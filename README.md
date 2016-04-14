@@ -151,17 +151,17 @@ El jugador gana al encontrar el tesoro y volver a la habitación inicial.
 
 ## Calendario tentativo ##
 
- |             |                  |
- |-----------  | -----------------|
- | 7 de Abril  | Armado de grupos |
- | 14 de Abril | Publicación 1ra Entrega |
- | 21 de Abril | |
- | 28 de Abril | **Primera Entrega** - Publicación 2da Entrega |
- | 5 de Mayo   | Entrega de notas 1ra Entrega |
- | 12 de Mayo  | |
- | 19 de Mayo  | **Segunda Entrega** - Publicación 3ra Entrega |
- | 26 de Mayo  | Entrega de notas 2da Entrega |
- | 2 de junio  | **Tercera Entrega** |
- | 9 de Junio  | Revisión |
- | 16 de Junio | Cierre de notas |
+| Fecha       |                  |
+|-----------  | -----------------|
+| 7 de Abril  | Armado de grupos |
+| 14 de Abril | Publicación 1ra Entrega |
+| 21 de Abril | |
+| 28 de Abril | **Primera Entrega** - Publicación 2da Entrega |
+| 5 de Mayo   | Entrega de notas 1ra Entrega |
+| 12 de Mayo  | |
+| 19 de Mayo  | **Segunda Entrega** - Publicación 3ra Entrega |
+| 26 de Mayo  | Entrega de notas 2da Entrega |
+| 2 de junio  | **Tercera Entrega** |
+| 9 de Junio  | Revisión |
+| 16 de Junio | Cierre de notas |
 
