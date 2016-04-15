@@ -7,15 +7,42 @@ Se desea implementar un motor de generación de juegos tipo aventura gráfica (o
 En ésta primera instancia se considerarán solo aventuras gráficas basadas en texto, el jugador ingresa comandos a través de una consola y el juego devuelve la salida correspondiente también en forma de texto.
 En ésta primera instancia el set de juegos a soportar será fijo y estará compuesto por los ejemplos mencionados al final del enunciado, más los juegos que el grupo quiera agregar (dentro de los comportamientos mencionados en los ejemplos).
 El tp tendrá los siguientes componentes:
- - Un servidor en donde se pueden cargar los juegos. Esto es inicializa un motor con un juego y se queda esperando en un port por comandos del jugador.
- - Un cliente: se conecta a un servidor que esté ejecutando un juego y permite enviar comandos y recibir respuestas.
- - Un motor: Es el componente encargado de la carga y la ejecución del juego.
+ - Un **servidor** en donde se pueden cargar los juegos. El servidor debe inicializar el motor con el modelo del juego pedido y un port en donde escuchar. Los comandos que lleguen por dicho port se deben mandar al motor correspondiente. Es decir que el server tiene que mantener la relación port --> motor. 
+ - Un **cliente**: se conecta a un servidor que esté ejecutando un juego y permite enviar comandos y recibir respuestas.
+ - Un **motor**: Es el componente encargado de la carga y la ejecución del juego.
+
+En el servidor:
+```
+> load game game1 [Enter]
+> game1 loaded and listening on port 8081
+> load game game2 [Enter]
+> game2 loaded and listening on port 8082
+```
+En el cliente:
+```
+> connect 127.0.0.1:8081 [Enter]
+> Welcome to game1!
+> ...
+> exit game [Enter]
+> bye!
+```
+
+```
+> connect 127.0.0.1:8082 [Enter]
+> Welcome to game2!
+> ...
+> exit game [Enter]
+> bye!
+```
 
 El servidor tiene que soportar los siguientes comandos:
- - `load game “juego”`: carga “juego” y se queda esperando a que el jugador se conecte.
+ - `load game [juego]`: carga “juego” y se queda esperando a que el jugador se conecte.
 El cliente tiene que soportar los siguientes comandos (independientes del juego):
+ - `connet [ip:port]`: Trata de conectarse al juego escuchando en ip:port.
  - `exit game`: sale del juego actual.
- - `help “juego”`: Muestra una descripción de “juego”.
+ - `help [juego]`: Muestra una descripción de “juego”.
+ 
+Cuando un cliente sale del juego el server mantiene el juego levantado esperando por otro jugador.
 
 La idea no es implementar estos juegos, sino diseñar un modelo que permita fácilmente la creación de los mismos.
 
@@ -95,25 +122,25 @@ Hay tres habitaciones en serie: En la primera, hay un objeto “maldito” que e
 > ...
 ```
 
-### Acertijo del lobo, la cabra y la col ###
-Hace mucho tiempo un granjero fue al mercado y compró un lobo , una cabra y una col. Para volver a su casa tenía que cruzar un río. El granjero dispone de una barca para cruzar a la otra orilla, pero en la barca solo caben él y una de sus compras.  Si el lobo se queda solo con la cabra se la come, si la cabra se queda sola con la col se la come. El reto del granjero era cruzar él mismo y dejar sus compras a la otra orilla del río, dejando cada compra intacta. ¿Cómo lo hizo?
+### Acertijo del lobo, la oveja y la col ###
+Hace mucho tiempo un granjero fue al mercado y compró un lobo , una oveja y una col. Para volver a su casa tenía que cruzar un río. El granjero dispone de una barca para cruzar a la otra orilla, pero en la barca solo caben él y una de sus compras.  Si el lobo se queda solo con la oveja se la come, si la oveja se queda sola con la col se la come. El reto del granjero era cruzar él mismo y dejar sus compras a la otra orilla del río, dejando cada compra intacta. ¿Cómo lo hizo?
 
 ```
-> take wolf [Enter]
-> ok, but be carefull!
 > take sheep [Enter]
+> Ok
+> take wolf [Enter]
 > You can’t do that! The boat is full.
 > cross north-shore [Enter]
 > you have crossed!
-> leave wolf [Enter]
+> leave sheep [Enter]
 > Ok
 > cross south-shore [Enter]
 > you have crossed!
-> take sheep [Enter]
+> take wolf [Enter]
 > Ok
 > cross north-shore [Enter]
 > crossed!
-> leave sheep [Enter]
+> leave wolf [Enter]
 > You can’t do that! The wolf will eat the sheep!
 ...
 ```
