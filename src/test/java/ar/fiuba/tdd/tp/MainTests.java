@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class MainTests {
 
     @Test
-    public void dummy() {
-        assertEquals(2,2);
+    public void dummy_test() {
+        assertEquals(0,0);
     }
 }
