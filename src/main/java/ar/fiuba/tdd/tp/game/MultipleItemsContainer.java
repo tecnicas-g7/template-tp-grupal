@@ -16,11 +16,11 @@ public class MultipleItemsContainer extends Container {
         this.containers = new HashMap<>();
     }
 
-    public void addContainer(SingleItemContainer container){
+    public void addContainer(SingleItemContainer container) {
         containers.put(container.getName(),container);
     }
 
-    public SingleItemContainer getContainer(String name){
+    public SingleItemContainer getContainer(String name) {
         SingleItemContainer container = this.containers.get(name);
         if (container != null) {
             return container;
