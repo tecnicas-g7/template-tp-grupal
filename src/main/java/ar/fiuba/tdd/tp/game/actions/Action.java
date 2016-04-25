@@ -9,7 +9,7 @@ import ar.fiuba.tdd.tp.game.items.Item;
 public interface Action {
 
     public String getName();
-    
+
     public String execute(String[] tokens, Player player, Item item);
 
 }

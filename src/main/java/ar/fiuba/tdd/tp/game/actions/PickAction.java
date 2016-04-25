@@ -10,7 +10,7 @@ import ar.fiuba.tdd.tp.game.items.Item;
  */
 
 /*
- Pick items from room where player is.
+ Pick items from room where player is. Assumes player and item are in same room.
  */
 
 public class PickAction implements Action {
@@ -27,7 +27,7 @@ public class PickAction implements Action {
                 player.getItem(itemName);
                 return "Item not found!";
             } catch (ItemNotFoundException e) {
-                player.addItem(itemName, item);
+                player.addItem(item);
                 player.getRoom().removeItem(itemName);
                 return itemName + " added to inventory!";
             }

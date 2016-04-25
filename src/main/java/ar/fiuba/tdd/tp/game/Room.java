@@ -4,17 +4,22 @@ import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * Created by fran on 24/04/16.
  */
-public class Room {
+public class Room extends Describable {
 
     private HashMap<String,Item> items;
 
-    public Room() {
+    private HashMap<String, Door> doors;
+
+    public Room(String name) {
         this.items = new HashMap<>();
+        this.doors = new HashMap<String, Door>();
     }
 
     public Item getItem(String name) throws ItemNotFoundException {
@@ -26,7 +31,7 @@ public class Room {
     }
 
     public void addItem( Item item) {
-        this.items.put(item.getName(),item);
+        this.items.put(item.getName(), item);
     }
 
     public void removeItem(String name) {
@@ -34,18 +39,51 @@ public class Room {
     }
 
 
+    public Iterator<Map.Entry<String, Item>> getItemsIterator() {
+        return this.items.entrySet().iterator();
+    }
+
+    public Iterator<Map.Entry<String, Door>> getDoorsIterator() {
+        return this.doors.entrySet().iterator();
+    }
+
     public Set<String> getItemsNames() {
         return items.keySet();
     }
 
     public String look() {
         Set<String> items = this.getItemsNames();
-        StringBuilder output = new StringBuilder();
-        output.append("There's a");
+        StringBuilder output = new StringBuilder("There's a");
         for (String item : items) {
             output.append(item + " ");
         }
         output.append("in the room.");
         return output.toString();
     }
+
+    public void addDoor(Room destination, Item key) {
+        int doorNumber = this.doors.size() + 1;
+        Door door;
+        if (key == null) {
+            door = new Door(destination,String.valueOf(doorNumber));
+        } else {
+            door = new Door(destination,String.valueOf(doorNumber),key);
+        }
+        this.doors.put(String.valueOf(doorNumber), door);
+    }
+
+    public Door getDestinationDoor(Room destination) {
+        Iterator<HashMap.Entry<String, Door>> it = this.getDoorsIterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Door> itemEntry = it.next();
+            Room destinationAux = itemEntry.getValue().getDestination();
+            if (destinationAux == destination ) {
+                return itemEntry.getValue();
+            }
+        }
+        return null;
+    }
+
+
+
 }

@@ -42,7 +42,7 @@ public class Game {
         try {
             Item item = findItem(objectName);
             if (item != null) {
-                return item.executeAction(tokens,tokens[0],this.player);
+                return item.executeAction(tokens,this.player);
             }
         } catch (ItemNotFoundException ine) {
             return ine.getMessage();

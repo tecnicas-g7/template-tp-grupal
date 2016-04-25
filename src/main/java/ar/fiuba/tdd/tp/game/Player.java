@@ -4,10 +4,7 @@ import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.items.Item;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by fran on 24/04/16.
@@ -33,11 +30,11 @@ public class Player {
         this.maxInventory = maxInventory;
     }
 
-    public void addItem(String name, Item item) throws MaxInventoryException {
+    public void addItem(Item item) throws MaxInventoryException {
         if (inventory.size() == maxInventory) {
             throw new MaxInventoryException();
         }
-        this.inventory.put(name, item);
+        this.inventory.put(item.getName(), item);
     }
 
     public void removeItem(String name) {
@@ -66,5 +63,48 @@ public class Player {
         output.append("You have");
         output.append(inventoryNames.toString());
         return output.toString();
+    }
+
+    private int getInventorySize() {
+        return this.inventory.size();
+    }
+
+    public Iterator<Item> getInventoryIterator() {
+        return this.inventory.values().iterator();
+    }
+
+    private boolean checkIdenticalInventory(Iterator<Item> it) {
+        while (it.hasNext()) {
+            Item item = it.next();
+            if (!this.inventory.containsKey(item.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkVictory(Player winner) {
+        Iterator<Item> it = winner.getInventoryIterator();
+        if (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void move(Room room, Door door) {
+        System.out.println("Hello!");
+        if (!door.isLocked()) {
+            this.room = room;
+        } else {
+            Item key = door.getKey();
+            System.out.println(showInventory());
+            if (inventory.containsValue(key)) {
+                door.unlock(key);
+                this.room = room;
+                System.out.println("Success!");
+                return;
+            }
+            System.out.println("Ey! Where do you go?! Room 2 is locked.");
+        }
     }
 }

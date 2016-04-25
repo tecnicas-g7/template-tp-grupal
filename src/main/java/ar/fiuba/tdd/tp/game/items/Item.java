@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.Action;
 
@@ -9,14 +10,16 @@ import java.util.*;
 /**
  * Created by fran on 24/04/16.
  */
-public class Item {
 
-    //private List<String> actions;
-    private String name;
+public class Item extends Describable {
+
     private HashMap<String,Action> actions;
 
 
     public Item(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Item must have a name.");
+        }
         this.actions = new HashMap<>();
         this.name = name;
     }
@@ -29,7 +32,8 @@ public class Item {
         return name;
     }
 
-    public String executeAction(String[] tokens, String actionName, Player player) throws WrongItemActionException {
+    public String executeAction(String[] tokens, Player player) throws WrongItemActionException {
+        String actionName = tokens[0];
         if (!this.actions.containsKey(actionName)) {
             throw new WrongItemActionException();
         }

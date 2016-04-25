@@ -11,7 +11,7 @@ import ar.fiuba.tdd.tp.game.items.Item;
 public class StickGame {
 
     public static Game getGame() {
-        Room room = new Room();
+        Room room = new Room("room");
 
         Item stick = new Item("stick");
         stick.addAction(new PickAction());
