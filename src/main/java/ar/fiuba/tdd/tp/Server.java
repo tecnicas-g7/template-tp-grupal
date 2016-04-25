@@ -9,30 +9,24 @@ import java.nio.charset.StandardCharsets;
  */
 public class Server {
 
-    private static int currentPort = 6789;
-
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Server");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-        String input = bufferedReader.readLine();
-        while (input != null && !input.equals("exit")) {
-            if (input.equals("load game")) {
-                try {
-                    newGame(currentPort);
-                    System.out.println("Game loaded and listening on port " + currentPort);
-                    currentPort++;
-                } catch (IOException e) {
-                    System.out.println("Could not listen on port: " + currentPort);
-                }
-            }
-            input = bufferedReader.readLine();
+        String clientSentence;
+        String capitalizedSentence;
+        ServerSocket welcomeSocket = new ServerSocket(6789);
+        while (true) {
+            Socket connectionSocket = welcomeSocket.accept();
+            BufferedReader inFromClient = new BufferedReader(
+                    new InputStreamReader(connectionSocket.getInputStream(),StandardCharsets.UTF_8)
+            );
+            clientSentence = inFromClient.readLine();
+            System.out.println("Received: " + clientSentence);
+            capitalizedSentence = clientSentence.toUpperCase() + '\n';
+            DataOutputStream outToClient = new DataOutputStream(
+                    connectionSocket.getOutputStream()
+            );
+            outToClient.writeBytes(capitalizedSentence);
         }
-
     }
-
-    public static void newGame(int port) throws IOException {
-        new Thread(new GameServer(port)).start();
-    }
-
 }
 
