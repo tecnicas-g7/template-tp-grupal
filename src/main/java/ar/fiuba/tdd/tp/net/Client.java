@@ -32,6 +32,7 @@ public class Client {
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         System.out.println(inFromServer.readLine());
         String input = inFromUser.readLine();
+
         while (input != null && !input.equals("exit game")) {
             outToServer.writeBytes(input + '\n');
             System.out.println(inFromServer.readLine());

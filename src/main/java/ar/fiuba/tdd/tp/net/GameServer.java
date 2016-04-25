@@ -45,6 +45,7 @@ public class GameServer implements Runnable{
     }
 
     public Socket acceptSocket() {
+
         Socket socket = null;
         try {
             socket = serverSocket.accept();
