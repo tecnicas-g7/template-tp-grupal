@@ -91,6 +91,12 @@ public class Room extends Describable {
         return null;
     }
 
+    public void addSimpleContainer(SingleItemContainer container) {
+        simplecontainers.put(container.getName(),container);
+    }
 
+    public void addMultipleContainer(MultipleItemsContainer container) {
+        multiplecontainers.put(container.getName(),container);
+    }
 
 }
