@@ -1,7 +1,13 @@
 package ar.fiuba.tdd.tp.game;
 
+import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
+import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
+import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.items.Item;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by fran on 24/04/16.
@@ -9,32 +15,57 @@ import java.util.List;
 public class Game {
 
     private List<Room> rooms;
-    private Character character;
-    private Room activeRoom;
+    private Player player;
 
-    public Game(Character character) {
+    public Game(Player player) {
         this.rooms = new ArrayList<Room>();
-        this.character = character;
+        this.player = player;
     }
 
     public void addRoom(Room room) {
         this.rooms.add(room);
     }
 
-    public void setActiveRoom(int roomIndex) {
-        Room room = this.rooms.get(roomIndex);
-        if (room != null) {
-            this.activeRoom = room;
+    //Metodos creados para q findbugs no joda
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public String executeActionOnItem(String[] tokens) throws WrongItemActionException {
+        String objectName;
+        try {
+            objectName = tokens[1];
+        } catch (Exception e) {
+            return "You have to select an item!";
+        }
+        try {
+            Item item = findItem(objectName);
+            if (item != null) {
+                return item.executeAction(tokens,tokens[0],this.player);
+            }
+        } catch (ItemNotFoundException ine) {
+            return ine.getMessage();
+        }
+        return null;
+    }
+
+    public Item findItem(String objectName) throws ItemNotFoundException {
+        try {
+            return this.player.getItem(objectName);
+        } catch (ItemNotFoundException e) {
+
+            System.out.println(this.player.getRoom().getItem(objectName));
+            return this.player.getRoom().getItem(objectName);
         }
     }
 
-    //Metodos creados para q findbugs no joda
-    public Room getActiveRoom() {
-        return this.activeRoom;
+    public String look() {
+        return this.player.getRoom().look();
+
     }
 
-    public Character getCharacter() {
-        return this.character;
+    public String showInventory() {
+        return this.player.showInventory();
     }
-
 }
