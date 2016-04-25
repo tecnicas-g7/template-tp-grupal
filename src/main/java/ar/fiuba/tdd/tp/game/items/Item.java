@@ -40,5 +40,4 @@ public class Item extends Describable {
 
         return actions.get(actionName).execute(tokens, player, this);
     }
-
 }

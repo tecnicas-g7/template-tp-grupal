@@ -17,9 +17,16 @@ public class Room extends Describable {
 
     private HashMap<String, Door> doors;
 
+    private HashMap<String,SingleItemContainer> simplecontainers;
+
+    private HashMap<String,MultipleItemsContainer> multiplecontainers;
+
     public Room(String name) {
         this.items = new HashMap<>();
-        this.doors = new HashMap<String, Door>();
+        this.doors = new HashMap<>();
+        this.simplecontainers = new HashMap<>();
+        this.multiplecontainers = new HashMap<>();
+        this.name = name;
     }
 
     public Item getItem(String name) throws ItemNotFoundException {
