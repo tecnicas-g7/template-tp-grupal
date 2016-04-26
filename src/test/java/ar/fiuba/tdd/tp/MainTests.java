@@ -137,4 +137,21 @@ public class MainTests {
         }
         assertTrue(Player.Status.alive == player.getStatus());
     }
+
+    @Test
+    public void poison() {
+        Item poison = new Item("poison");
+        poison.addAction(new PoisonAction());
+        Room room1 = new Room("Room 1");
+        room1.addItem(poison);
+        Player player = new Player(room1);
+        room1.addDoor(room1,poison);
+        String command = "poison poison";
+        try {
+            poison.executeAction(command.split(" "), player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(player.getStatus().equals(Player.Status.poisoned));
+    }
 }
