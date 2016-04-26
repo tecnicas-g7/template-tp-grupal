@@ -117,7 +117,6 @@ public class MainTests {
         container.setItem(key);
         room1.addSimpleContainer(container);
         Room room2 = new Room("Room 2");
-        Player player = new Player(room1);
         Player player2 = new Player(room2);
         room1.addDoor(room2,key);
         room2.addDoor(room1,key);
@@ -129,6 +128,7 @@ public class MainTests {
             //Do nothing
         }
 
+        Player player = new Player(room1);
         player.enter(door);
 
         assertFalse(player.checkVictory(player2));

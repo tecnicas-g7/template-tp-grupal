@@ -5,9 +5,7 @@ import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.items.Item;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by fran on 24/04/16.
@@ -67,5 +65,17 @@ public class Game {
 
     public String showInventory() {
         return this.player.showInventory();
+    }
+
+    public String enter(String[] tokens) {
+        Iterator<HashMap.Entry<String, Door>> it = player.getRoom().getDoorsIterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Door> itemEntry = it.next();
+            Room destinationAux = itemEntry.getValue().getDestination();
+            if (itemEntry.getValue().getName().equals(tokens[1]) ) {
+                player.enter(itemEntry.getValue());
+            }
+        }
+        return "";
     }
 }

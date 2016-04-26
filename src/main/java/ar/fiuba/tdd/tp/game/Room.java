@@ -60,11 +60,14 @@ public class Room extends Describable {
 
     public String look() {
         Set<String> items = this.getItemsNames();
-        StringBuilder output = new StringBuilder("There's a");
+
+        StringBuilder output = new StringBuilder("You are in " + this.getName() + "\n");
+        output.append("There's a ");
         for (String item : items) {
             output.append(item + " ");
         }
         output.append("in the room.");
+
         return output.toString();
     }
 
