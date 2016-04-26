@@ -99,4 +99,7 @@ public class Room extends Describable {
         multiplecontainers.put(container.getName(),container);
     }
 
+    public HashMap<String, Item> getItems() {
+        return items;
+    }
 }

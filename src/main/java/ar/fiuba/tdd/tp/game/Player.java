@@ -69,6 +69,10 @@ public class Player {
         return this.inventory.size();
     }
 
+    public HashMap<String,Item> getInventory() {
+        return this.inventory;
+    }
+
     public Iterator<Item> getInventoryIterator() {
         return this.inventory.values().iterator();
     }
