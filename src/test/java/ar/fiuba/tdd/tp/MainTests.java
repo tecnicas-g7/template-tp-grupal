@@ -6,6 +6,7 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
 import ar.fiuba.tdd.tp.game.SingleItemContainer;
 import ar.fiuba.tdd.tp.game.actions.PickAction;
+import ar.fiuba.tdd.tp.game.actions.PoisonAction;
 import ar.fiuba.tdd.tp.game.items.Item;
 import org.junit.Test;
 
@@ -106,4 +107,22 @@ public class MainTests {
 
         assertTrue(player.checkVictory(player2));
     }
+
+    @Test
+    public void poison() {
+        Item poison = new Item("poison");
+        poison.addAction(new PoisonAction());
+        Room room1 = new Room("Room 1");
+        room1.addItem(poison);
+        Player player = new Player(room1);
+        room1.addDoor(room1,poison);
+        String command = "poison poison";
+        try {
+            poison.executeAction(command.split(" "), player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(player.getStatus().equals(Player.Status.poisoned));
+    }
+
 }
