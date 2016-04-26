@@ -91,20 +91,22 @@ public class Player {
         return false;
     }
 
-    public void move(Room room, Door door) {
+    public boolean enter(Door door) {
         System.out.println("Hello!");
         if (!door.isLocked()) {
-            this.room = room;
+            this.room = door.getDestination();
         } else {
             Item key = door.getKey();
             System.out.println(showInventory());
             if (inventory.containsValue(key)) {
                 door.unlock(key);
-                this.room = room;
+                this.room = door.getDestination();
                 System.out.println("Success!");
-                return;
+                return true;
             }
             System.out.println("Ey! Where do you go?! Room 2 is locked.");
+            return false;
         }
+        return true;
     }
 }
