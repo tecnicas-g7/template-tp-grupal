@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.GameNotFoundExcpetion;
+import ar.fiuba.tdd.tp.game.types.EnterRoom;
 import ar.fiuba.tdd.tp.game.types.StickGame;
 
 import java.io.BufferedReader;
@@ -15,7 +16,7 @@ public class MainTest {
     public static void main(String[] argv) throws Exception {
 
         System.out.println("Welcome to game!");
-        Controller controller = new Controller(getGame("stickGame"));
+        Controller controller = new Controller(getGame("enterRoom"));
 
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String input = inFromUser.readLine();
@@ -31,6 +32,8 @@ public class MainTest {
         switch (gameName) {
             case "stickGame":
                 return StickGame.getGame();
+            case "enterRoom":
+                return EnterRoom.getGame();
             default:
                 throw new GameNotFoundExcpetion();
         }

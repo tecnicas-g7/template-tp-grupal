@@ -25,6 +25,8 @@ public class Controller {
                     return game.look();
                 case "inventory":
                     return game.showInventory();
+                case "enter":
+                    return game.enter(tokens);
                 default:
                     return game.executeActionOnItem(tokens);
             }
