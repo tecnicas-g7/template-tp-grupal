@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.conditions;
 
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.random.Util;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +20,6 @@ public class InventoryCondition implements Condition {
 
     @Override
     public boolean isValid(Player player) {
-        HashMap<String,Item> playerInventory = player.getInventory();
-        for (Item item : this.inventory) {
-            if (!playerInventory.containsValue(item)) {
-                return false;
-            }
-        }
-        return true;
+        return Util.itemsInInventory(inventory,player.getInventory());
     }
 }
