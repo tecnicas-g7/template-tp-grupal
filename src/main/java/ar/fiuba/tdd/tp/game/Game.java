@@ -1,8 +1,8 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.*;
@@ -14,17 +14,17 @@ public class Game {
 
     private List<Room> rooms;
     private Player player;
+    private List<Condition> conditions;
 
     public Game(Player player) {
         this.rooms = new ArrayList<Room>();
         this.player = player;
+        this.conditions = new ArrayList<>();
     }
 
     public void addRoom(Room room) {
         this.rooms.add(room);
     }
-
-    //Metodos creados para q findbugs no joda
 
     public Player getPlayer() {
         return this.player;
@@ -78,4 +78,20 @@ public class Game {
         }
         return "";
     }
+
+
+    public void addCondition(Condition condition) {
+        this.conditions.add(condition);
+    }
+
+    public boolean verifyVictory() {
+
+        for (Condition condition : this.conditions) {
+            if (!condition.isValid(this.player)) {
+                return false;
+            }
+        }
+        return  true;
+    }
 }
+

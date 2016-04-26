@@ -21,9 +21,14 @@ public class MainTest {
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String input = inFromUser.readLine();
 
-        while (input != null) {
+        boolean finish = false;
+        while (!finish) {
             System.out.println(controller.interptetCommand(input));
-            input = inFromUser.readLine();
+            if (!controller.verify()) {
+                input = inFromUser.readLine();
+            } else {
+                finish = true;
+            }
         }
     }
 

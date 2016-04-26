@@ -33,8 +33,9 @@ public class Controller {
         } catch (WrongItemActionException e) {
             return e.getMessage();
         }
-
     }
 
-
+    public boolean verify( ) {
+        return game.verifyVictory();
+    }
 }

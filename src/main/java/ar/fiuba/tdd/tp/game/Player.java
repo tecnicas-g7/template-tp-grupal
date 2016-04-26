@@ -69,6 +69,10 @@ public class Player {
         return this.inventory.size();
     }
 
+    public HashMap<String,Item> getInventory() {
+        return this.inventory;
+    }
+
     public Iterator<Item> getInventoryIterator() {
         return this.inventory.values().iterator();
     }
@@ -92,16 +96,13 @@ public class Player {
     }
 
     public boolean enter(Door door) {
-        System.out.println("Hello!");
         if (!door.isLocked()) {
             this.room = door.getDestination();
         } else {
             Item key = door.getKey();
-            System.out.println(showInventory());
             if (inventory.containsValue(key)) {
                 door.unlock(key);
                 this.room = door.getDestination();
-                System.out.println("Success!");
                 return true;
             }
             System.out.println("Ey! Where do you go?! Room 2 is locked.");
