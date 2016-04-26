@@ -15,6 +15,15 @@ public class Item extends Describable {
 
     private HashMap<String,Action> actions;
 
+    public Size getSize() {
+        return size;
+    }
+
+    public enum Size {
+        SMALL, MEDIUM, LARGE
+    }
+
+    protected Size size;
 
     public Item(String name) {
         if (name == null || name.isEmpty()) {
@@ -22,6 +31,11 @@ public class Item extends Describable {
         }
         this.actions = new HashMap<>();
         this.name = name;
+        this.size = Size.SMALL;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
     }
 
     public void addAction(Action action) {
