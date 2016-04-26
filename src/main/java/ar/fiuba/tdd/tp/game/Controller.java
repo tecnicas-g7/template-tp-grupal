@@ -34,5 +34,9 @@ public class Controller {
 
     }
 
+    public boolean verify( ) {
+        return game.verifyVictory();
+    }
+
 
 }

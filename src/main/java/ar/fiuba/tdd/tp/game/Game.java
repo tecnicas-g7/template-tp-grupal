@@ -4,6 +4,7 @@ import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.conditions.Condition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Game {
 
     private List<Room> rooms;
     private Player player;
+    private List<Condition> conditions;
 
     public Game(Player player) {
         this.rooms = new ArrayList<Room>();
@@ -67,5 +69,15 @@ public class Game {
 
     public String showInventory() {
         return this.player.showInventory();
+    }
+
+    public boolean verifyVictory() {
+
+        for (Condition condition : this.conditions) {
+            if (!condition.isValid(this.player)) {
+                return false;
+            }
+        }
+        return  true;
     }
 }
