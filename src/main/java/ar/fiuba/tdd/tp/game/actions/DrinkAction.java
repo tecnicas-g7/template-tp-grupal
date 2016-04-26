@@ -10,7 +10,7 @@ import ar.fiuba.tdd.tp.game.items.Item;
 public class DrinkAction implements Action {
 
     public String getName() {
-        return "antidote";
+        return "drink";
     }
 
     @Override

@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.game.Door;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
 import ar.fiuba.tdd.tp.game.SingleItemContainer;
-import ar.fiuba.tdd.tp.game.actions.PickAction;
+import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.items.Item;
 import org.junit.Test;
 
@@ -105,5 +105,36 @@ public class MainTests {
         player.move(room2,door);
 
         assertTrue(player.checkVictory(player2));
+    }
+
+    @Test
+    public void takeAntidoteWhilePoisoned() {
+        Item antidote = new Item("antidote");
+        antidote.addAction(new DrinkAction());
+        Room room = new Room("room");
+        Player player = new Player(room);
+        player.changeStatus(Player.Status.poisoned);
+        String command = "drink antidote";
+        try {
+            antidote.executeAction(command.split(" "), player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(Player.Status.alive == player.getStatus());
+    }
+
+    @Test
+    public void takeAntidoteWhileNotPoisoned() {
+        Item antidote = new Item("antidote");
+        antidote.addAction(new DrinkAction());
+        Room room = new Room("room");
+        Player player = new Player(room);
+        String command = "drink antidote";
+        try {
+            antidote.executeAction(command.split(" "), player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(Player.Status.alive == player.getStatus());
     }
 }
