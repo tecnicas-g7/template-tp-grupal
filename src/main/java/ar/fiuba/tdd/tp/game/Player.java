@@ -19,15 +19,25 @@ public class Player {
     private Room room;
 
     //TODO: estado (envenado, maldicion)
+    private Status status;
+    public enum Status
+    {
+        alive, poisoned, damned
+    }
 
     public Player(Room room) {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.room = room;
+        this.status = Status.alive;
     }
 
     public void setMaxInventory(int maxInventory) {
         this.maxInventory = maxInventory;
+    }
+
+    public void changeStatus(Status newStatus) {
+        this.status = newStatus;
     }
 
     public void addItem(Item item) throws MaxInventoryException {
@@ -51,6 +61,10 @@ public class Player {
 
     public Room getRoom() {
         return this.room;
+    }
+
+    public Status getStatus() {
+        return this.status;
     }
 
     public String showInventory() {
