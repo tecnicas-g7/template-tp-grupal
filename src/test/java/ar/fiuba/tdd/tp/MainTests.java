@@ -1,13 +1,12 @@
 package ar.fiuba.tdd.tp;
 
-import ar.fiuba.tdd.tp.game.*;
-import ar.fiuba.tdd.tp.game.actions.DropAction;
-import ar.fiuba.tdd.tp.game.actions.PickAction;
-import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
-import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 
+import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
+import ar.fiuba.tdd.tp.game.actions.*;
+import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
+import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.types.EnterRoom;
 import ar.fiuba.tdd.tp.game.types.StickGame;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -36,9 +35,9 @@ public class MainTests {
         Item mouse = createItemsWithCondition("mouse");
         Item stick = createItemsWithCondition("stick");
         Room room1 = new Room("Room1");
-        room1.addItem(key);
-        room1.addItem(mouse);
-        room1.addItem(stick);
+        room1.addContainerComponent(key);
+        room1.addContainerComponent(mouse);
+        room1.addContainerComponent(stick);
         Room room2 = new Room("Room2");
         Player player = new Player(room1);
         player.setMaxInventory(2);
@@ -47,7 +46,7 @@ public class MainTests {
         Game game = new Game(player);
         game.addRoom(room1);
         game.addRoom(room2);
-        List<Item> items = new ArrayList<>(Arrays.asList(stick,key));
+        List<ContainerComponent> items = new ArrayList<>(Arrays.asList(stick,key));
         // items.add(stick);
         //  items.add(key);
         game.addCondition(new InventoryCondition(items));
@@ -81,7 +80,7 @@ public class MainTests {
         assertTrue(enterRoom.verifyVictory());
     }
 
-    public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
+    private void makeRoomsAdjacent(Room room1, Room room2, Item key) {
         room1.addDoor(room2,key);
         room2.addDoor(room1,key);
     }
