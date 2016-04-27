@@ -1,6 +1,8 @@
 package ar.fiuba.tdd.tp.game.random;
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.HashMap;
@@ -18,6 +20,15 @@ public class Util {
             }
         }
         return true;
+    }
+
+    public static boolean checkConditions(List<Condition> conditions, Player player) {
+        for (Condition condition : conditions) {
+            if (!condition.isValid(player)) {
+                return false;
+            }
+        }
+        return  true;
     }
 
 }

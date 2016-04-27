@@ -1,12 +1,11 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
+import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.random.Util;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by fran on 24/04/16.
@@ -17,12 +16,17 @@ public class Room {
 
     private HashMap<String, Door> doors;
 
+    private List<Condition> enterConditions;
+    private List<Condition> leaveConditions;
+
     private String name;
 
     public Room(String name) {
         this.name = name;
         this.items = new HashMap<>();
         this.doors = new HashMap<>();
+        this.enterConditions = new ArrayList<>();
+        this.leaveConditions = new ArrayList<>();
     }
 
     public ContainerComponent getItem(String name) throws ItemNotFoundException {
@@ -100,4 +104,21 @@ public class Room {
         ContainerComponent component = getItem(name);
         component.openContainer(this);
     }
+
+    public void addEnterCondition(Condition condition) {
+        this.enterConditions.add(condition);
+    }
+
+    public void addLeaveCondition(Condition condition) {
+        this.leaveConditions.add(condition);
+    }
+
+    public boolean validEnterConditions(Player player) {
+        return Util.checkConditions(this.enterConditions, player);
+    }
+
+    public boolean validLeaveConditions(Player player) {
+        return Util.checkConditions(this.leaveConditions, player);
+    }
+
 }

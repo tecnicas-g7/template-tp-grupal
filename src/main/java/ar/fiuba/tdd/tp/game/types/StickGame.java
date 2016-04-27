@@ -31,7 +31,7 @@ public class StickGame {
         List<ContainerComponent> items = new ArrayList<>();
         items.add(stick);
 
-        Condition condition = new InventoryCondition(items);
+        Condition condition = new InventoryCondition(items, true);
         game.addCondition(condition);
 
         return game;

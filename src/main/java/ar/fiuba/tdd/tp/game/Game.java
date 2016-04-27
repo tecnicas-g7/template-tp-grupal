@@ -53,7 +53,7 @@ public class Game {
             return this.player.getItem(objectName);
         } catch (ItemNotFoundException e) {
 
-            System.out.println(this.player.getRoom().getItem(objectName));
+            System.out.println(this.player.getRoom().look());
             return this.player.getRoom().getItem(objectName);
         }
     }
@@ -68,15 +68,16 @@ public class Game {
     }
 
     public String enter(String[] tokens) {
-        Iterator<HashMap.Entry<String, Door>> it = player.getRoom().getDoorsIterator();
+        Room origin = player.getRoom();
+        Iterator<HashMap.Entry<String, Door>> it = origin.getDoorsIterator();
         while (it.hasNext()) {
-            Map.Entry<String, Door> itemEntry = it.next();
-            Room destinationAux = itemEntry.getValue().getDestination();
-            if (itemEntry.getValue().getName().equals(tokens[1]) ) {
-                player.enter(itemEntry.getValue());
+            Door door = it.next().getValue();
+            Room destination = door.getDestination();
+            if (door.getName().equals(tokens[1]) && origin.validLeaveConditions(player) && destination.validEnterConditions(player)) {
+                player.enter(door);
             }
         }
-        return "";
+        return "The door doesn't open ...";
     }
 
 
@@ -85,7 +86,6 @@ public class Game {
     }
 
     public boolean verifyVictory() {
-
         for (Condition condition : this.conditions) {
             if (!condition.isValid(this.player)) {
                 return false;
