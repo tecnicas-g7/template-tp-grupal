@@ -60,21 +60,26 @@ public class Room extends Describable {
 
     public String look() {
         Set<String> items = this.getItemsNames();
-        StringBuilder output = new StringBuilder("There's a");
+
+        StringBuilder output = new StringBuilder("You are in " + this.getName() + "\n");
+        output.append("There's a ");
         for (String item : items) {
             output.append(item + " ");
         }
         output.append("in the room.");
+
         return output.toString();
     }
 
     public void addDoor(Room destination, Item key) {
         int doorNumber = this.doors.size() + 1;
+        StringBuilder doorName = new StringBuilder("door");
+        doorName.append(doorNumber);
         Door door;
         if (key == null) {
-            door = new Door(destination,String.valueOf(doorNumber));
+            door = new Door(destination,doorName.toString());
         } else {
-            door = new Door(destination,String.valueOf(doorNumber),key);
+            door = new Door(destination,doorName.toString(),key);
         }
         this.doors.put(String.valueOf(doorNumber), door);
     }
@@ -99,4 +104,7 @@ public class Room extends Describable {
         multiplecontainers.put(container.getName(),container);
     }
 
+    public HashMap<String, Item> getItems() {
+        return items;
+    }
 }

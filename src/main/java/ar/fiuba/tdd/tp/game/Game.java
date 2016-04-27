@@ -1,13 +1,11 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by fran on 24/04/16.
@@ -16,17 +14,17 @@ public class Game {
 
     private List<Room> rooms;
     private Player player;
+    private List<Condition> conditions;
 
     public Game(Player player) {
         this.rooms = new ArrayList<Room>();
         this.player = player;
+        this.conditions = new ArrayList<>();
     }
 
     public void addRoom(Room room) {
         this.rooms.add(room);
     }
-
-    //Metodos creados para q findbugs no joda
 
     public Player getPlayer() {
         return this.player;
@@ -68,4 +66,32 @@ public class Game {
     public String showInventory() {
         return this.player.showInventory();
     }
+
+    public String enter(String[] tokens) {
+        Iterator<HashMap.Entry<String, Door>> it = player.getRoom().getDoorsIterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Door> itemEntry = it.next();
+            Room destinationAux = itemEntry.getValue().getDestination();
+            if (itemEntry.getValue().getName().equals(tokens[1]) ) {
+                player.enter(itemEntry.getValue());
+            }
+        }
+        return "";
+    }
+
+
+    public void addCondition(Condition condition) {
+        this.conditions.add(condition);
+    }
+
+    public boolean verifyVictory() {
+
+        for (Condition condition : this.conditions) {
+            if (!condition.isValid(this.player)) {
+                return false;
+            }
+        }
+        return  true;
+    }
 }
+
