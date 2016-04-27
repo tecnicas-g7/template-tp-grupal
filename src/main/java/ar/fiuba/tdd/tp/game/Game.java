@@ -38,7 +38,7 @@ public class Game {
             return "You have to select an item!";
         }
         try {
-            Item item = findItem(objectName);
+            ContainerComponent item = findItem(objectName);
             if (item != null) {
                 return item.executeAction(tokens,this.player);
             }
@@ -48,7 +48,7 @@ public class Game {
         return null;
     }
 
-    public Item findItem(String objectName) throws ItemNotFoundException {
+    public ContainerComponent findItem(String objectName) throws ItemNotFoundException {
         try {
             return this.player.getItem(objectName);
         } catch (ItemNotFoundException e) {

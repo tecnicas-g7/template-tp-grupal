@@ -9,9 +9,9 @@ public class Door extends Describable {
     private Item key;
 
     public Door(Room destination, String name) {
+        super(name);
         this.locked = false;
         this.destination = destination;
-        this.name = name;
     }
 
     public Door(Room destination,String name, Item key) {

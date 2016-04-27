@@ -5,6 +5,9 @@ import ar.fiuba.tdd.tp.game.actions.DropAction;
 import ar.fiuba.tdd.tp.game.actions.PickAction;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
+
+import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.Room;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.types.EnterRoom;
 import ar.fiuba.tdd.tp.game.types.StickGame;
@@ -74,8 +77,13 @@ public class MainTests {
         controller.interptetCommand(command);
         String command2 = "enter door1";
         controller.interptetCommand(command2);
-        
+
         assertTrue(enterRoom.verifyVictory());
+    }
+
+    public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
+        room1.addDoor(room2,key);
+        room2.addDoor(room1,key);
     }
 
     @Test
@@ -83,57 +91,100 @@ public class MainTests {
         Item key = new Item("key");
         key.addAction(new PickAction());
         Room room1 = new Room("Room 1");
-        SingleItemContainer container = new SingleItemContainer("Box");
-        container.setItem(key);
-        room1.addSimpleContainer(container);
+        Container container = new Container("Box",1);
+        container.addComponent(key);
+        room1.addContainerComponent(container);
         Room room2 = new Room("Room 2");
         Player player = new Player(room1);
         Player player2 = new Player(room2);
-        room1.addDoor(room2,key);
-        room2.addDoor(room1,key);
+        makeRoomsAdjacent(room1,room2, key);
         Door door = room1.getDestinationDoor(room2);
         String command = "pick key";
         try {
+            player.openRoomContainer("Box");
             key.executeAction(command.split(" "), player);
         } catch (Exception e) {
             //Do nothing
         }
         try {
-            player2.addItem(container.openContainer());
+            player2.addItem(key);
         } catch (Exception e) {
             //Do nothing
         }
-
         player.enter(door);
-
         assertTrue(player.checkVictory(player2));
     }
 
     @Test
     public void cantEnterDoor() {
         Item key = new Item("key");
-        key.addAction(new PickAction());
         Room room1 = new Room("Room 1");
-        SingleItemContainer container = new SingleItemContainer("Box");
-        container.setItem(key);
-        room1.addSimpleContainer(container);
+        Container container = new Container("Box",1);
+        container.addComponent(key);
+        room1.addContainerComponent(container);
         Room room2 = new Room("Room 2");
         Player player2 = new Player(room2);
         room1.addDoor(room2,key);
         room2.addDoor(room1,key);
         Door door = room1.getDestinationDoor(room2);
-        String command = "pick key";
         try {
-            player2.addItem(container.openContainer());
+            container.openContainer(room2);
+            player2.addItem(room2.getItem("key"));
         } catch (Exception e) {
             //Do nothing
         }
-
         Player player = new Player(room1);
         player.enter(door);
-
         assertFalse(player.checkVictory(player2));
     }
+
+    @Test
+    public void takeAntidoteWhilePoisoned() {
+        Item antidote = new Item("antidote");
+        antidote.addAction(new DrinkAction());
+        Room room = new Room("room");
+        Player player = new Player(room);
+        player.changeStatus(Player.Status.poisoned);
+        String command = "drink antidote";
+        try {
+            antidote.executeAction(command.split(" "), player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(Player.Status.alive == player.getStatus());
+    }
+
+    @Test
+    public void takeAntidoteWhileNotPoisoned() {
+        Item antidote = new Item("antidote");
+        antidote.addAction(new DrinkAction());
+        Room room = new Room("room");
+        Player player = new Player(room);
+        String command = "drink antidote";
+        try {
+            antidote.executeAction(command.split(" "), player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(Player.Status.alive == player.getStatus());
+    }
+
+    /*@Test
+    public void poison() {
+        Item poison = new Item("poison");
+        poison.addAction(new PoisonAction());
+        Room room1 = new Room("Room 1");
+        room1.addItem(poison);
+        Player player = new Player(room1);
+        room1.addDoor(room1,poison);
+        String command = "poison poison";
+        try {
+            poison.executeAction(command.split(" "), player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(player.getStatus().equals(Player.Status.poisoned));
+    }*/
 
     @Test
     public void cantTakeMoreItems() {

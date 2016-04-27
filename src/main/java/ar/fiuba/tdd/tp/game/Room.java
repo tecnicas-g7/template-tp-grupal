@@ -11,33 +11,29 @@ import java.util.Set;
 /**
  * Created by fran on 24/04/16.
  */
-public class Room extends Describable {
+public class Room {
 
-    private HashMap<String,Item> items;
+    private HashMap<String,ContainerComponent> items;
 
     private HashMap<String, Door> doors;
 
-    private HashMap<String,SingleItemContainer> simplecontainers;
-
-    private HashMap<String,MultipleItemsContainer> multiplecontainers;
+    private String name;
 
     public Room(String name) {
+        this.name = name;
         this.items = new HashMap<>();
         this.doors = new HashMap<>();
-        this.simplecontainers = new HashMap<>();
-        this.multiplecontainers = new HashMap<>();
-        this.name = name;
     }
 
-    public Item getItem(String name) throws ItemNotFoundException {
-        Item item = this.items.get(name);
+    public ContainerComponent getItem(String name) throws ItemNotFoundException {
+        ContainerComponent item = this.items.get(name);
         if (item != null) {
             return item;
         }
         throw new ItemNotFoundException();
     }
 
-    public void addItem( Item item) {
+    public void addContainerComponent( ContainerComponent item) {
         this.items.put(item.getName(), item);
     }
 
@@ -46,7 +42,7 @@ public class Room extends Describable {
     }
 
 
-    public Iterator<Map.Entry<String, Item>> getItemsIterator() {
+    public Iterator<Map.Entry<String, ContainerComponent>> getItemsIterator() {
         return this.items.entrySet().iterator();
     }
 
@@ -61,7 +57,7 @@ public class Room extends Describable {
     public String look() {
         Set<String> items = this.getItemsNames();
 
-        StringBuilder output = new StringBuilder("You are in " + this.getName() + "\n");
+        StringBuilder output = new StringBuilder("You are in " + name + "\n");
         output.append("There's a ");
         for (String item : items) {
             output.append(item + " ");
@@ -96,15 +92,12 @@ public class Room extends Describable {
         return null;
     }
 
-    public void addSimpleContainer(SingleItemContainer container) {
-        simplecontainers.put(container.getName(),container);
-    }
-
-    public void addMultipleContainer(MultipleItemsContainer container) {
-        multiplecontainers.put(container.getName(),container);
-    }
-
-    public HashMap<String, Item> getItems() {
+    public HashMap<String, ContainerComponent> getItems() {
         return items;
+    }
+
+    public void openContainer(String name) {
+        ContainerComponent component = getItem(name);
+        component.openContainer(this);
     }
 }
