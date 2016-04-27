@@ -6,7 +6,6 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
 import ar.fiuba.tdd.tp.game.SingleItemContainer;
 import ar.fiuba.tdd.tp.game.actions.*;
-import ar.fiuba.tdd.tp.game.actions.PickAction;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.types.EnterRoom;
 import ar.fiuba.tdd.tp.game.types.StickGame;
