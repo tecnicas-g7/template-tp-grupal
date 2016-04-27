@@ -26,7 +26,7 @@ public class Player {
     }
 
     public void clearInventory() {
-        inventory = new HashMap<>();
+        inventory.clear();
     }
 
     public enum Status {

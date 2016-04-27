@@ -13,12 +13,4 @@ public class Item extends Describable {
         super(name);
     }
 
-    public void addAction(Action action) {
-        this.actions.put(action.getName(), action);
-    }
-
-    public String getName() {
-        return name;
-    }
-
 }

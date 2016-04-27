@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.FullCapacityReachedException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.actions.Action;
 
 import java.util.HashMap;
 
@@ -20,27 +21,26 @@ public class Container extends Describable {
     }
 
     //When the player opens the container, the components move to the room
-    public void openContainer(Room room) {
-        components.forEach((key,value) -> room.addContainerComponent(value));
+    public String openContainer(Room room) {
+        StringBuilder output = new StringBuilder();
+        components.forEach((key,value) -> {
+                room.addContainerComponent(value);
+                output.append(key + " ");
+            }
+        );
         components.clear();
+        output.append("added to the room.");
+        return output.toString();
     }
 
-    @Override
     public void removeComponent(ContainerComponent component) {
         components.remove(component.getName());
     }
 
-    @Override
     public ContainerComponent getChild(String name) {
         return components.get(name);
     }
 
-    @Override
-    public String executeAction(String[] tokens, Player player) throws WrongItemActionException {
-        return null;
-    }
-
-    @Override
     public void addComponent(ContainerComponent component)  throws FullCapacityReachedException {
         if (components.size() < this.maxSize) {
             components.put(component.getName(), component);
@@ -48,5 +48,4 @@ public class Container extends Describable {
             throw new FullCapacityReachedException();
         }
     }
-
 }

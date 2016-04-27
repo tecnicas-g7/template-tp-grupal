@@ -23,6 +23,10 @@ public abstract class Describable implements ContainerComponent {
         return this.name;
     }
 
+    public void addAction(Action action) {
+        this.actions.put(action.getName(), action);
+    }
+
     public String executeAction(String[] tokens, Player player) throws WrongItemActionException {
         String actionName = tokens[0];
         if (!this.actions.containsKey(actionName)) {

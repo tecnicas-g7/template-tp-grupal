@@ -8,6 +8,7 @@ import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.types.BoxGame;
 import ar.fiuba.tdd.tp.game.types.CursedItem;
 import ar.fiuba.tdd.tp.game.types.EnterRoom;
 import ar.fiuba.tdd.tp.game.types.StickGame;
@@ -82,6 +83,22 @@ public class MainTests {
     }
 
     @Test
+    public void boxGame() {
+
+        Game boxGame = BoxGame.getGame();
+        Controller controller = new Controller(boxGame);
+
+        String command = "open box";
+        controller.interptetCommand(command);
+        String command2 = "pick key";
+        controller.interptetCommand(command2);
+        String command3 = "enter door1";
+        controller.interptetCommand(command3);
+
+        assertTrue(boxGame.verifyVictory());
+    }
+
+    @Test
     public void cursedItem() {
 
         Game cursedItem = CursedItem.getGame();
@@ -98,6 +115,8 @@ public class MainTests {
 
         assertTrue(cursedItem.verifyVictory());
     }
+
+
 
     public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
         room1.addDoor(room2, key);
