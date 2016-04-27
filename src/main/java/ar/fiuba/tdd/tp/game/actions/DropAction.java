@@ -20,7 +20,6 @@ public class DropAction implements Action {
         } catch (ItemNotFoundException e) {
             return "You don't have that item";
         }
-
         player.removeItem(item.getName());
         player.getRoom().addItem(item);
         return  "You left the item " + item.getName() + " on the floor";

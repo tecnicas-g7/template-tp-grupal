@@ -53,11 +53,6 @@ public class MainTests {
     }
 
     @Test
-    public void dummy_test() {
-        assertEquals(0,0);
-    }
-
-    @Test
     public void stickQuest() {
 
         Game stickGame = StickGame.getGame();
