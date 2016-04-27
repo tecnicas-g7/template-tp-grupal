@@ -22,5 +22,6 @@ public class SingleItemContainer extends Container {
         Item auxItem = item;
         item = null;
         return auxItem;
+
     }
 }
