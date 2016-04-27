@@ -8,6 +8,7 @@ import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.types.CursedItem;
 import ar.fiuba.tdd.tp.game.types.EnterRoom;
 import ar.fiuba.tdd.tp.game.types.StickGame;
 
@@ -49,7 +50,7 @@ public class MainTests {
         List<ContainerComponent> items = new ArrayList<>(Arrays.asList(stick,key));
         // items.add(stick);
         //  items.add(key);
-        game.addCondition(new InventoryCondition(items));
+        game.addCondition(new InventoryCondition(items,true));
         game.addCondition(new RoomCondition(room2,true));
         return game;
     }
@@ -80,9 +81,27 @@ public class MainTests {
         assertTrue(enterRoom.verifyVictory());
     }
 
-    private void makeRoomsAdjacent(Room room1, Room room2, Item key) {
-        room1.addDoor(room2,key);
-        room2.addDoor(room1,key);
+    @Test
+    public void cursedItem() {
+
+        Game cursedItem = CursedItem.getGame();
+        Controller controller = new Controller(cursedItem);
+
+        String command = "pick cursed_item";
+        controller.interptetCommand(command);
+        String command2 = "enter door1";
+        controller.interptetCommand(command2);
+        String command3 = "talk thief";
+        controller.interptetCommand(command3);
+        String command4 = "enter door1";
+        controller.interptetCommand(command4);
+
+        assertTrue(cursedItem.verifyVictory());
+    }
+
+    public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
+        room1.addDoor(room2, key);
+        room2.addDoor(room1, key);
     }
 
     @Test

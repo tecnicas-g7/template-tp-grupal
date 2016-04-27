@@ -12,13 +12,22 @@ import java.util.List;
 public class InventoryCondition implements Condition {
 
     List<ContainerComponent> inventory;
+    private boolean valid;
 
-    public InventoryCondition(List<ContainerComponent> items) {
+    public InventoryCondition(List<ContainerComponent> items, boolean valid) {
         this.inventory = items;
+        this.valid = valid;
     }
 
     @Override
     public boolean isValid(Player player) {
-        return Util.itemsInInventory(inventory,player.getInventory());
+        boolean valid = Util.itemsInInventory(inventory,player.getInventory());
+        if (this.valid && valid) {
+            return true;
+        }
+        if (!this.valid && !valid) {
+            return true;
+        }
+        return false;
     }
 }

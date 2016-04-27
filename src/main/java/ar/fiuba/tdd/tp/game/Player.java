@@ -18,15 +18,19 @@ public class Player {
     private int maxInventory;
     private Room room;
 
-    //TODO: estado (envenado, maldicion)
+    //TODO: estado (envenado)
     private Status status;
 
     public void openRoomContainer(String name) {
         room.openContainer(name);
     }
 
+    public void clearInventory() {
+        inventory = new HashMap<>();
+    }
+
     public enum Status {
-        alive, poisoned, damned
+        alive, poisoned
     }
 
     public Player(Room room) {
