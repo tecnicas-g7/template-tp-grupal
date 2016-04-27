@@ -16,7 +16,7 @@ public class EnterRoom {
         key.addAction(new PickAction());
 
         Room room1 = new Room("Room1");
-        room1.addItem(key);
+        room1.addContainerComponent(key);
         Room room2 = new Room("Room2");
 
         Player player = new Player(room1);

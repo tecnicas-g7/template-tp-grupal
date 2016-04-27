@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.game.actions;
 
+import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Item;
 
@@ -18,8 +19,8 @@ public class PoisonAction implements Action {
     }
 
     @Override
-    public String execute(String[] tokens, Player player, Item item) {
-            player.changeStatus(Player.Status.poisoned);
+    public String execute(String[] tokens, Player player, ContainerComponent item) {
+        player.changeStatus(Player.Status.poisoned);
         return "I feel bad!";
     }
 }

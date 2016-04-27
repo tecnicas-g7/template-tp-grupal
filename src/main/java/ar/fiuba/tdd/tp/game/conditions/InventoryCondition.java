@@ -1,10 +1,9 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
+import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.random.Util;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -12,9 +11,9 @@ import java.util.List;
  */
 public class InventoryCondition implements Condition {
 
-    List<Item> inventory;
+    List<ContainerComponent> inventory;
 
-    public InventoryCondition(List<Item> items) {
+    public InventoryCondition(List<ContainerComponent> items) {
         this.inventory = items;
     }
 
