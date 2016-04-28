@@ -20,7 +20,7 @@ public class StickGame {
 
         Item stick = new Item("stick");
         stick.addAction(new PickAction());
-        room.addItem(stick);
+        room.addContainerComponent(stick);
 
         Player player = new Player(room);
 
@@ -28,10 +28,10 @@ public class StickGame {
 
         game.addRoom(room);
 
-        List<Item> items = new ArrayList<>();
+        List<ContainerComponent> items = new ArrayList<>();
         items.add(stick);
 
-        Condition condition = new InventoryCondition(items);
+        Condition condition = new InventoryCondition(items, true);
         game.addCondition(condition);
 
         return game;

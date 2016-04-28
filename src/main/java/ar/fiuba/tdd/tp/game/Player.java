@@ -14,23 +14,41 @@ public class Player {
 
     private static final int DEFAULT_MAX_INVENTORY = 10;
 
-    private HashMap<String,Item> inventory;
+    private HashMap<String,ContainerComponent> inventory;
     private int maxInventory;
     private Room room;
 
-    //TODO: estado (envenado, maldicion)
+    //TODO: estado (envenado)
+    private Status status;
+
+    public void openRoomContainer(String name) {
+        room.openContainer(name);
+    }
+
+    public void clearInventory() {
+        inventory.clear();
+    }
+
+    public enum Status {
+        alive, poisoned
+    }
 
     public Player(Room room) {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.room = room;
+        this.status = Status.alive;
     }
 
     public void setMaxInventory(int maxInventory) {
         this.maxInventory = maxInventory;
     }
 
-    public void addItem(Item item) throws MaxInventoryException {
+    public void changeStatus(Status newStatus) {
+        this.status = newStatus;
+    }
+
+    public void addItem(ContainerComponent item) throws MaxInventoryException {
         if (inventory.size() == maxInventory) {
             throw new MaxInventoryException();
         }
@@ -41,8 +59,8 @@ public class Player {
         this.inventory.remove(name);
     }
 
-    public Item getItem(String name) throws ItemNotFoundException {
-        Item item = this.inventory.get(name);
+    public ContainerComponent getItem(String name) throws ItemNotFoundException {
+        ContainerComponent item = this.inventory.get(name);
         if (item != null) {
             return item;
         }
@@ -51,6 +69,10 @@ public class Player {
 
     public Room getRoom() {
         return this.room;
+    }
+
+    public Status getStatus() {
+        return this.status;
     }
 
     public String showInventory() {
@@ -69,17 +91,17 @@ public class Player {
         return this.inventory.size();
     }
 
-    public HashMap<String,Item> getInventory() {
+    public HashMap<String,ContainerComponent> getInventory() {
         return this.inventory;
     }
 
-    public Iterator<Item> getInventoryIterator() {
+    public Iterator<ContainerComponent> getInventoryIterator() {
         return this.inventory.values().iterator();
     }
 
-    private boolean checkIdenticalInventory(Iterator<Item> it) {
+    private boolean checkIdenticalInventory(Iterator<ContainerComponent> it) {
         while (it.hasNext()) {
-            Item item = it.next();
+            ContainerComponent item = it.next();
             if (!this.inventory.containsKey(item.getName())) {
                 return false;
             }
@@ -88,7 +110,7 @@ public class Player {
     }
 
     public boolean checkVictory(Player winner) {
-        Iterator<Item> it = winner.getInventoryIterator();
+        Iterator<ContainerComponent> it = winner.getInventoryIterator();
         if (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize()) {
             return true;
         }
@@ -110,4 +132,6 @@ public class Player {
         }
         return true;
     }
+
+
 }

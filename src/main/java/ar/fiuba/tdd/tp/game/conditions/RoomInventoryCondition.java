@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
+import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.random.Util;
@@ -13,9 +14,9 @@ import java.util.List;
 
 public class RoomInventoryCondition implements Condition {
 
-    List<Item> inventory;
+    List<ContainerComponent> inventory;
 
-    public RoomInventoryCondition(List<Item> items) {
+    public RoomInventoryCondition(List<ContainerComponent> items) {
         this.inventory = items;
     }
 
