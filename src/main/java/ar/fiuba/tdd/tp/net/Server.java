@@ -38,35 +38,43 @@ public class Server {
         while (true) {
             clientSentence = inFromClient.readLine();
             if ( clientSentence != null ) {
-                DataOutputStream outToClient = new DataOutputStream(
-                        connectionSocket.getOutputStream()
-                );
 
                 String gameFeedback = checkHelp( clientSentence );
 
                 if ( gameFeedback == null ) {
                     gameFeedback = controller.interptetCommand(clientSentence);
                 }
-                outToClient.writeBytes(gameFeedback + '\n');
-                outToClient.writeBytes("EOMessage" + '\n');
+                showMessage(connectionSocket, gameFeedback);
 
                 if (controller.verify()) {
+                    showMessage(connectionSocket, "You win!");
                     break;
                 }
             }
         }
     }
 
+    private static void showMessage(Socket connectionSocket, String gameFeedback) throws IOException {
+        DataOutputStream outToClient = new DataOutputStream(
+                connectionSocket.getOutputStream()
+        );
+
+        outToClient.writeBytes(gameFeedback + '\n');
+        outToClient.writeBytes("EOMessage" + '\n');
+
+    }
+
     private static String checkHelp( String token) {
         String helpCommand = "help";
         String[] tokens = token.split(tokenSeparator);
-        try {
-            if ( tokens[0].contains(helpCommand) ) {
-                return getDescriptionGame(tokens[1]);
+        if (tokens.length > 1) {
+            try {
+                if (tokens[0].contains(helpCommand)) {
+                    return getDescriptionGame(tokens[1]);
+                }
+            } catch (GameNotFoundExcpetion e) {
+                System.out.println("Game not Found");
             }
-
-        } catch (GameNotFoundExcpetion e) {
-            System.out.println("Game not Found");
         }
         return null;
     }
