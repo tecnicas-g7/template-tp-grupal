@@ -10,13 +10,14 @@ import java.util.Stack;
 /**
  * Created by ltessore on 27/04/16.
  */
-public class StackContainerComponent implements ContainerComponent {
+public class StackContainerComponent extends Describable {
 
     protected String name;
     protected Integer maxSize;
     protected Stack<ContainerComponent> components;
 
     public StackContainerComponent(String name, int maxSize) {
+        super(name);
         this.maxSize = maxSize;
         this.components = new Stack<>();
     }
@@ -35,6 +36,10 @@ public class StackContainerComponent implements ContainerComponent {
         } else {
             throw new FullCapacityReachedException();
         }
+    }
+
+    public void addAction(Action action) {
+        this.actions.put(action.getName(), action);
     }
 
     public ContainerComponent getLast() {
