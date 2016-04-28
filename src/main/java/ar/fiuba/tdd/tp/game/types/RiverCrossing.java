@@ -84,4 +84,7 @@ public class RiverCrossing {
         return new RoomWithItemsCondition(createComponents(), room);
     }
 
+    public static String getHelp() {
+        return "Your goal is to bring the wolf, the sheep, and the head of cabbage to the left side of the river in the man's boat.";
+    }
 }

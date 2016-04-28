@@ -3,10 +3,7 @@ package ar.fiuba.tdd.tp.net;
 import ar.fiuba.tdd.tp.exceptions.GameNotFoundExcpetion;
 import ar.fiuba.tdd.tp.game.Controller;
 import ar.fiuba.tdd.tp.game.Game;
-import ar.fiuba.tdd.tp.game.types.BoxGame;
-import ar.fiuba.tdd.tp.game.types.CursedItem;
-import ar.fiuba.tdd.tp.game.types.EnterRoom;
-import ar.fiuba.tdd.tp.game.types.StickGame;
+import ar.fiuba.tdd.tp.game.types.*;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -18,13 +15,14 @@ import java.nio.charset.StandardCharsets;
  */
 public class Server {
     public static final String tokenSeparator = " ";
-    private static int socketNumber = 6789;
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Server");
 
         Game game = loadGame();
         Controller controller = new Controller(game);
+
+        int socketNumber = 6789;
 
         ServerSocket welcomeSocket = new ServerSocket(socketNumber );
         System.out.println("game loaded in " + socketNumber);
@@ -44,12 +42,14 @@ public class Server {
                 if ( gameFeedback == null ) {
                     gameFeedback = controller.interptetCommand(clientSentence);
                 }
-                showMessage(connectionSocket, gameFeedback);
 
                 if (controller.verify()) {
                     showMessage(connectionSocket, "You win!");
                     break;
                 }
+
+                showMessage(connectionSocket, gameFeedback);
+
             }
         }
     }
@@ -108,6 +108,10 @@ public class Server {
                 return StickGame.getGame();
             case "cursedItem":
                 return EnterRoom.getGame();
+            case "hanoiTower":
+                return HanoiTower.getGame();
+            case "riverCrossing":
+                return RiverCrossing.getGame();
             default:
                 throw new GameNotFoundExcpetion();
         }
@@ -123,6 +127,10 @@ public class Server {
                 return BoxGame.getHelp();
             case "cursedItem":
                 return CursedItem.getHelp();
+            case "hanoiTower":
+                return HanoiTower.getHelp();
+            case "riverCrossing":
+                return RiverCrossing.getHelp();
             default:
                 throw new GameNotFoundExcpetion();
         }
