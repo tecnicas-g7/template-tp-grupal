@@ -1,12 +1,11 @@
 package ar.fiuba.tdd.tp.game.types;
 
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
-import ar.fiuba.tdd.tp.game.ContainerComponent;
-import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.Room;
+import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -14,25 +13,28 @@ import java.util.List;
  */
 public class HanoiTower {
     private Room room1;
-    private Room room2;
-    private Room room3;
-    private Player player
+    private Player player;
     private List<Condition> restrictionList;
 
     public HanoiTower() {
         this.room1 = new Room("R1");
-        this.room2 = new Room("R2");
-        this.room3 = new Room("R3");
 
         Item pieza1 = new Item("1");
         Item pieza2 = new Item("2");
         Item pieza3 = new Item("3");
+        //Creo 3 pilas
+        StackContainerComponent stack1 = new StackContainerComponent("stack1",3);
+        StackContainerComponent stack2 = new StackContainerComponent("stack2",3);
+        StackContainerComponent stack3 = new StackContainerComponent("stack3",3);
+        //agrego piezas a una pila
+        stack1.addComponent(pieza1);
+        stack1.addComponent(pieza2);
+        stack1.addComponent(pieza3);
 
-
-        //Agrego fichas a la torre 1
-        room1.addContainerComponent(pieza3);
-        room1.addContainerComponent(pieza2);
-        room1.addContainerComponent(pieza1);
+        //agrego las 3 pilas al room
+        room1.addContainerComponent(stack1);
+        room1.addContainerComponent(stack2);
+        room1.addContainerComponent(stack3);
 
         this.player = new Player(room1);
 
@@ -46,66 +48,51 @@ public class HanoiTower {
         return conditions;
     }
 
-    private void move(Item component, Room roomAfter) throws MaxInventoryException {
-        //TODO mover la pieza al roomAfter
-
-        //El player toma la pieza
-        this.player.addItem(component);
+    private void move(ContainerComponent stackFrom, ContainerComponent stackAfter) throws MaxInventoryException {
+        ContainerComponent item = stackAfter.getLast();
+        //Player toma pieza
+        this.player.addItem(item);
 
         //Mover
-        if (isMovementValid(component,roomAfter)) {
+        if (isMovementValid(stackAfter)) {
             System.out.print(" MOVIMIENTO VALIDO \n");
-            roomAfter.addContainerComponent(component);
+            stackFrom.removeComponent(item);
+            stackAfter.addComponent(item);
         } else {
             System.out.print(" MOVIMIENTO INVALIDO \n");
         }
+        //Player deja pieza
+        this.player.removeItem(item.getName());
 
     }
 
-    private Boolean isMovementValid(ContainerComponent component, Room roomAfter) {
-        //TODO chequear condiciones de movimiento de la pieza
-        for (Condition r : this.restrictionList) {
-            if (!r.isValid(player)) {
-                return false;
-            }
+    private Boolean isMovementValid(ContainerComponent stackAfter) {
+        // chequea condiciones de movimiento de la pieza
+        Iterator<ContainerComponent> it = this.player.getInventoryIterator();
+        //chequea si el ultimo del stackAfter es mas grande del que tiene el player
+        if (Integer.parseInt(stackAfter.getLast().getName()) > Integer.parseInt(it.next().getName())) {
+            return true;
         }
-        return true;
+        return false;
+
     }
 
 
-    public void play() {
+    public void play() throws MaxInventoryException{
 
+        move(room1.getItem("stack1"), room1.getItem("stack2"));
 
+        move(room1.getItem("stack1"), room1.getItem("stack3"));
 
-        /**
-         * TODO deberia agregar metodo getLast() en Room y que me devuelva el ultimo
-         * Para eso deberia hacer que los items de Room sea una collection para instanciarlo con un stack
-         * (COMENTO el move() para que no genere warnings)
-        */
-        //move(room1.getLast(), room2);
+        move(room1.getItem("stack2"), room1.getItem("stack3"));
 
+        move(room1.getItem("stack1"), room1.getItem("stack2"));
 
-        //move(room1.getLast(), room3);
+        move(room1.getItem("stack3"), room1.getItem("stack1"));
 
+        move(room1.getItem("stack3"), room1.getItem("stack2"));
 
-        this.player.setRoom(room2);
-        //move(room2.getLast(), room3);
-
-
-        this.player.setRoom(room1);
-        //move(room1.getLast(), room2);
-
-
-        this.player.setRoom(room3);
-        //move(room3.getLast(), room1);
-
-
-        this.player.setRoom(room3);
-        //move(room3.getLast(), room2);
-
-
-        this.player.setRoom(room1);
-        //move(room1.getLast(), room2);
+        move(room1.getItem("stack1"), room1.getItem("stack2"));
 
 
         System.out.print("FIN");

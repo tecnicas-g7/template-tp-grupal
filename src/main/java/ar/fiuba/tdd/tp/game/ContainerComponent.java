@@ -25,4 +25,6 @@ public interface ContainerComponent {
     default String openContainer(Room room) {
         return null;
     }
+
+    default ContainerComponent getLast() { return null; }
 }
