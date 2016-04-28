@@ -14,9 +14,9 @@ import java.util.List;
 Created by fran on 24/04/16.
 */
 
-public class StickGame {
+public class StickGame implements GameFactory {
 
-    public static Game getGame() {
+    public Game getGame() {
         Room room = new Room("room");
 
         Item stick = new Item("stick");
@@ -38,7 +38,9 @@ public class StickGame {
         return game;
     }
 
-    public static String getHelp() {
+    public String getHelp() {
         return "The player will look for an item and find it to win";
     }
+
+
 }

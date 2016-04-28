@@ -61,7 +61,7 @@ public class MainTests {
         Controller controller = new Controller(stickGame);
 
         String command = "pick stick";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
 
         assertTrue(stickGame.verifyVictory());
     }
@@ -73,9 +73,9 @@ public class MainTests {
         Controller controller = new Controller(enterRoom);
 
         String command = "pick key";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         String command2 = "enter door1";
-        controller.interptetCommand(command2);
+        controller.interpretCommand(command2);
 
         assertTrue(enterRoom.verifyVictory());
     }
@@ -87,11 +87,11 @@ public class MainTests {
         Controller controller = new Controller(boxGame);
 
         String command = "open box";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         String command2 = "pick key";
-        controller.interptetCommand(command2);
+        controller.interpretCommand(command2);
         String command3 = "enter door1";
-        controller.interptetCommand(command3);
+        controller.interpretCommand(command3);
 
         assertTrue(boxGame.verifyVictory());
     }
@@ -103,13 +103,13 @@ public class MainTests {
         Controller controller = new Controller(cursedItem);
 
         String command = "pick cursed_item";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         String command2 = "enter door1";
-        controller.interptetCommand(command2);
+        controller.interpretCommand(command2);
         String command3 = "talk thief";
-        controller.interptetCommand(command3);
+        controller.interpretCommand(command3);
         String command4 = "enter door1";
-        controller.interptetCommand(command4);
+        controller.interpretCommand(command4);
 
         assertTrue(cursedItem.verifyVictory());
     }
@@ -121,19 +121,19 @@ public class MainTests {
         Controller controller = new Controller(hanoiTower);
 
         String command = "move stack1 stack3";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         String command2 = "move stack1 stack2";
-        controller.interptetCommand(command2);
+        controller.interpretCommand(command2);
         String command3 = "move stack3 stack2";
-        controller.interptetCommand(command3);
+        controller.interpretCommand(command3);
         String command4 = "move stack1 stack3";
-        controller.interptetCommand(command4);
+        controller.interpretCommand(command4);
         String command5 = "move stack2 stack1";
-        controller.interptetCommand(command5);
+        controller.interpretCommand(command5);
         String command6 = "move stack2 stack3";
-        controller.interptetCommand(command6);
+        controller.interpretCommand(command6);
         String command7 = "move stack1 stack3";
-        controller.interptetCommand(command7);
+        controller.interpretCommand(command7);
 
         assertTrue(hanoiTower.verifyVictory());
 
@@ -145,19 +145,19 @@ public class MainTests {
         Controller controller = new Controller(treasureGame);
 
         String command = "open box";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         String command2 = "pick key";
-        controller.interptetCommand(command2);
+        controller.interpretCommand(command2);
         String command3 = "enter door1";
-        controller.interptetCommand(command3);
+        controller.interpretCommand(command3);
         String command4 = "enter door2";
-        controller.interptetCommand(command4);
+        controller.interpretCommand(command4);
         String command5 = "open trunk";
-        controller.interptetCommand(command5);
+        controller.interpretCommand(command5);
         String command6 = "drop key";
-        controller.interptetCommand(command6);
+        controller.interpretCommand(command6);
         String command7 = "pick antidote";
-        controller.interptetCommand(command7);
+        controller.interpretCommand(command7);
 
         interpretTreasureCommands(controller);
 
@@ -168,19 +168,19 @@ public class MainTests {
 
     private void interpretTreasureCommands(Controller controller) {
         String command = "open box";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         command = "pick key2";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         command = "drink antidote";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         command = "enter door1";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         command = "enter door3";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         command = "enter door2";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
         command = "pick treasure";
-        controller.interptetCommand(command);
+        controller.interpretCommand(command);
     }
 
     public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
@@ -307,17 +307,17 @@ public class MainTests {
         Controller controller = new Controller(dropGame);
         try {
             String command = "pick key";
-            controller.interptetCommand(command);
+            controller.interpretCommand(command);
             command = "pick mouse";
-            controller.interptetCommand(command);
+            controller.interpretCommand(command);
             command = "pick stick";
-            controller.interptetCommand(command);
+            controller.interpretCommand(command);
             command = "drop mouse";
-            controller.interptetCommand(command);
+            controller.interpretCommand(command);
             command = "pick stick";
-            controller.interptetCommand(command);
+            controller.interpretCommand(command);
             command = "enter door1";
-            controller.interptetCommand(command);
+            controller.interpretCommand(command);
 
         } catch (Exception e) {
             //Do nothing
@@ -347,9 +347,9 @@ public class MainTests {
 
 
     private void simpleCross(Controller controller,  String animal, String moveTo) {
-        controller.interptetCommand("take " + animal);
-        controller.interptetCommand("cross " + moveTo);
-        controller.interptetCommand("leave " + animal);
+        controller.interpretCommand("take " + animal);
+        controller.interpretCommand("cross " + moveTo);
+        controller.interpretCommand("leave " + animal);
     }
 
     @Test
@@ -360,18 +360,18 @@ public class MainTests {
 
         simpleCross(controller,"sheep", "north-shore");
 
-        controller.interptetCommand("cross south-shore");
+        controller.interpretCommand("cross south-shore");
 
         simpleCross(controller, "wolf", "north-shore");
 
-        controller.interptetCommand("take sheep");
-        controller.interptetCommand("cross south-shore");
-        controller.interptetCommand("leave sheep");
+        controller.interpretCommand("take sheep");
+        controller.interpretCommand("cross south-shore");
+        controller.interpretCommand("leave sheep");
 
 
         simpleCross(controller,"cabbage", "north-shore");
 
-        controller.interptetCommand("cross south-shore");
+        controller.interpretCommand("cross south-shore");
 
         simpleCross(controller, "sheep", "north-shore");
 
@@ -395,15 +395,15 @@ public class MainTests {
         String northShore = "cross north-shore";
         String crossSouth = "cross south-shore";
 
-        controller.interptetCommand(takeSheep);
-        controller.interptetCommand(northShore);
-        controller.interptetCommand(leaveSheep);
+        controller.interpretCommand(takeSheep);
+        controller.interpretCommand(northShore);
+        controller.interpretCommand(leaveSheep);
 
-        controller.interptetCommand(crossSouth);
+        controller.interpretCommand(crossSouth);
 
-        controller.interptetCommand(takeWolf);
-        controller.interptetCommand(northShore);
-        controller.interptetCommand(leaveWolf);
+        controller.interpretCommand(takeWolf);
+        controller.interpretCommand(northShore);
+        controller.interpretCommand(leaveWolf);
 
 
         assertTrue(!riverCrossing.verifyVictory());
@@ -416,8 +416,8 @@ public class MainTests {
 
         String takeSheep = "take sheep";
         String takeWolf = "take wolf";
-        controller.interptetCommand(takeSheep);
-        controller.interptetCommand(takeWolf);
+        controller.interpretCommand(takeSheep);
+        controller.interpretCommand(takeWolf);
         Assert.assertTrue(riverCrossing.getPlayer().getInventory().size() == 1);
     }
 
@@ -426,7 +426,7 @@ public class MainTests {
         Game riverCrossing = RiverCrossing.getGame();
         Controller controller = new Controller(riverCrossing);
         String takeWrongItem = "take wrongItem";
-        controller.interptetCommand(takeWrongItem);
+        controller.interpretCommand(takeWrongItem);
         Assert.assertTrue(riverCrossing.getPlayer().getInventory().isEmpty());
     }
 
@@ -440,8 +440,8 @@ public class MainTests {
         String northShore = "cross north-shore";
 
 
-        controller.interptetCommand(takeCabbage);
-        controller.interptetCommand(northShore);
+        controller.interpretCommand(takeCabbage);
+        controller.interpretCommand(northShore);
         //No se pudo mover.
         Assert.assertTrue(riverCrossing.getPlayer().getRoom().getName().equals("south-shore"));
     }

@@ -13,9 +13,9 @@ import ar.fiuba.tdd.tp.game.items.Item;
 /**
  Created by fran on 27/04/16.
  */
-public class BoxGame {
+public class BoxGame implements GameFactory {
 
-    public static Game getGame() {
+    public Game getGame() {
         Item key = new Item("key");
         key.addAction(new PickAction());
         Container box = new Container("box",1);
@@ -41,7 +41,8 @@ public class BoxGame {
         return game;
     }
 
-    public static String getHelp() {
+    public String getHelp() {
         return "To leave the room the player must find the hidden key";
     }
+
 }

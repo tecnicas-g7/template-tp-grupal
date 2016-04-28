@@ -16,9 +16,9 @@ import java.util.List;
 /**
  Created by ltessore on 27/04/16.
  */
-public class HanoiTower {
+public class HanoiTower implements GameFactory {
 
-    public static Game getGame() {
+    public Game getGame() {
 
         //Creo 3 stacks
         StackContainerComponent stack1 = new StackContainerComponent("stack1",3);
@@ -68,7 +68,7 @@ public class HanoiTower {
         stack3.addAction(new CheckAction());
     }
 
-    public static String getHelp() {
+    public String getHelp() {
         return "It consists of three rods, and a number of disks of different sizes which can slide onto any rod. ";
     }
 }

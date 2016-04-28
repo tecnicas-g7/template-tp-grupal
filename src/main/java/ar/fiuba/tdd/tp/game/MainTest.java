@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 /**
  Created by fran on 25/04/16.
  */
+/*
 public class MainTest {
 
     public static void main(String[] argv) throws Exception {
@@ -21,7 +22,7 @@ public class MainTest {
 
         boolean finish = false;
         while (!finish) {
-            System.out.println(controller.interptetCommand(input));
+            System.out.println(controller.interpretCommand(input));
             if (!controller.verify()) {
                 input = inFromUser.readLine();
             } else {
@@ -43,9 +44,10 @@ public class MainTest {
                 return BoxGame.getGame();
             default:
                 throw new GameNotFoundExcpetion();
-        }*/
+        }
         return StickGame.getGame();
     }
 
 
 }
+*/

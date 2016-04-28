@@ -31,25 +31,29 @@ public class Client {
         DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        //getServerInput(inFromServer);
+        System.out.println(inFromServer.readLine());
         String inputClient = inFromUser.readLine();
+        try {
+            while (inputClient != null && !inputClient.equals("exit game")) {
+                outToServer.writeBytes(inputClient + '\n');
+                System.out.println(inFromServer.readLine());
+                inputClient = inFromUser.readLine();
 
-        while (inputClient != null && !inputClient.equals("exit game")) {
-
-            outToServer.writeBytes(inputClient + '\n');
-            getServerInput(inFromServer);
-            inputClient = inFromUser.readLine();
-
+            }
+        } catch (Exception e) {
+            System.out.println("Ganaste, chau.");
         }
         socket.close();
     }
 
     private static void getServerInput(BufferedReader inFromServer) throws IOException {
         String inputServer = inFromServer.readLine();
-        while (inputServer != null) {
+        while (inputServer != null && !inputServer.equals("")) {
             if (inputServer.equals("EOMessage")) {
                 break;
             }
-            System.out.println(inputServer);
+            System.out.println("INPUT: " + inputServer);
             inputServer = inFromServer.readLine();
         }
     }

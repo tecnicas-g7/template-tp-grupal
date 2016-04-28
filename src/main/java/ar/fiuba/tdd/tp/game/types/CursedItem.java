@@ -14,9 +14,9 @@ import java.util.List;
 Created by fran on 27/04/16.
 */
 
-public class CursedItem {
+public class CursedItem implements GameFactory {
 
-    public static Game getGame() {
+    public Game getGame() {
         Room room1 = new Room("Room1");
         Room room2 = new Room("Room2");
 
@@ -62,7 +62,7 @@ public class CursedItem {
         room3.addEnterCondition(new InventoryCondition(items, false));
     }
 
-    public static String getHelp() {
+    public String getHelp() {
         return "The player needs to find the cursed artifact and get rid of it somehow to win";
     }
 

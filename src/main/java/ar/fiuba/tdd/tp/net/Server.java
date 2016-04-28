@@ -9,21 +9,31 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 /**
 Created by ezequiel on 20/04/16.
  */
 public class Server {
-    private static final String tokenSeparator = " ";
+    public static final String tokenSeparator = " ";
+    private static int initialPort = 6789;
+
+    private static HashMap<String,GameFactory> games;
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Server");
 
-        Game game = loadGame();
-        Controller controller = new Controller(game);
+        games = new HashMap<>();
+        games.put("boxGame", new BoxGame());
+        games.put("cursedItem", new CursedItem());
+        games.put("enterRoom", new EnterRoom());
+        games.put("hanoiTower", new HanoiTower());
+        games.put("riverCrossing", new RiverCrossing());
+        games.put("stickGame", new StickGame());
+        games.put("treasureGame", new TreasureGame());
+        loadGame();
 
-        int socketNumber = 6789;
-
+        /*
         ServerSocket welcomeSocket = new ServerSocket(socketNumber );
         System.out.println("game loaded in " + socketNumber);
 
@@ -40,7 +50,7 @@ public class Server {
                 String gameFeedback = checkHelp( clientSentence );
 
                 if ( gameFeedback == null ) {
-                    gameFeedback = controller.interptetCommand(clientSentence);
+                    gameFeedback = controller.interpretCommand(clientSentence);
                 }
 
                 if (controller.verify()) {
@@ -50,7 +60,7 @@ public class Server {
                 showMessage(connectionSocket, gameFeedback);
 
             }
-        }
+        }*/
     }
 
     private static void showMessage(Socket connectionSocket, String gameFeedback) throws IOException {
@@ -63,76 +73,41 @@ public class Server {
 
     }
 
-    private static String checkHelp( String token) {
-        String helpCommand = "help";
-        String[] tokens = token.split(tokenSeparator);
-        if (tokens.length > 1) {
-            try {
-                if (tokens[0].contains(helpCommand)) {
-                    return getDescriptionGame(tokens[1]);
-                }
-            } catch (GameNotFoundExcpetion e) {
-                System.out.println("Game not Found");
-            }
-        }
-        return null;
-    }
 
-    private static Game loadGame() throws IOException {
+    private static void loadGame() throws IOException {
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String input = inFromUser.readLine();
         String loadGameCommand = "load game ";
-        String game;
+        String gameName;
         while (input != null) {
             if (input.contains(loadGameCommand)) {
-                game = input.replace(loadGameCommand,"");
+                gameName = input.replace(loadGameCommand,"");
                 try {
-                    return getGame(game);
+                    (new Thread(new GameServer(initialPort, games.get(gameName)))).start();
+                    System.out.println("Game " + gameName + " created in port " + initialPort);
+                    initialPort++;
                 } catch (GameNotFoundExcpetion e) {
                     System.out.println("Game not Found");
                 }
             }
             input = inFromUser.readLine();
         }
-        return null;
     }
 
     public static Game getGame(String gameName) {
-        switch (gameName) {
-            case "stickGame":
-                return StickGame.getGame();
-            case "enterRoom":
-                return EnterRoom.getGame();
-            case "boxGame":
-                return StickGame.getGame();
-            case "cursedItem":
-                return EnterRoom.getGame();
-            case "hanoiTower":
-                return HanoiTower.getGame();
-            case "riverCrossing":
-                return RiverCrossing.getGame();
-            default:
-                throw new GameNotFoundExcpetion();
+        GameFactory gameFactory = games.get(gameName);
+        if (gameFactory != null) {
+            return gameFactory.getGame();
         }
+        throw new GameNotFoundExcpetion();
     }
 
-    private static String getDescriptionGame(String gameName) {
-        switch (gameName) {
-            case "stickGame":
-                return StickGame.getHelp();
-            case "enterRoom":
-                return EnterRoom.getHelp();
-            case "boxGame":
-                return BoxGame.getHelp();
-            case "cursedItem":
-                return CursedItem.getHelp();
-            case "hanoiTower":
-                return HanoiTower.getHelp();
-            case "riverCrossing":
-                return RiverCrossing.getHelp();
-            default:
-                throw new GameNotFoundExcpetion();
+    public static String getDescriptionGame(String gameName) {
+        GameFactory gameFactory = games.get(gameName);
+        if (gameFactory != null) {
+            return gameFactory.getHelp();
         }
+        throw new GameNotFoundExcpetion();
     }
 }
 

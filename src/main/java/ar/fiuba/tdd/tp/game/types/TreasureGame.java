@@ -12,9 +12,9 @@ import java.util.List;
 /**
  Created by fran on 28/04/16.
  */
-public class TreasureGame {
+public class TreasureGame implements GameFactory {
 
-    public static Game getGame() {
+    public Game getGame() {
         Room room1 = new Room("Room1");
         Room room2 = new Room("Room2");
 
@@ -107,7 +107,7 @@ public class TreasureGame {
         container.addAction(new CloseAction());
     }
 
-    public static String getHelp() {
+    public String getHelp() {
         return "The player will look for the treasure!";
     }
 

@@ -55,7 +55,7 @@ public class Room {
     }
 
     public String look() {
-        StringBuilder output = new StringBuilder("You are in " + name + "\n");
+        StringBuilder output = new StringBuilder("You are in " + name + "  ");
         output.append("You can see a ");
         items.forEach((key,value) -> {
                 output.append(value.look());

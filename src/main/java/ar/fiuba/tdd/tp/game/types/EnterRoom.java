@@ -11,9 +11,9 @@ import ar.fiuba.tdd.tp.game.items.Item;
 Created by fran on 24/04/16.
 */
 
-public class EnterRoom {
+public class EnterRoom implements GameFactory {
 
-    public static Game getGame() {
+    public Game getGame() {
         Item key = new Item("key");
         key.addAction(new PickAction());
 
@@ -35,7 +35,7 @@ public class EnterRoom {
         return game;
     }
 
-    public static String getHelp() {
+    public String getHelp() {
         return "The player must find the way out of the room.";
     }
 }
