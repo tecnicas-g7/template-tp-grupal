@@ -74,8 +74,8 @@ public class HanoiTower {
             return true;
         }
         return false;
-
     }
+
 
 
     public void play() throws MaxInventoryException{
