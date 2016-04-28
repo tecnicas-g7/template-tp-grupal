@@ -23,7 +23,7 @@ public interface ContainerComponent {
 
     String executeAction(String[] tokens, Player player) throws WrongItemActionException;
 
-    default String openContainer(Room room) {
+    default String openContainer() {
         return null;
     }
 
@@ -35,5 +35,11 @@ public interface ContainerComponent {
         return null;
     }
 
+    default String closeContainer() {
+        return null;
+    }
 
+    default String look() {
+        return getName();
+    }
 }

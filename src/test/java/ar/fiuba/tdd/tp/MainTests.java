@@ -185,7 +185,7 @@ public class MainTests {
         room2.addDoor(room1,key);
         Door door = room1.getDestinationDoor(room2);
         try {
-            container.openContainer(room2);
+            container.openContainer();
             player2.addItem(room2.getItem("key"));
         } catch (Exception e) {
             //Do nothing
@@ -267,4 +267,25 @@ public class MainTests {
 
         assertTrue(dropGame.verifyVictory());
     }
+
+
+    @Test
+    public void lookAroundTest() {
+        Item key = new Item("key");
+        Room room1 = new Room("Room 1");
+        Container container = new Container("Box",1);
+        container.addComponent(key);
+        room1.addContainerComponent(container);
+        Container container1 = new Container("Baul",10);
+        Container container2 = new Container("Box2",1);
+        Item stick = new Item("Stick");
+        container2.addComponent(stick);
+        container1.addComponent(container2);
+        room1.addContainerComponent(container1);
+        room1.openContainer("Baul");
+        System.out.println(room1.look());
+        assertTrue(true);
+    }
+
+
 }

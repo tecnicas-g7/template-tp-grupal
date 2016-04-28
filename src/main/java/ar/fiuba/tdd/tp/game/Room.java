@@ -30,11 +30,7 @@ public class Room {
     }
 
     public ContainerComponent getItem(String name) throws ItemNotFoundException {
-        ContainerComponent item = this.items.get(name);
-        if (item != null) {
-            return item;
-        }
-        throw new ItemNotFoundException();
+        return Util.getContainerComponent(items,name);
     }
 
     public void addContainerComponent( ContainerComponent item) {
@@ -59,14 +55,14 @@ public class Room {
     }
 
     public String look() {
-        Set<String> items = this.getItemsNames();
-
         StringBuilder output = new StringBuilder("You are in " + name + "\n");
         output.append("There's a ");
-        for (String item : items) {
-            output.append(item + " ");
-        }
-        output.append("in the room.");
+        items.forEach((key,value) -> {
+                output.append(value.look());
+            }
+        );
+        doors.forEach((key,value) -> output.append(" " + value.getName()));
+        output.append(" in the room.");
 
         return output.toString();
     }
@@ -102,7 +98,7 @@ public class Room {
 
     public void openContainer(String name) {
         ContainerComponent component = getItem(name);
-        component.openContainer(this);
+        component.openContainer();
     }
 
     public void addEnterCondition(Condition condition) {
