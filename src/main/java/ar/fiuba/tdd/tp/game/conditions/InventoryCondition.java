@@ -6,9 +6,10 @@ import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.List;
 
-/**
- * Created by fran on 25/04/16.
- */
+/*
+Created by fran on 25/04/16.
+*/
+
 public class InventoryCondition implements Condition {
 
     List<ContainerComponent> inventory;
@@ -21,13 +22,7 @@ public class InventoryCondition implements Condition {
 
     @Override
     public boolean isValid(Player player) {
-        boolean valid = Util.itemsInInventory(inventory,player.getInventory());
-        if (this.valid && valid) {
-            return true;
-        }
-        if (!this.valid && !valid) {
-            return true;
-        }
-        return false;
+        boolean valid = Util.itemsInInventory(inventory, player.getInventory());
+        return this.valid && valid || !this.valid && !valid;
     }
 }

@@ -7,9 +7,10 @@ import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.*;
 
-/**
- * Created by fran on 24/04/16.
- */
+/*
+Created by fran on 24/04/16.
+*/
+
 public class Room {
 
     private HashMap<String,ContainerComponent> items;
@@ -100,10 +101,10 @@ public class Room {
         return items;
     }
 
-    public void openContainer(String name) {
+    /*public void openContainer(String name) {
         ContainerComponent component = getItem(name);
         component.openContainer();
-    }
+    }*/
 
     public String getName() {
         return name;

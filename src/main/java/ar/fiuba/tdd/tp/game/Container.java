@@ -7,14 +7,15 @@ import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.HashMap;
 
+/*
+Created by javier on 4/25/16.
+*/
 
-/**
- * Created by javier on 4/25/16.
- */
 public class Container extends Describable {
 
     private HashMap<String, ContainerComponent> components;
     private int maxSize;
+    private boolean hasPoison;
     private boolean open;
     private Type type;
 
@@ -38,9 +39,21 @@ public class Container extends Describable {
         return output.toString();
     }
 
+    public void yesPoison() {
+        this.hasPoison = true;
+    }
+
+    public void noPoison() {
+        this.hasPoison = false;
+    }
+
     //When the player opens the container, the components in it can be reached
-    public String openContainer() {
+    public String openContainer(Player player) {
         this.open = true;
+        if (this.hasPoison) {
+            player.changeStatus(Player.Status.poisoned);
+            this.noPoison();
+        }
         StringBuilder output = new StringBuilder();
         components.forEach((key, value) -> {
                 output.append(key + " ");

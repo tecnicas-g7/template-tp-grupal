@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp;
 
 
-import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
@@ -160,7 +159,7 @@ public class MainTests {
         Door door = room1.getDestinationDoor(room2);
         String command = "pick key";
         try {
-            player.openRoomContainer("Box");
+            player.openContainer("Box");
             key.executeAction(command.split(" "), player);
         } catch (Exception e) {
             //Do nothing
@@ -187,7 +186,7 @@ public class MainTests {
         room2.addDoor(room1,key);
         Door door = room1.getDestinationDoor(room2);
         try {
-            container.openContainer();
+            container.openContainer(player2);
             player2.addItem(room2.getItem("key"));
         } catch (Exception e) {
             //Do nothing
@@ -228,22 +227,35 @@ public class MainTests {
         assertTrue(Player.Status.alive == player.getStatus());
     }
 
-    /*@Test
-    public void poison() {
-        Item poison = new Item("poison");
-        poison.addAction(new PoisonAction());
+    // El jugador no se envenena
+    @Test
+    public void noPoison() {
         Room room1 = new Room("Room 1");
-        room1.addItem(poison);
+        Container container = new Container("Box",1);
+        container.noPoison();
         Player player = new Player(room1);
-        room1.addDoor(room1,poison);
-        String command = "poison poison";
         try {
-            poison.executeAction(command.split(" "), player);
+            container.openContainer(player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(player.getStatus().equals(Player.Status.alive));
+    }
+
+    // El jugador se envenena
+    @Test
+    public void yesPoison() {
+        Room room1 = new Room("Room 1");
+        Container container = new Container("Box",1);
+        container.yesPoison();
+        Player player = new Player(room1);
+        try {
+            container.openContainer(player);
         } catch (Exception e) {
             //Do nothing
         }
         assertTrue(player.getStatus().equals(Player.Status.poisoned));
-    }*/
+    }
 
     @Test
     public void cantTakeMoreItems() {
@@ -283,7 +295,8 @@ public class MainTests {
         container2.addComponent(stick);
         container1.addComponent(container2);
         room1.addContainerComponent(container1);
-        room1.openContainer("Baul");
+        Player player = new Player(room1);
+        player.openContainer("Baul");
         System.out.println(room1.look());
         assertTrue(true);
     }

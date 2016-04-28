@@ -4,15 +4,14 @@ import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.items.Item;
 
-/**
- * Created by fran on 25/04/16.
- */
+/*
+Created by fran on 25/04/16.
+*/
 
 /*
  Pick items from room where player is. Assumes player and item are in same room.
- */
+*/
 
 public class PickAction implements Action {
 

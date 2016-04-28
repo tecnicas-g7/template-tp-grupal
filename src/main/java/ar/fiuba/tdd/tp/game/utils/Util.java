@@ -10,9 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by fran on 26/04/16.
- */
+/*
+Created by fran on 26/04/16.
+*/
+
 public class Util {
 
     public static boolean itemsInInventory(List<ContainerComponent> list, HashMap<String,ContainerComponent> inventory) {

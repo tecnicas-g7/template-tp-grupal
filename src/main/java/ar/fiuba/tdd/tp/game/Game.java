@@ -7,9 +7,10 @@ import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.*;
 
-/**
- * Created by fran on 24/04/16.
- */
+/*
+Created by fran on 24/04/16.
+*/
+
 public class Game {
 
     private List<Room> rooms;

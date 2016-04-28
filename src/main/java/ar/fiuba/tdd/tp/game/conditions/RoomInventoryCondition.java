@@ -6,9 +6,9 @@ import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.List;
 
-/**
- * Created by fran on 25/04/16.
- */
+/*
+Created by fran on 25/04/16.
+*/
 
 public class RoomInventoryCondition implements Condition {
 

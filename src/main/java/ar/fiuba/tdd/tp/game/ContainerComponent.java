@@ -4,9 +4,10 @@ import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.items.type.Type;
 import com.sun.glass.ui.Size;
 
-/**
- * Created by javier on 4/27/16.
- */
+/*
+Created by javier on 4/27/16.
+*/
+
 public interface ContainerComponent {
     default void addComponent(ContainerComponent component) {
 
@@ -26,8 +27,8 @@ public interface ContainerComponent {
 
     String executeAction(String[] tokens, Player player) throws WrongItemActionException;
 
-    default String openContainer() {
-        return null;
+    default String openContainer(Player player) {
+        return "";
     }
 
     default ContainerComponent getLast() {

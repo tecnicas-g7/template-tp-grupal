@@ -6,9 +6,9 @@ import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.*;
 
-/**
- * Created by fran on 24/04/16.
- */
+/*
+Created by fran on 24/04/16.
+*/
 
 public class Player {
 
@@ -18,11 +18,16 @@ public class Player {
     private int maxInventory;
     private Room room;
 
-    //TODO: estado (envenado)
     private Status status;
 
-    public void openRoomContainer(String name) {
+    //Se cambia por el metodo de abajo
+    /*public void openRoomContainer(String name) {
         room.openContainer(name);
+    }*/
+
+    public String openContainer(String name) {
+        ContainerComponent component = room.getItem(name);
+        return component.openContainer(this);
     }
 
     public void clearInventory() {
