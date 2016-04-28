@@ -55,14 +55,13 @@ public class Room {
     }
 
     public String look() {
-        Set<String> items = this.getItemsNames();
-
         StringBuilder output = new StringBuilder("You are in " + name + "\n");
         output.append("There's a ");
-        for (String item : items) {
-            output.append(item + " ");
+        items.forEach((key,value) -> {
+            output.append(value.look());
         }
-        output.append("in the room.");
+        );
+        output.append(" in the room.");
 
         return output.toString();
     }

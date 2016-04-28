@@ -26,7 +26,19 @@ public class Container extends Describable {
         this.open = false;
     }
 
-    //When the player opens the container, the components move to the room
+    public String look() {
+        StringBuilder output = new StringBuilder();
+        output.append(name);
+        if (this.open) {
+            components.forEach((key,value) -> {
+                        output.append(" " + value.look() + " ");
+                    }
+            );
+        }
+        return output.toString();
+    }
+
+    //When the player opens the container, the components in it can be reached
     public String openContainer() {
         this.open = true;
         StringBuilder output = new StringBuilder();

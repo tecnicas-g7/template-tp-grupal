@@ -29,4 +29,8 @@ public interface ContainerComponent {
     default String closeContainer() {
         return null;
     }
+
+    default String look() {
+        return getName();
+    }
 }
