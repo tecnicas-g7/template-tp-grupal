@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp;
 
 
+import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
@@ -8,11 +9,9 @@ import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.types.BoxGame;
-import ar.fiuba.tdd.tp.game.types.CursedItem;
-import ar.fiuba.tdd.tp.game.types.EnterRoom;
-import ar.fiuba.tdd.tp.game.types.StickGame;
+import ar.fiuba.tdd.tp.game.types.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -116,7 +115,30 @@ public class MainTests {
         assertTrue(cursedItem.verifyVictory());
     }
 
+    @Test
+    public void hanoiTower() {
 
+        Game hanoiTower = HanoiTower.getGame();
+        Controller controller = new Controller(hanoiTower);
+
+        String command = "move stack1 stack3";
+        controller.interptetCommand(command);
+        String command2 = "move stack1 stack2";
+        controller.interptetCommand(command2);
+        String command3 = "move stack3 stack2";
+        controller.interptetCommand(command3);
+        String command4 = "move stack1 stack3";
+        controller.interptetCommand(command4);
+        String command5 = "move stack2 stack1";
+        controller.interptetCommand(command5);
+        String command6 = "move stack2 stack3";
+        controller.interptetCommand(command6);
+        String command7 = "move stack1 stack3";
+        controller.interptetCommand(command7);
+
+        assertTrue(hanoiTower.verifyVictory());
+
+    }
 
     public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
         room1.addDoor(room2, key);
@@ -165,7 +187,7 @@ public class MainTests {
         room2.addDoor(room1,key);
         Door door = room1.getDestinationDoor(room2);
         try {
-            container.openContainer(room2);
+            container.openContainer();
             player2.addItem(room2.getItem("key"));
         } catch (Exception e) {
             //Do nothing
@@ -247,4 +269,125 @@ public class MainTests {
 
         assertTrue(dropGame.verifyVictory());
     }
+
+    @Test
+    public void lookAroundTest() {
+        Item key = new Item("key");
+        Room room1 = new Room("Room 1");
+        Container container = new Container("Box",1);
+        container.addComponent(key);
+        room1.addContainerComponent(container);
+        Container container1 = new Container("Baul",10);
+        Container container2 = new Container("Box2",1);
+        Item stick = new Item("Stick");
+        container2.addComponent(stick);
+        container1.addComponent(container2);
+        room1.addContainerComponent(container1);
+        room1.openContainer("Baul");
+        System.out.println(room1.look());
+        assertTrue(true);
+    }
+
+
+    private void simpleCross(Controller controller,  String animal, String moveTo) {
+        controller.interptetCommand("take " + animal);
+        controller.interptetCommand("cross " + moveTo);
+        controller.interptetCommand("leave " + animal);
+    }
+
+    @Test
+    public void riverCrossingVictory() {
+
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        simpleCross(controller,"sheep", "north-shore");
+
+        controller.interptetCommand("cross south-shore");
+
+        simpleCross(controller,"wolf", "north-shore");
+
+        controller.interptetCommand("take sheep");
+        controller.interptetCommand("cross south-shore");
+        controller.interptetCommand("leave sheep");
+
+
+        simpleCross(controller,"cabbage", "north-shore");
+
+        controller.interptetCommand("cross south-shore");
+
+        simpleCross(controller,"sheep", "north-shore");
+
+
+        assertTrue(riverCrossing.verifyVictory());
+
+    }
+
+    @Test
+    public void riverCrossingFail() {
+
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        String takeSheep = "take sheep";
+        String leaveSheep = "leave sheep";
+
+        String takeWolf = "take wolf";
+        String leaveWolf = "leave wolf";
+
+        String northShore = "cross north-shore";
+        String crossSouth = "cross south-shore";
+
+        controller.interptetCommand(takeSheep);
+        controller.interptetCommand(northShore);
+        controller.interptetCommand(leaveSheep);
+
+        controller.interptetCommand(crossSouth);
+
+        controller.interptetCommand(takeWolf);
+        controller.interptetCommand(northShore);
+        controller.interptetCommand(leaveWolf);
+
+
+        assertTrue(!riverCrossing.verifyVictory());
+    }
+
+    @Test
+    public void moreItemsThaAllowed() {
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        String takeSheep = "take sheep";
+        String takeWolf = "take wolf";
+        controller.interptetCommand(takeSheep);
+        controller.interptetCommand(takeWolf);
+        Assert.assertTrue(riverCrossing.getPlayer().getInventory().size() == 1);
+    }
+
+    @Test
+    public void getWrongItem() {
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+        String takeWrongItem = "take wrongItem";
+        controller.interptetCommand(takeWrongItem);
+        Assert.assertTrue(riverCrossing.getPlayer().getInventory().isEmpty());
+    }
+
+    @Test
+    public void forbiddenMove() {
+
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        String takeCabbage = "take cabbage";
+        String northShore = "cross north-shore";
+
+
+        controller.interptetCommand(takeCabbage);
+        controller.interptetCommand(northShore);
+        //No se pudo mover.
+        Assert.assertTrue(riverCrossing.getPlayer().getRoom().getName().equals("south-shore"));
+    }
+
+
 }

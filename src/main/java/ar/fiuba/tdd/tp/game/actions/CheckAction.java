@@ -1,22 +1,19 @@
 package ar.fiuba.tdd.tp.game.actions;
 
-import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
 
 /**
- * Created by fran on 27/04/16.
+ * Created by ltessore on 28/04/16.
  */
-public class OpenAction implements Action {
-
+public class CheckAction implements Action {
+    @Override
     public String getName() {
-        return "open";
+        return "check";
     }
 
     @Override
     public String execute(String[] tokens, Player player, ContainerComponent item) {
-        return item.openContainer();
+        return "Size of top from" + tokens[1] + "is" + String.valueOf(player.getItem(tokens[2]));
     }
-
 }

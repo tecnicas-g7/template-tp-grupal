@@ -37,6 +37,7 @@ public class Game {
         } catch (Exception e) {
             return "You have to select an item!";
         }
+
         try {
             ContainerComponent item = findItem(objectName);
             if (item != null) {
@@ -72,12 +73,26 @@ public class Game {
             Door door = it.next().getValue();
             Room destination = door.getDestination();
             if (door.getName().equals(tokens[1]) && origin.validLeaveConditions(player) && destination.validEnterConditions(player)) {
-                player.enter(door);
+                return player.enter(door);
             }
         }
         return "The door doesn't open ...";
     }
 
+    public String cross() {
+        Room origin = player.getRoom();
+        Room destination = origin.getDoorsIterator().next().getValue().getDestination();
+        if (validateEnterAndLeaveConditions(origin, destination)) {
+            player.cross(destination);
+        } else {
+            System.out.print("You cannot do that!");
+        }
+        return "";
+    }
+
+    private boolean validateEnterAndLeaveConditions(Room origin, Room destination) {
+        return origin.validLeaveConditions(player) && destination.validEnterConditions(player);
+    }
 
     public void addCondition(Condition condition) {
         this.conditions.add(condition);
@@ -89,7 +104,24 @@ public class Game {
                 return false;
             }
         }
+        System.out.print("You have won the game!");
         return  true;
+    }
+
+    public String itemHelp(String[] tokens) {
+        if (tokens.length <= 1) {
+            return "You have to select an item!";
+        }
+        String name = tokens[1];
+        try {
+            ContainerComponent item = findItem(name);
+            if (item != null) {
+                return item.showActions();
+            }
+        } catch (ItemNotFoundException ine) {
+            return "You can enter doors";
+        }
+        return "You can enter doors";
     }
 }
 

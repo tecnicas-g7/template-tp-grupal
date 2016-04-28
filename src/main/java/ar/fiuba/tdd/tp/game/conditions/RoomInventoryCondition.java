@@ -2,10 +2,8 @@ package ar.fiuba.tdd.tp.game.conditions;
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.random.Util;
+import ar.fiuba.tdd.tp.game.utils.Util;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

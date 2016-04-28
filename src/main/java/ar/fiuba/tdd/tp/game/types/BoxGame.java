@@ -4,6 +4,7 @@ import ar.fiuba.tdd.tp.game.Container;
 import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
+import ar.fiuba.tdd.tp.game.actions.CloseAction;
 import ar.fiuba.tdd.tp.game.actions.OpenAction;
 import ar.fiuba.tdd.tp.game.actions.PickAction;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
@@ -19,6 +20,7 @@ public class BoxGame {
         key.addAction(new PickAction());
         Container box = new Container("box",1);
         box.addAction(new OpenAction());
+        box.addAction(new CloseAction());
 
         Room room1 = new Room("Room1");
         room1.addContainerComponent(box);
