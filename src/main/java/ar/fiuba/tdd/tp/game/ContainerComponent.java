@@ -42,4 +42,6 @@ public interface ContainerComponent {
     default String look() {
         return getName();
     }
+
+    String showActions();
 }

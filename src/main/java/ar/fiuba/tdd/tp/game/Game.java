@@ -92,5 +92,21 @@ public class Game {
         }
         return  true;
     }
+
+    public String itemHelp(String[] tokens) {
+        if (tokens.length <= 1) {
+            return "You have to select an item!";
+        }
+        String name = tokens[1];
+        try {
+            ContainerComponent item = findItem(name);
+            if (item != null) {
+                return item.showActions();
+            }
+        } catch (ItemNotFoundException ine) {
+            return "You can enter doors";
+        }
+        return "You can enter doors";
+    }
 }
 

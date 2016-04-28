@@ -34,4 +34,11 @@ public abstract class Describable implements ContainerComponent {
         }
         return actions.get(actionName).execute(tokens, player, this);
     }
+
+    public String showActions() {
+        StringBuilder output = new StringBuilder("You can ");
+        actions.forEach((key,value) -> output.append(key + " "));
+        output.append("with " + name);
+        return output.toString();
+    }
 }
