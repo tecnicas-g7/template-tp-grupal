@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp;
 
 
+import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
@@ -10,6 +11,7 @@ import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.types.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -268,7 +270,6 @@ public class MainTests {
         assertTrue(dropGame.verifyVictory());
     }
 
-
     @Test
     public void lookAroundTest() {
         Item key = new Item("key");
@@ -285,6 +286,107 @@ public class MainTests {
         room1.openContainer("Baul");
         System.out.println(room1.look());
         assertTrue(true);
+    }
+
+
+    private void simpleCross(Controller controller,  String animal, String moveTo) {
+        controller.interptetCommand("take " + animal);
+        controller.interptetCommand("cross " + moveTo);
+        controller.interptetCommand("leave " + animal);
+    }
+
+    @Test
+    public void riverCrossingVictory() {
+
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        simpleCross(controller,"sheep", "north-shore");
+
+        controller.interptetCommand("cross south-shore");
+
+        simpleCross(controller,"wolf", "north-shore");
+
+        controller.interptetCommand("take sheep");
+        controller.interptetCommand("cross south-shore");
+        controller.interptetCommand("leave sheep");
+
+
+        simpleCross(controller,"cabbage", "north-shore");
+
+        controller.interptetCommand("cross south-shore");
+
+        simpleCross(controller,"sheep", "north-shore");
+
+
+        assertTrue(riverCrossing.verifyVictory());
+
+    }
+
+    @Test
+    public void riverCrossingFail() {
+
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        String takeSheep = "take sheep";
+        String leaveSheep = "leave sheep";
+
+        String takeWolf = "take wolf";
+        String leaveWolf = "leave wolf";
+
+        String northShore = "cross north-shore";
+        String crossSouth = "cross south-shore";
+
+        controller.interptetCommand(takeSheep);
+        controller.interptetCommand(northShore);
+        controller.interptetCommand(leaveSheep);
+
+        controller.interptetCommand(crossSouth);
+
+        controller.interptetCommand(takeWolf);
+        controller.interptetCommand(northShore);
+        controller.interptetCommand(leaveWolf);
+
+
+        assertTrue(!riverCrossing.verifyVictory());
+    }
+
+    @Test
+    public void moreItemsThaAllowed() {
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        String takeSheep = "take sheep";
+        String takeWolf = "take wolf";
+        controller.interptetCommand(takeSheep);
+        controller.interptetCommand(takeWolf);
+        Assert.assertTrue(riverCrossing.getPlayer().getInventory().size() == 1);
+    }
+
+    @Test
+    public void getWrongItem() {
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+        String takeWrongItem = "take wrongItem";
+        controller.interptetCommand(takeWrongItem);
+        Assert.assertTrue(riverCrossing.getPlayer().getInventory().isEmpty());
+    }
+
+    @Test
+    public void forbiddenMove() {
+
+        Game riverCrossing = RiverCrossing.getGame();
+        Controller controller = new Controller(riverCrossing);
+
+        String takeCabbage = "take cabbage";
+        String northShore = "cross north-shore";
+
+
+        controller.interptetCommand(takeCabbage);
+        controller.interptetCommand(northShore);
+        //No se pudo mover.
+        Assert.assertTrue(riverCrossing.getPlayer().getRoom().getName().equals("south-shore"));
     }
 
 

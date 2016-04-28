@@ -29,6 +29,8 @@ public class Controller {
                     return game.enter(tokens);
                 case "item":
                     return game.itemHelp(tokens);
+                case "cross":
+                    return game.cross();
                 default:
                     return game.executeActionOnItem(tokens);
             }

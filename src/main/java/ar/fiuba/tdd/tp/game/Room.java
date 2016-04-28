@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.game;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.random.Util;
+import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.*;
 
@@ -99,6 +99,10 @@ public class Room {
     public void openContainer(String name) {
         ContainerComponent component = getItem(name);
         component.openContainer();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void addEnterCondition(Condition condition) {

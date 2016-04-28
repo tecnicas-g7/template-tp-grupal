@@ -2,35 +2,35 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.FullCapacityReachedException;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
-import ar.fiuba.tdd.tp.game.actions.Action;
-import ar.fiuba.tdd.tp.game.random.Util;
+import ar.fiuba.tdd.tp.game.items.type.Type;
+import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+
 
 /**
  * Created by javier on 4/25/16.
  */
 public class Container extends Describable {
 
-    private HashMap<String,ContainerComponent> components;
+    private HashMap<String, ContainerComponent> components;
     private int maxSize;
     private boolean open;
+    private Type type;
 
     public Container(String name, int maxSize) {
         super(name);
         this.maxSize = maxSize;
         this.components = new HashMap<>();
         this.open = false;
+        type = new Type();
     }
 
     public String look() {
         StringBuilder output = new StringBuilder();
         output.append(name);
         if (this.open) {
-            components.forEach((key,value) -> {
+            components.forEach((key, value) -> {
                     output.append(" " + value.look() + " ");
                 }
             );
@@ -42,7 +42,7 @@ public class Container extends Describable {
     public String openContainer() {
         this.open = true;
         StringBuilder output = new StringBuilder();
-        components.forEach((key,value) -> {
+        components.forEach((key, value) -> {
                 output.append(key + " ");
             }
         );
@@ -61,12 +61,17 @@ public class Container extends Describable {
 
     public ContainerComponent getChild(String name) {
         if (open) {
-            return Util.getContainerComponent(components,name);
+            return Util.getContainerComponent(components, name);
         }
         throw new ItemNotFoundException();
     }
 
-    public void addComponent(ContainerComponent component)  throws FullCapacityReachedException {
+    @Override
+    public Type getType() {
+        return type;
+    }
+
+    public void addComponent(ContainerComponent component) throws FullCapacityReachedException {
         if (components.size() < this.maxSize) {
             components.put(component.getName(), component);
         } else {

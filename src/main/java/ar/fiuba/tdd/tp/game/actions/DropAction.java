@@ -9,8 +9,18 @@ import ar.fiuba.tdd.tp.game.Player;
 */
 public class DropAction implements Action {
 
+    private String name;
+
+    public DropAction() {
+        name = "drop";
+    }
+
+    public DropAction(String name) {
+        this.name = name;
+    }
+
     public String getName() {
-        return "drop";
+        return name;
     }
 
     @Override

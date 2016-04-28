@@ -79,6 +79,20 @@ public class Game {
         return "The door doesn't open ...";
     }
 
+    public String cross() {
+        Room origin = player.getRoom();
+        Room destination = origin.getDoorsIterator().next().getValue().getDestination();
+        if (validateEnterAndLeaveConditions(origin, destination)) {
+            player.cross(destination);
+        } else {
+            System.out.print("You cannot do that!");
+        }
+        return "";
+    }
+
+    private boolean validateEnterAndLeaveConditions(Room origin, Room destination) {
+        return origin.validLeaveConditions(player) && destination.validEnterConditions(player);
+    }
 
     public void addCondition(Condition condition) {
         this.conditions.add(condition);
@@ -90,6 +104,7 @@ public class Game {
                 return false;
             }
         }
+        System.out.print("You have won the game!");
         return  true;
     }
 

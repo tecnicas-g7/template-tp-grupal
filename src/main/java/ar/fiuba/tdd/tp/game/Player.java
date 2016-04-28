@@ -82,7 +82,7 @@ public class Player {
             inventoryNames.append(item + " ");
         }
         StringBuilder output = new StringBuilder();
-        output.append("You have");
+        output.append("You have ");
         output.append(inventoryNames.toString());
         return output.toString();
     }
@@ -130,6 +130,12 @@ public class Player {
             }
             return "Ey! Where do you go?! Room 2 is locked.";
         }
+    }
+
+    public boolean cross(Room room) {
+        this.room = room;
+        System.out.println("Crossed!");
+        return true;
     }
 
     public void setRoom(Room room) {

@@ -16,8 +16,18 @@ import ar.fiuba.tdd.tp.game.items.Item;
 
 public class PickAction implements Action {
 
+    private String name;
+
     public String getName() {
-        return "pick";
+        return name;
+    }
+
+    public PickAction() {
+        name = "pick";
+    }
+
+    public PickAction(String name) {
+        this.name = name;
     }
 
     @Override
