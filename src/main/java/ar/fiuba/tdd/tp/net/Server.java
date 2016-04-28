@@ -44,12 +44,14 @@ public class Server {
                 if ( gameFeedback == null ) {
                     gameFeedback = controller.interptetCommand(clientSentence);
                 }
-                showMessage(connectionSocket, gameFeedback);
 
                 if (controller.verify()) {
                     showMessage(connectionSocket, "You win!");
                     break;
                 }
+
+                showMessage(connectionSocket, gameFeedback);
+
             }
         }
     }
