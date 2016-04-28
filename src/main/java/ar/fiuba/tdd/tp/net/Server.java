@@ -45,7 +45,6 @@ public class Server {
 
                 if (controller.verify()) {
                     showMessage(connectionSocket, "You win!");
-                    break;
                 }
 
                 showMessage(connectionSocket, gameFeedback);
