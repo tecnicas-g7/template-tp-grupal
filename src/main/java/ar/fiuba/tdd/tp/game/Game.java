@@ -72,7 +72,7 @@ public class Game {
             Door door = it.next().getValue();
             Room destination = door.getDestination();
             if (door.getName().equals(tokens[1]) && origin.validLeaveConditions(player) && destination.validEnterConditions(player)) {
-                player.enter(door);
+                return player.enter(door);
             }
         }
         return "The door doesn't open ...";

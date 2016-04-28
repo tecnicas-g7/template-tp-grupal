@@ -117,20 +117,19 @@ public class Player {
         return false;
     }
 
-    public boolean enter(Door door) {
+    public String enter(Door door) {
         if (!door.isLocked()) {
             this.room = door.getDestination();
+            return "Door entered!";
         } else {
             Item key = door.getKey();
             if (inventory.containsValue(key)) {
                 door.unlock(key);
                 this.room = door.getDestination();
-                return true;
+                return "Door entered!";
             }
-            System.out.println("Ey! Where do you go?! Room 2 is locked.");
-            return false;
+            return "Ey! Where do you go?! Room 2 is locked.";
         }
-        return true;
     }
 
 

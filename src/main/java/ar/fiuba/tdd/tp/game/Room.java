@@ -61,6 +61,7 @@ public class Room {
                 output.append(value.look());
             }
         );
+        doors.forEach((key,value) -> output.append(" " + value.getName()));
         output.append(" in the room.");
 
         return output.toString();
