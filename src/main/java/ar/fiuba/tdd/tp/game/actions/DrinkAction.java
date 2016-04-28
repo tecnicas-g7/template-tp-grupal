@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.game.actions;
 
+import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Item;
 
@@ -14,7 +15,7 @@ public class DrinkAction implements Action {
     }
 
     @Override
-    public String execute(String[] tokens, Player player, Item item) {
+    public String execute(String[] tokens, Player player, ContainerComponent item) {
         if (player.getStatus() == Player.Status.poisoned) {
             player.changeStatus(Player.Status.alive);
             return "I feel much better now!";
