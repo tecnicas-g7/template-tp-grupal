@@ -133,5 +133,8 @@ public class Player {
         return true;
     }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
 }
