@@ -22,7 +22,7 @@ public interface ContainerComponent {
 
     String executeAction(String[] tokens, Player player) throws WrongItemActionException;
 
-    default void openContainer(Room room) {
+    default void openContainer(Room room, Player player) {
 
     }
 }

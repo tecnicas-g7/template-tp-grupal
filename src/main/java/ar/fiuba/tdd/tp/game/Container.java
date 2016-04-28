@@ -12,6 +12,7 @@ public class Container extends Describable {
 
     private HashMap<String,ContainerComponent> components;
     private int maxSize;
+    private boolean hasPoison;
 
     public Container(String name, int maxSize) {
         super(name);
@@ -19,8 +20,20 @@ public class Container extends Describable {
         this.components = new HashMap<>();
     }
 
+    public void yesPoison() {
+        this.hasPoison = true;
+    }
+
+    public void noPoison() {
+        this.hasPoison = false;
+    }
+
     //When the player opens the container, the components move to the room
-    public void openContainer(Room room) {
+    public void openContainer(Room room, Player player) {
+        if (this.hasPoison) {
+            player.changeStatus(Player.Status.poisoned);
+            this.noPoison();
+        }
         components.forEach((key,value) -> room.addContainerComponent(value));
         components.clear();
     }

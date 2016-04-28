@@ -3,7 +3,6 @@ package ar.fiuba.tdd.tp.game.random;
 import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
-import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.HashMap;
 import java.util.List;

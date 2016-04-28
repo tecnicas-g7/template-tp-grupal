@@ -113,7 +113,7 @@ public class MainTests {
         room2.addDoor(room1,key);
         Door door = room1.getDestinationDoor(room2);
         try {
-            container.openContainer(room2);
+            container.openContainer(room2, player2);
             player2.addItem(room2.getItem("key"));
         } catch (Exception e) {
             //Do nothing
@@ -154,20 +154,34 @@ public class MainTests {
         assertTrue(Player.Status.alive == player.getStatus());
     }
 
-    /*@Test
-    public void poison() {
-        Item poison = new Item("poison");
-        poison.addAction(new PoisonAction());
+    // El jugador no se envenena
+    @Test
+    public void NoPoison() {
         Room room1 = new Room("Room 1");
-        room1.addItem(poison);
+        Container container = new Container("Box",1);
+        container.noPoison();
         Player player = new Player(room1);
-        room1.addDoor(room1,poison);
-        String command = "poison poison";
         try {
-            poison.executeAction(command.split(" "), player);
+            container.openContainer(room1, player);
+        } catch (Exception e) {
+            //Do nothing
+        }
+        assertTrue(player.getStatus().equals(Player.Status.alive));
+    }
+
+    // El jugador se envenena
+    @Test
+    public void YesPoison() {
+        Room room1 = new Room("Room 1");
+        Container container = new Container("Box",1);
+        container.yesPoison();
+        Player player = new Player(room1);
+        try {
+            container.openContainer(room1, player);
         } catch (Exception e) {
             //Do nothing
         }
         assertTrue(player.getStatus().equals(Player.Status.poisoned));
-    }*/
+    }
+
 }

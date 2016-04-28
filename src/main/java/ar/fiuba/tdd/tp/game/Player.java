@@ -22,7 +22,7 @@ public class Player {
     private Status status;
 
     public void openRoomContainer(String name) {
-        room.openContainer(name);
+        room.openContainer(name, this);
     }
 
     public void clearInventory() {

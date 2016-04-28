@@ -100,9 +100,9 @@ public class Room {
         return items;
     }
 
-    public void openContainer(String name) {
+    public void openContainer(String name, Player player) {
         ContainerComponent component = getItem(name);
-        component.openContainer(this);
+        component.openContainer(this, player);
     }
 
     public void addEnterCondition(Condition condition) {

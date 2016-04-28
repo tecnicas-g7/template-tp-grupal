@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.game.actions;
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
-import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 
 /**
