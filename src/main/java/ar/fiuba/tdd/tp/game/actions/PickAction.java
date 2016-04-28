@@ -15,8 +15,18 @@ Created by fran on 25/04/16.
 
 public class PickAction implements Action {
 
+    private String name;
+
     public String getName() {
-        return "pick";
+        return name;
+    }
+
+    public PickAction() {
+        name = "pick";
+    }
+
+    public PickAction(String name) {
+        this.name = name;
     }
 
     @Override

@@ -1,21 +1,24 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.type.Type;
 
 public class Door extends Describable {
 
     private boolean locked;
     private Room destination;
     private Item key;
+    private Type type;
 
     public Door(Room destination, String name) {
         super(name);
         this.locked = false;
         this.destination = destination;
+        type = new Type();
     }
 
-    public Door(Room destination,String name, Item key) {
-        this(destination,name);
+    public Door(Room destination, String name, Item key) {
+        this(destination, name);
         this.locked = true;
         this.key = key;
     }
@@ -44,5 +47,9 @@ public class Door extends Describable {
 
     public Item getKey() {
         return this.key;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

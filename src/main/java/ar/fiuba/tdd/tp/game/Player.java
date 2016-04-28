@@ -17,14 +17,16 @@ public class Player {
     private HashMap<String,ContainerComponent> inventory;
     private int maxInventory;
     private Room room;
+
+    //TODO: estado (envenado)
     private Status status;
 
     public void openRoomContainer(String name) {
-        room.openContainer(name, this);
+        room.openContainer(name);
     }
 
     public void clearInventory() {
-        inventory = new HashMap<>();
+        inventory.clear();
     }
 
     public enum Status {
@@ -77,9 +79,12 @@ public class Player {
         Set<String> items = this.inventory.keySet();
         StringBuilder inventoryNames = new StringBuilder();
         for (String item : items) {
-            inventoryNames.append(item).append(" ");
+            inventoryNames.append(item + " ");
         }
-        return "You have" + inventoryNames.toString();
+        StringBuilder output = new StringBuilder();
+        output.append("You have ");
+        output.append(inventoryNames.toString());
+        return output.toString();
     }
 
     private int getInventorySize() {
@@ -106,24 +111,35 @@ public class Player {
 
     public boolean checkVictory(Player winner) {
         Iterator<ContainerComponent> it = winner.getInventoryIterator();
-        return winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize();
+        if (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize()) {
+            return true;
+        }
+        return false;
     }
 
-    public boolean enter(Door door) {
+    public String enter(Door door) {
         if (!door.isLocked()) {
             this.room = door.getDestination();
+            return "Door entered!";
         } else {
             Item key = door.getKey();
             if (inventory.containsValue(key)) {
                 door.unlock(key);
                 this.room = door.getDestination();
-                return true;
+                return "Door entered!";
             }
-            System.out.println("Ey! Where do you go?! Room 2 is locked.");
-            return false;
+            return "Ey! Where do you go?! Room 2 is locked.";
         }
+    }
+
+    public boolean cross(Room room) {
+        this.room = room;
+        System.out.println("Crossed!");
         return true;
     }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
 }
