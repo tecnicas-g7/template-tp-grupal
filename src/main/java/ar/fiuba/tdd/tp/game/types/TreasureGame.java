@@ -4,14 +4,13 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
-import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by fran on 28/04/16.
+ Created by fran on 28/04/16.
  */
 public class TreasureGame {
 

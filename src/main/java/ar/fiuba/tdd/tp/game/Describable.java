@@ -17,7 +17,7 @@ public abstract class Describable implements ContainerComponent {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Item must have a name.");
         }
-        this.actions = new HashMap<String,Action>();
+        this.actions = new HashMap<>();
         this.name = name;
     }
 
@@ -39,8 +39,9 @@ public abstract class Describable implements ContainerComponent {
 
     public String showActions() {
         StringBuilder output = new StringBuilder("You can ");
-        actions.forEach((key,value) -> output.append(key + " "));
-        output.append("with " + name);
+        actions.forEach((key,value) -> output.append(key.concat(" ")));
+        output.append("with ");
+        output.append(name);
         return output.toString();
     }
 

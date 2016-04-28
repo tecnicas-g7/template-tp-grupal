@@ -12,7 +12,7 @@ Created by fran on 25/04/16.
 
 public class InventoryCondition implements Condition {
 
-    List<ContainerComponent> inventory;
+    private List<ContainerComponent> inventory;
     private boolean valid;
 
     public InventoryCondition(List<ContainerComponent> items, boolean valid) {

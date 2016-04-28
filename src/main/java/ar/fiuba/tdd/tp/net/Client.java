@@ -12,7 +12,7 @@ public class Client {
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Client");
-        String input = "";
+        String input;
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         input = inFromUser.readLine();
         while (input != null && !input.equals("exit")) {
@@ -27,7 +27,7 @@ public class Client {
         }
     }
 
-    public static void play(Socket socket) throws IOException {
+    private static void play(Socket socket) throws IOException {
         DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));

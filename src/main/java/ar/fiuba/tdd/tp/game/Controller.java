@@ -3,12 +3,12 @@ package ar.fiuba.tdd.tp.game;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 
 /**
- * Created by fran on 24/04/16.
+  Created by fran on 24/04/16.
  */
 
 public class Controller {
 
-    public static final String tokenSeparator = " ";
+    private static final String tokenSeparator = " ";
 
     private Game game;
 

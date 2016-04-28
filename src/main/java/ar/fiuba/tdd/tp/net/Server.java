@@ -11,10 +11,10 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by ezequiel on 20/04/16.
+Created by ezequiel on 20/04/16.
  */
 public class Server {
-    public static final String tokenSeparator = " ";
+    private static final String tokenSeparator = " ";
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Server");
@@ -82,7 +82,7 @@ public class Server {
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String input = inFromUser.readLine();
         String loadGameCommand = "load game ";
-        String game = "";
+        String game;
         while (input != null) {
             if (input.contains(loadGameCommand)) {
                 game = input.replace(loadGameCommand,"");
@@ -116,7 +116,7 @@ public class Server {
         }
     }
 
-    public static String getDescriptionGame(String gameName) {
+    private static String getDescriptionGame(String gameName) {
         switch (gameName) {
             case "stickGame":
                 return StickGame.getHelp();

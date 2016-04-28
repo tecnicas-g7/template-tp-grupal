@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.Room;
 
 /**
- * Created by nico on 27/04/16.
+ Created by nico on 27/04/16.
  */
 public class ItemTypeCondition implements Condition {
 

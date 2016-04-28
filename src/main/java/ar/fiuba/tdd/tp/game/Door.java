@@ -10,20 +10,20 @@ public class Door extends Describable {
     private Item key;
     private Type type;
 
-    public Door(Room destination, String name) {
+    Door(Room destination, String name) {
         super(name);
         this.locked = false;
         this.destination = destination;
         type = new Type();
     }
 
-    public Door(Room destination, String name, Item key) {
+    Door(Room destination, String name, Item key) {
         this(destination, name);
         this.locked = true;
         this.key = key;
     }
 
-    public boolean isLocked() {
+    boolean isLocked() {
         return this.locked;
     }
 
@@ -34,18 +34,18 @@ public class Door extends Describable {
         this.locked = true;
     }
 
-    public void unlock(Item key) {
+    void unlock(Item key) {
         if (key == null || key != this.key) {
             throw new IllegalArgumentException("Can't unlock " + this.name);
         }
         this.locked = false;
     }
 
-    public Room getDestination() {
+    Room getDestination() {
         return destination;
     }
 
-    public Item getKey() {
+    Item getKey() {
         return this.key;
     }
 

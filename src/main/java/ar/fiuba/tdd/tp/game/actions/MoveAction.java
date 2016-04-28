@@ -10,7 +10,7 @@ import ar.fiuba.tdd.tp.game.items.Item;
 import java.util.Iterator;
 
 /**
- * Created by ltessore on 28/04/16.
+ Created by ltessore on 28/04/16.
  */
 public class MoveAction implements Action {
     @Override
@@ -22,8 +22,8 @@ public class MoveAction implements Action {
     public String execute(String[] tokens, Player player, ContainerComponent item) {
         try {
             Room room = player.getRoom();
-            String result = move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
-            return result;
+            //String result = move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
+            return move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
         } catch (MaxInventoryException e) {
             //Do nothing
             return null;

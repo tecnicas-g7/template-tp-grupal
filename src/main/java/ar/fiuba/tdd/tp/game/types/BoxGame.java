@@ -11,7 +11,7 @@ import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 /**
- * Created by fran on 27/04/16.
+ Created by fran on 27/04/16.
  */
 public class BoxGame {
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nico on 26/04/16.
+  Created by nico on 26/04/16.
  */
 public class Type {
 
@@ -24,7 +24,7 @@ public class Type {
         this.name = name;
     }
 
-    public List<Class<? extends Type>> getEnemyTypes() {
+    List<Class<? extends Type>> getEnemyTypes() {
         return enemyTypes;
     }
 

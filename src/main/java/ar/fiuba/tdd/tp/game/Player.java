@@ -80,15 +80,14 @@ public class Player {
         return this.status;
     }
 
-    public String showInventory() {
+    String showInventory() {
         Set<String> items = this.inventory.keySet();
-        StringBuilder inventoryNames = new StringBuilder();
+        String inventoryNames = "";
         for (String item : items) {
-            inventoryNames.append(item + " ");
+            inventoryNames = inventoryNames.concat(item + " ");
         }
-        StringBuilder output = new StringBuilder();
-        output.append("You have ");
-        output.append(inventoryNames.toString());
+        String output = "You have ";
+        output = output.concat(inventoryNames);
         return output.toString();
     }
 
@@ -100,7 +99,7 @@ public class Player {
         return this.inventory;
     }
 
-    public Iterator<ContainerComponent> getInventoryIterator() {
+    private Iterator<ContainerComponent> getInventoryIterator() {
         return this.inventory.values().iterator();
     }
 
@@ -116,10 +115,7 @@ public class Player {
 
     public boolean checkVictory(Player winner) {
         Iterator<ContainerComponent> it = winner.getInventoryIterator();
-        if (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize()) {
-            return true;
-        }
-        return false;
+        return (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize());
     }
 
     public String enter(Door door) {

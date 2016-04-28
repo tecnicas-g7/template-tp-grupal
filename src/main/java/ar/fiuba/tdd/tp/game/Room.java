@@ -46,7 +46,7 @@ public class Room {
         return this.items.entrySet().iterator();
     }
 
-    public Iterator<Map.Entry<String, Door>> getDoorsIterator() {
+    Iterator<Map.Entry<String, Door>> getDoorsIterator() {
         return this.doors.entrySet().iterator();
     }
 
@@ -58,28 +58,30 @@ public class Room {
         StringBuilder output = new StringBuilder("You are in " + name + "\n");
         output.append("You can see a ");
         items.forEach((key,value) -> {
-                output.append(value.look() + " ");
+                output.append(value.look());
+                output.append(" ");
             }
         );
-        doors.forEach((key, value) -> output.append(value.getName() + " "));
-        output.append(" in " + name);
+        doors.forEach((key, value) -> output.append(value.getName().concat(" ")));
+        output.append(" in ");
+        output.append(name);
 
         return output.toString();
     }
 
     public void addDoor(Room destination, Item key) {
         int doorNumber = this.doors.size() + 1;
-        StringBuilder doorName = new StringBuilder("door");
-        doorName.append(doorNumber);
-        addDoor(destination, key, doorName.toString());
+        String doorName = "door";
+        doorName = doorName.concat(String.valueOf(doorNumber));
+        addDoor(destination, key, doorName);
     }
 
     public void addDoor(Room destination, Item key, String name) {
         Door door;
         if (key == null) {
-            door = new Door(destination,name.toString());
+            door = new Door(destination, name);
         } else {
-            door = new Door(destination,name.toString(),key);
+            door = new Door(destination, name, key);
         }
         this.doors.put(door.getName(), door);
     }
@@ -117,11 +119,11 @@ public class Room {
         this.leaveConditions.add(condition);
     }
 
-    public boolean validEnterConditions(Player player) {
+    boolean validEnterConditions(Player player) {
         return Util.checkConditions(this.enterConditions, player);
     }
 
-    public boolean validLeaveConditions(Player player) {
+    boolean validLeaveConditions(Player player) {
         return Util.checkConditions(this.leaveConditions, player);
     }
 

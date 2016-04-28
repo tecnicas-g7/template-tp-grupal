@@ -12,7 +12,7 @@ Created by fran on 25/04/16.
 
 public class RoomInventoryCondition implements Condition {
 
-    List<ContainerComponent> inventory;
+    private List<ContainerComponent> inventory;
 
     public RoomInventoryCondition(List<ContainerComponent> items) {
         this.inventory = items;

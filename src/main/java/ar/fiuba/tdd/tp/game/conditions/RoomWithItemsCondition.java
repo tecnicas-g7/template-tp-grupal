@@ -8,7 +8,7 @@ import ar.fiuba.tdd.tp.game.items.Item;
 import java.util.List;
 
 /**
- * Created by nico on 26/04/16.
+ Created by nico on 26/04/16.
  */
 
 public class RoomWithItemsCondition implements Condition {

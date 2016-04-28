@@ -3,7 +3,6 @@ package ar.fiuba.tdd.tp.game;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
-import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.*;
 
@@ -18,7 +17,7 @@ public class Game {
     private List<Condition> conditions;
 
     public Game(Player player) {
-        this.rooms = new ArrayList<Room>();
+        this.rooms = new ArrayList<>();
         this.player = player;
         this.conditions = new ArrayList<>();
     }
@@ -31,7 +30,7 @@ public class Game {
         return this.player;
     }
 
-    public String executeActionOnItem(String[] tokens) throws WrongItemActionException {
+    String executeActionOnItem(String[] tokens) throws WrongItemActionException {
         String objectName;
         try {
             objectName = tokens[1];
@@ -50,7 +49,7 @@ public class Game {
         return null;
     }
 
-    public ContainerComponent findItem(String objectName) throws ItemNotFoundException {
+    private ContainerComponent findItem(String objectName) throws ItemNotFoundException {
         try {
             return this.player.getItem(objectName);
         } catch (ItemNotFoundException e) {
@@ -58,16 +57,15 @@ public class Game {
         }
     }
 
-    public String look() {
+    String look() {
         return this.player.getRoom().look();
-
     }
 
-    public String showInventory() {
+    String showInventory() {
         return this.player.showInventory();
     }
 
-    public String enter(String[] tokens) {
+    String enter(String[] tokens) {
         Room origin = player.getRoom();
         Iterator<HashMap.Entry<String, Door>> it = origin.getDoorsIterator();
         while (it.hasNext()) {
@@ -98,7 +96,7 @@ public class Game {
         return  true;
     }
 
-    public String itemHelp(String[] tokens) {
+    String itemHelp(String[] tokens) {
         if (tokens.length <= 1) {
             return "You have to select an item!";
         }

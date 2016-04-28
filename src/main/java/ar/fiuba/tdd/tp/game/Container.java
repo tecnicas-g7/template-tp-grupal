@@ -32,7 +32,8 @@ public class Container extends Describable {
         output.append(name);
         if (this.open) {
             components.forEach((key, value) -> {
-                    output.append(" " + value.look() + " ");
+                    output.append(" ");
+                    output.append(value.look().concat(" "));
                 }
             );
         }
@@ -57,7 +58,8 @@ public class Container extends Describable {
             output.append("You have been poisoned! \n");
         }
         components.forEach((key, value) -> {
-                output.append(key + " ");
+                output.append(key);
+                output.append(" ");
             }
         );
         output.append("added to the room.");

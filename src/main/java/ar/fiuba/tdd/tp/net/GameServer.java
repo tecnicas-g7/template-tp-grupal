@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by fran on 22/04/16.
+  Created by fran on 22/04/16.
  */
 public class GameServer implements Runnable{
 
@@ -44,7 +44,7 @@ public class GameServer implements Runnable{
         }
     }
 
-    public Socket acceptSocket() {
+    private Socket acceptSocket() {
 
         Socket socket = null;
         try {
@@ -55,7 +55,7 @@ public class GameServer implements Runnable{
         return socket;
     }
 
-    public void sendMessage(DataOutputStream out, String message) throws IOException {
+    private void sendMessage(DataOutputStream out, String message) throws IOException {
         out.writeBytes(message + '\n');
     }
 }

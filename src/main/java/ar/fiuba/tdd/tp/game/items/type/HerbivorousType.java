@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.game.items.type;
 
 /**
- * Created by nico on 26/04/16.
+ Created by nico on 26/04/16.
  */
 public class HerbivorousType extends Type{
 
