@@ -31,7 +31,7 @@ public class StackContainerComponent extends Describable {
         return "";
     }
     public void addComponent(ContainerComponent component)  throws FullCapacityReachedException {
-        if (components.size() >= this.maxSize) {
+        if (components.size() < this.maxSize) {
             components.add(component);
         } else {
             throw new FullCapacityReachedException();
@@ -44,6 +44,13 @@ public class StackContainerComponent extends Describable {
 
     public ContainerComponent getLast() {
         return components.lastElement();
+    }
+
+    public boolean isFull() {
+        if (components.size() == this.maxSize) {
+            return true;
+        }
+        return false;
     }
 
     //Integer.parseInt(components.lastElement().getName()) > Integer.parseInt(component.getName())

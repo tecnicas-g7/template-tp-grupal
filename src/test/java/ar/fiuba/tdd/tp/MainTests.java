@@ -8,10 +8,7 @@ import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.types.BoxGame;
-import ar.fiuba.tdd.tp.game.types.CursedItem;
-import ar.fiuba.tdd.tp.game.types.EnterRoom;
-import ar.fiuba.tdd.tp.game.types.StickGame;
+import ar.fiuba.tdd.tp.game.types.*;
 
 import org.junit.Test;
 
@@ -116,7 +113,30 @@ public class MainTests {
         assertTrue(cursedItem.verifyVictory());
     }
 
+    @Test
+    public void hanoiTower() {
 
+        Game hanoiTower = HanoiTower.getGame();
+        Controller controller = new Controller(hanoiTower);
+
+        String command = "move stack1 stack3";
+        controller.interptetCommand(command);
+        String command2 = "move stack1 stack2";
+        controller.interptetCommand(command2);
+        String command3 = "move stack3 stack2";
+        controller.interptetCommand(command3);
+        String command4 = "move stack1 stack3";
+        controller.interptetCommand(command4);
+        String command5 = "move stack2 stack1";
+        controller.interptetCommand(command5);
+        String command6 = "move stack2 stack3";
+        controller.interptetCommand(command6);
+        String command7 = "move stack1 stack3";
+        controller.interptetCommand(command7);
+
+        assertTrue(hanoiTower.verifyVictory());
+
+    }
 
     public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
         room1.addDoor(room2, key);
