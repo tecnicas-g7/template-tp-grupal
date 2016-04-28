@@ -31,8 +31,8 @@ public class Container extends Describable {
         output.append(name);
         if (this.open) {
             components.forEach((key,value) -> {
-                        output.append(" " + value.look() + " ");
-                    }
+                    output.append(" " + value.look() + " ");
+                }
             );
         }
         return output.toString();

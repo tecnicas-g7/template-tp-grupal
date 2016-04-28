@@ -58,8 +58,8 @@ public class Room {
         StringBuilder output = new StringBuilder("You are in " + name + "\n");
         output.append("There's a ");
         items.forEach((key,value) -> {
-            output.append(value.look());
-        }
+                output.append(value.look());
+            }
         );
         output.append(" in the room.");
 
