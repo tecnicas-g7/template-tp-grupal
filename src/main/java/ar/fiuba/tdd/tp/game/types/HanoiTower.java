@@ -16,7 +16,7 @@ public class HanoiTower {
     private Room room1;
     private Room room2;
     private Room room3;
-    private Player player
+    private Player player;
     private List<Condition> restrictionList;
 
     public HanoiTower() {
@@ -74,11 +74,8 @@ public class HanoiTower {
 
 
     public void play() {
-
-
-
-        /**
-         * TODO deberia agregar metodo getLast() en Room y que me devuelva el ultimo
+        // TODO deberia agregar metodo getLast() en Room y que me devuelva el ultimo
+         /*
          * Para eso deberia hacer que los items de Room sea una collection para instanciarlo con un stack
          * (COMENTO el move() para que no genere warnings)
         */
