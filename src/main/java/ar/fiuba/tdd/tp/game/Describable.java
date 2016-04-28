@@ -32,7 +32,6 @@ public abstract class Describable implements ContainerComponent {
         if (!this.actions.containsKey(actionName)) {
             throw new WrongItemActionException();
         }
-
         return actions.get(actionName).execute(tokens, player, this);
     }
 }

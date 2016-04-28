@@ -37,6 +37,7 @@ public class Game {
         } catch (Exception e) {
             return "You have to select an item!";
         }
+
         try {
             ContainerComponent item = findItem(objectName);
             if (item != null) {
