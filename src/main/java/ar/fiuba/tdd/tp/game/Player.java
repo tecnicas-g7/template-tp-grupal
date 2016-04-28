@@ -82,7 +82,7 @@ public class Player {
             inventoryNames.append(item + " ");
         }
         StringBuilder output = new StringBuilder();
-        output.append("You have");
+        output.append("You have ");
         output.append(inventoryNames.toString());
         return output.toString();
     }
@@ -120,16 +120,22 @@ public class Player {
     public String enter(Door door) {
         if (!door.isLocked()) {
             this.room = door.getDestination();
-            return "Door entered!";
+            return door.getName() +  " entered!";
         } else {
             Item key = door.getKey();
             if (inventory.containsValue(key)) {
                 door.unlock(key);
                 this.room = door.getDestination();
-                return "Door entered!";
+                return door.getName() + " entered!";
             }
-            return "Ey! Where do you go?! Room 2 is locked.";
+            return "You can't do that!";
         }
+    }
+
+    public boolean cross(Room room) {
+        this.room = room;
+        System.out.println("Crossed!");
+        return true;
     }
 
     public void setRoom(Room room) {

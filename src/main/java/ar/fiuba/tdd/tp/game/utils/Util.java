@@ -1,11 +1,9 @@
-package ar.fiuba.tdd.tp.game.random;
+package ar.fiuba.tdd.tp.game.utils;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.game.Container;
 import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
-import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.HashMap;
 import java.util.Iterator;

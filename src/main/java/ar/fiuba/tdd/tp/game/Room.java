@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.game;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.random.Util;
+import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.*;
 
@@ -56,13 +56,13 @@ public class Room {
 
     public String look() {
         StringBuilder output = new StringBuilder("You are in " + name + "\n");
-        output.append("There's a ");
+        output.append("You can see a ");
         items.forEach((key,value) -> {
-                output.append(value.look());
+                output.append(value.look() + " ");
             }
         );
-        doors.forEach((key,value) -> output.append(" " + value.getName()));
-        output.append(" in the room.");
+        doors.forEach((key,value) -> output.append(value.getName() + " "));
+        output.append(" in " + name);
 
         return output.toString();
     }
@@ -71,13 +71,17 @@ public class Room {
         int doorNumber = this.doors.size() + 1;
         StringBuilder doorName = new StringBuilder("door");
         doorName.append(doorNumber);
+        addDoor(destination,key,doorName.toString());
+    }
+
+    public void addDoor(Room destination, Item key, String name) {
         Door door;
         if (key == null) {
-            door = new Door(destination,doorName.toString());
+            door = new Door(destination,name.toString());
         } else {
-            door = new Door(destination,doorName.toString(),key);
+            door = new Door(destination,name.toString(),key);
         }
-        this.doors.put(String.valueOf(doorNumber), door);
+        this.doors.put(door.getName(), door);
     }
 
     public Door getDestinationDoor(Room destination) {
@@ -99,6 +103,10 @@ public class Room {
     public void openContainer(String name) {
         ContainerComponent component = getItem(name);
         component.openContainer();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void addEnterCondition(Condition condition) {

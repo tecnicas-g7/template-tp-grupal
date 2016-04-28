@@ -76,9 +76,12 @@ public class Game {
                 return player.enter(door);
             }
         }
-        return "The door doesn't open ...";
+        return "You can't do that!";
     }
 
+    private boolean validateEnterAndLeaveConditions(Room origin, Room destination) {
+        return origin.validLeaveConditions(player) && destination.validEnterConditions(player);
+    }
 
     public void addCondition(Condition condition) {
         this.conditions.add(condition);
@@ -90,6 +93,7 @@ public class Game {
                 return false;
             }
         }
+        System.out.print("You have won the game!");
         return  true;
     }
 

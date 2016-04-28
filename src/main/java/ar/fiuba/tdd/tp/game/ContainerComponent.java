@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.items.type.Type;
 import com.sun.glass.ui.Size;
 
 /**
@@ -20,6 +21,8 @@ public interface ContainerComponent {
     }
 
     String getName();
+
+    Type getType();
 
     String executeAction(String[] tokens, Player player) throws WrongItemActionException;
 
