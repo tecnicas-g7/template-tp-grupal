@@ -3,10 +3,7 @@ package ar.fiuba.tdd.tp.net;
 import ar.fiuba.tdd.tp.exceptions.GameNotFoundExcpetion;
 import ar.fiuba.tdd.tp.game.Controller;
 import ar.fiuba.tdd.tp.game.Game;
-import ar.fiuba.tdd.tp.game.types.BoxGame;
-import ar.fiuba.tdd.tp.game.types.CursedItem;
-import ar.fiuba.tdd.tp.game.types.EnterRoom;
-import ar.fiuba.tdd.tp.game.types.StickGame;
+import ar.fiuba.tdd.tp.game.types.*;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -111,6 +108,10 @@ public class Server {
                 return StickGame.getGame();
             case "cursedItem":
                 return EnterRoom.getGame();
+            case "hanoiTower":
+                return HanoiTower.getGame();
+            case "riverCrossing":
+                return RiverCrossing.getGame();
             default:
                 throw new GameNotFoundExcpetion();
         }
@@ -126,6 +127,10 @@ public class Server {
                 return BoxGame.getHelp();
             case "cursedItem":
                 return CursedItem.getHelp();
+            case "hanoiTower":
+                return HanoiTower.getHelp();
+            case "riverCrossing":
+                return RiverCrossing.getHelp();
             default:
                 throw new GameNotFoundExcpetion();
         }

@@ -68,4 +68,7 @@ public class HanoiTower {
         stack3.addAction(new CheckAction());
     }
 
+    public static String getHelp() {
+        return "It consists of three rods, and a number of disks of different sizes which can slide onto any rod. ";
+    }
 }
