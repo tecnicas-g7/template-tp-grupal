@@ -14,6 +14,10 @@ public class CheckAction implements Action {
 
     @Override
     public String execute(String[] tokens, Player player, ContainerComponent item) {
-        return "Size of top from" + tokens[1] + "is" + String.valueOf(player.getItem(tokens[2]));
+        try {
+            return "Size of top from " + tokens[1] + " is " + String.valueOf(player.getRoom().getItem(tokens[1]).getLast().getName());
+        } catch (Exception e) {
+            return tokens[1] + " is empty.";
+        }
     }
 }
