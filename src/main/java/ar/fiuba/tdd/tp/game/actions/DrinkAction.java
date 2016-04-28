@@ -2,11 +2,10 @@ package ar.fiuba.tdd.tp.game.actions;
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.items.Item;
 
-/**
- * Created by Javier on 26/04/2016.
- */
+/*
+Created by Javier on 26/04/2016.
+*/
 
 public class DrinkAction implements Action {
 

@@ -10,9 +10,10 @@ import ar.fiuba.tdd.tp.game.items.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fran on 27/04/16.
- */
+/*
+Created by fran on 27/04/16.
+*/
+
 public class CursedItem {
 
     public static Game getGame() {
@@ -60,6 +61,5 @@ public class CursedItem {
         room2.addEnterCondition(new InventoryCondition(items, true));
         room3.addEnterCondition(new InventoryCondition(items, false));
     }
-
 
 }

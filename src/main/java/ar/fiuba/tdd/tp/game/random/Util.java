@@ -7,9 +7,10 @@ import ar.fiuba.tdd.tp.game.conditions.Condition;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by fran on 26/04/16.
- */
+/*
+Created by fran on 26/04/16.
+*/
+
 public class Util {
 
     public static boolean itemsInInventory(List<ContainerComponent> list, HashMap<String,ContainerComponent> inventory) {
@@ -29,5 +30,4 @@ public class Util {
         }
         return  true;
     }
-
 }

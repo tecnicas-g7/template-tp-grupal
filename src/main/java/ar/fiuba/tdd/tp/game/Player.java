@@ -6,9 +6,9 @@ import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.*;
 
-/**
- * Created by fran on 24/04/16.
- */
+/*
+Created by fran on 24/04/16.
+*/
 
 public class Player {
 
@@ -17,8 +17,6 @@ public class Player {
     private HashMap<String,ContainerComponent> inventory;
     private int maxInventory;
     private Room room;
-
-    //TODO: estado (envenado)
     private Status status;
 
     public void openRoomContainer(String name) {
@@ -79,12 +77,9 @@ public class Player {
         Set<String> items = this.inventory.keySet();
         StringBuilder inventoryNames = new StringBuilder();
         for (String item : items) {
-            inventoryNames.append(item + " ");
+            inventoryNames.append(item).append(" ");
         }
-        StringBuilder output = new StringBuilder();
-        output.append("You have");
-        output.append(inventoryNames.toString());
-        return output.toString();
+        return "You have" + inventoryNames.toString();
     }
 
     private int getInventorySize() {
@@ -111,10 +106,7 @@ public class Player {
 
     public boolean checkVictory(Player winner) {
         Iterator<ContainerComponent> it = winner.getInventoryIterator();
-        if (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize()) {
-            return true;
-        }
-        return false;
+        return winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize();
     }
 
     public boolean enter(Door door) {

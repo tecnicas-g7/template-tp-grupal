@@ -3,13 +3,16 @@ package ar.fiuba.tdd.tp.game;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
-import ar.fiuba.tdd.tp.game.items.Item;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
-/**
- * Created by fran on 24/04/16.
- */
+/*
+Created by fran on 24/04/16.
+*/
+
 public class Game {
 
     private List<Room> rooms;
@@ -17,7 +20,8 @@ public class Game {
     private List<Condition> conditions;
 
     public Game(Player player) {
-        this.rooms = new ArrayList<Room>();
+        //this.rooms = new ArrayList<Room>();
+        this.rooms = new ArrayList<>();
         this.player = player;
         this.conditions = new ArrayList<>();
     }
@@ -79,7 +83,6 @@ public class Game {
         }
         return "The door doesn't open ...";
     }
-
 
     public void addCondition(Condition condition) {
         this.conditions.add(condition);

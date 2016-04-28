@@ -5,9 +5,10 @@ import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 
 import java.util.HashMap;
 
-/**
- * Created by javier on 4/25/16.
- */
+/*
+Created by javier on 4/25/16.
+*/
+
 public class Container extends Describable {
 
     private HashMap<String,ContainerComponent> components;

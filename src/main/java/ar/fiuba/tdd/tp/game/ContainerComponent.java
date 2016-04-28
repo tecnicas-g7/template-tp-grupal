@@ -2,9 +2,10 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 
-/**
- * Created by javier on 4/27/16.
- */
+/*
+Created by javier on 4/27/16.
+*/
+
 public interface ContainerComponent {
     default void addComponent(ContainerComponent component) {
 

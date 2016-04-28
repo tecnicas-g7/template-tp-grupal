@@ -7,9 +7,10 @@ import ar.fiuba.tdd.tp.game.random.Util;
 
 import java.util.*;
 
-/**
- * Created by fran on 24/04/16.
- */
+/*
+Created by fran on 24/04/16.
+*/
+
 public class Room {
 
     private HashMap<String,ContainerComponent> items;
@@ -64,7 +65,7 @@ public class Room {
         StringBuilder output = new StringBuilder("You are in " + name + "\n");
         output.append("There's a ");
         for (String item : items) {
-            output.append(item + " ");
+            output.append(item).append(" ");
         }
         output.append("in the room.");
 
