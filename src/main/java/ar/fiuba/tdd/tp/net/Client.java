@@ -20,6 +20,7 @@ public class Client {
             if (message[0].equals("connect")) {
                 String[] address = message[1].split(":");
                 Socket socket = new Socket(address[0], Integer.parseInt(address[1]));
+
                 play(socket);
             }
             input = inFromUser.readLine();
@@ -30,7 +31,7 @@ public class Client {
         DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-        System.out.println(inFromServer.readLine());
+        //System.out.println(inFromServer.readLine());
         String input = inFromUser.readLine();
 
         while (input != null && !input.equals("exit game")) {
