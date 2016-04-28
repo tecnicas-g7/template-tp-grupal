@@ -16,30 +16,25 @@ import java.util.Iterator;
 public class HanoiTower {
 
     public static Game getGame() {
-        Room room1 = new Room("R1");
-
-        Item pieza1 = new Item("1");
-        Item pieza2 = new Item("2");
-        Item pieza3 = new Item("3");
 
         //Creo 3 stacks
         StackContainerComponent stack1 = new StackContainerComponent("stack1",3);
         StackContainerComponent stack2 = new StackContainerComponent("stack2",3);
         StackContainerComponent stack3 = new StackContainerComponent("stack3",3);
+        addActionsToStacks(stack1,stack2,stack3);
 
-        //agrego piezas a un stack
-        stack1.addComponent(pieza1);
-        stack1.addComponent(pieza2);
+        //Creo piezas
+        Item pieza1 = new Item("1");
+        Item pieza2 = new Item("2");
+        Item pieza3 = new Item("3");
+
+        //agrego piezas a un stack (de mayor a menor)
         stack1.addComponent(pieza3);
+        stack1.addComponent(pieza2);
+        stack1.addComponent(pieza1);
 
-        stack1.addAction(new MoveAction());
-        stack1.addAction(new CheckAction());
-        stack2.addAction(new MoveAction());
-        stack2.addAction(new CheckAction());
-        stack3.addAction(new MoveAction());
-        stack3.addAction(new CheckAction());
-        
         //agrego las 3 pilas al room
+        Room room1 = new Room("R1");
         room1.addContainerComponent(stack1);
         room1.addContainerComponent(stack2);
         room1.addContainerComponent(stack3);
@@ -49,8 +44,15 @@ public class HanoiTower {
         Game game = new Game(player);
 
         return game;
+    }
 
-
+    private static void addActionsToStacks(StackContainerComponent stack1, StackContainerComponent stack2, StackContainerComponent stack3) {
+        stack1.addAction(new MoveAction());
+        stack1.addAction(new CheckAction());
+        stack2.addAction(new MoveAction());
+        stack2.addAction(new CheckAction());
+        stack3.addAction(new MoveAction());
+        stack3.addAction(new CheckAction());
     }
 
 }

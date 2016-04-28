@@ -20,7 +20,7 @@ public class MoveAction implements Action {
         try {
             String result = move(player, player.getItem(tokens[1]), player.getItem(tokens[2]));
             return result;
-        }catch (MaxInventoryException e) {
+        } catch (MaxInventoryException e) {
             //Do nothing
             return null;
         }
@@ -50,7 +50,8 @@ public class MoveAction implements Action {
         // chequea condiciones de movimiento de la pieza
         Iterator<ContainerComponent> it = player.getInventoryIterator();
         //chequea si el ultimo del stackAfter es mas grande del que tiene el player
-        if (Integer.parseInt(stackAfter.getLast().getName()) > Integer.parseInt(it.next().getName())) {
+        if (stackAfter.getSize() == 0
+                || (Integer.parseInt(stackAfter.getLast().getName()) > Integer.parseInt(it.next().getName()))) {
             return true;
         }
         return false;

@@ -4,7 +4,6 @@ import ar.fiuba.tdd.tp.exceptions.FullCapacityReachedException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.actions.Action;
 
-import java.util.HashMap;
 import java.util.Stack;
 
 /**
@@ -12,7 +11,6 @@ import java.util.Stack;
  */
 public class StackContainerComponent extends Describable {
 
-    protected String name;
     protected Integer maxSize;
     protected Stack<ContainerComponent> components;
 
@@ -22,7 +20,7 @@ public class StackContainerComponent extends Describable {
         this.components = new Stack<>();
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -30,6 +28,7 @@ public class StackContainerComponent extends Describable {
     public String executeAction(String[] tokens, Player player) throws WrongItemActionException {
         return "";
     }
+
     public void addComponent(ContainerComponent component)  throws FullCapacityReachedException {
         if (components.size() >= this.maxSize) {
             components.add(component);
@@ -46,5 +45,8 @@ public class StackContainerComponent extends Describable {
         return components.lastElement();
     }
 
-    //Integer.parseInt(components.lastElement().getName()) > Integer.parseInt(component.getName())
+    public Integer getSize() {
+        return this.components.size();
+    }
+
 }

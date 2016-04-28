@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import com.sun.glass.ui.Size;
 
 /**
  * Created by javier on 4/27/16.
@@ -26,5 +27,11 @@ public interface ContainerComponent {
         return null;
     }
 
-    default ContainerComponent getLast() { return null; }
+    default ContainerComponent getLast() {
+        return null;
+    }
+
+    default Integer getSize() {
+        return null;
+    }
 }
