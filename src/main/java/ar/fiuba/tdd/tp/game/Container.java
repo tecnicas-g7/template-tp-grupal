@@ -37,6 +37,8 @@ public class Container extends Describable {
             );
         }
         return output.toString();
+    }
+
     public void yesPoison() {
         this.hasPoison = true;
     }
@@ -45,19 +47,13 @@ public class Container extends Describable {
         this.hasPoison = false;
     }
 
-    //When the player opens the container, the components move to the room
-    public void openContainer(Room room, Player player) {
+    //When the player opens the container, the components in it can be reached
+    public String openContainer(Player player) {
+        this.open = true;
         if (this.hasPoison) {
             player.changeStatus(Player.Status.poisoned);
             this.noPoison();
         }
-        components.forEach((key,value) -> room.addContainerComponent(value));
-        components.clear();
-    }
-
-    //When the player opens the container, the components in it can be reached
-    public String openContainer() {
-        this.open = true;
         StringBuilder output = new StringBuilder();
         components.forEach((key, value) -> {
                 output.append(key + " ");

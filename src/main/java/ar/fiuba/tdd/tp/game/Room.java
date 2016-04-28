@@ -97,10 +97,10 @@ public class Room {
         return items;
     }
 
-    public void openContainer(String name) {
+    /*public void openContainer(String name) {
         ContainerComponent component = getItem(name);
         component.openContainer();
-    }
+    }*/
 
     public String getName() {
         return name;

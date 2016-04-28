@@ -27,8 +27,8 @@ public interface ContainerComponent {
 
     String executeAction(String[] tokens, Player player) throws WrongItemActionException;
 
-    default String openContainer() {
-        return null;
+    default String openContainer(Player player) {
+        return "";
     }
 
     default ContainerComponent getLast() {
