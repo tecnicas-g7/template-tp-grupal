@@ -40,4 +40,8 @@ public class BoxGame {
 
         return game;
     }
+
+    public static String getHelp() {
+        return "To leave the room the player must find the hidden key";
+    }
 }

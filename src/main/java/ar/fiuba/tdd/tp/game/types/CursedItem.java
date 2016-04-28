@@ -61,5 +61,8 @@ public class CursedItem {
         room3.addEnterCondition(new InventoryCondition(items, false));
     }
 
+    public static String getHelp() {
+        return "The player needs to find the cursed artifact and get rid of it somehow to win";
+    }
 
 }
