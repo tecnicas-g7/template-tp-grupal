@@ -18,13 +18,14 @@ import java.nio.charset.StandardCharsets;
  */
 public class Server {
     public static final String tokenSeparator = " ";
-    private static int socketNumber = 6789;
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Server");
 
         Game game = loadGame();
         Controller controller = new Controller(game);
+
+        int socketNumber = 6789;
 
         ServerSocket welcomeSocket = new ServerSocket(socketNumber );
         System.out.println("game loaded in " + socketNumber);
