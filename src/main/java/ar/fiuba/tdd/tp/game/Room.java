@@ -39,9 +39,8 @@ public class Room {
     }
 
     public void removeItem(String name) {
-        this.items.remove(name);
+        Util.removeComponent(items,name);
     }
-
 
     public Iterator<Map.Entry<String, ContainerComponent>> getItemsIterator() {
         return this.items.entrySet().iterator();
@@ -62,7 +61,7 @@ public class Room {
                 output.append(value.look() + " ");
             }
         );
-        doors.forEach((key,value) -> output.append(value.getName() + " "));
+        doors.forEach((key, value) -> output.append(value.getName() + " "));
         output.append(" in " + name);
 
         return output.toString();
@@ -72,7 +71,7 @@ public class Room {
         int doorNumber = this.doors.size() + 1;
         StringBuilder doorName = new StringBuilder("door");
         doorName.append(doorNumber);
-        addDoor(destination,key,doorName.toString());
+        addDoor(destination, key, doorName.toString());
     }
 
     public void addDoor(Room destination, Item key, String name) {

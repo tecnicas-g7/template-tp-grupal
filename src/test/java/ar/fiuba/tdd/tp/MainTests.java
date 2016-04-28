@@ -139,6 +139,50 @@ public class MainTests {
 
     }
 
+    @Test
+    public void treasure() {
+        Game treasureGame = TreasureGame.getGame();
+        Controller controller = new Controller(treasureGame);
+
+        String command = "open box";
+        controller.interptetCommand(command);
+        String command2 = "pick key";
+        controller.interptetCommand(command2);
+        String command3 = "enter door1";
+        controller.interptetCommand(command3);
+        String command4 = "enter door2";
+        controller.interptetCommand(command4);
+        String command5 = "open trunk";
+        controller.interptetCommand(command5);
+        String command6 = "drop key";
+        controller.interptetCommand(command6);
+        String command7 = "pick antidote";
+        controller.interptetCommand(command7);
+
+        interpretTreasureCommands(controller);
+
+
+        assertTrue(treasureGame.verifyVictory());
+
+    }
+
+    private void interpretTreasureCommands(Controller controller) {
+        String command = "open box";
+        controller.interptetCommand(command);
+        command = "pick key2";
+        controller.interptetCommand(command);
+        command = "drink antidote";
+        controller.interptetCommand(command);
+        command = "enter door1";
+        controller.interptetCommand(command);
+        command = "enter door3";
+        controller.interptetCommand(command);
+        command = "enter door2";
+        controller.interptetCommand(command);
+        command = "pick treasure";
+        controller.interptetCommand(command);
+    }
+
     public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
         room1.addDoor(room2, key);
         room2.addDoor(room1, key);
@@ -155,7 +199,7 @@ public class MainTests {
         Room room2 = new Room("Room 2");
         Player player = new Player(room1);
         Player player2 = new Player(room2);
-        makeRoomsAdjacent(room1,room2, key);
+        makeRoomsAdjacent(room1, room2, key);
         Door door = room1.getDestinationDoor(room2);
         String command = "pick key";
         try {
@@ -318,7 +362,7 @@ public class MainTests {
 
         controller.interptetCommand("cross south-shore");
 
-        simpleCross(controller,"wolf", "north-shore");
+        simpleCross(controller, "wolf", "north-shore");
 
         controller.interptetCommand("take sheep");
         controller.interptetCommand("cross south-shore");
@@ -329,7 +373,7 @@ public class MainTests {
 
         controller.interptetCommand("cross south-shore");
 
-        simpleCross(controller,"sheep", "north-shore");
+        simpleCross(controller, "sheep", "north-shore");
 
 
         assertTrue(riverCrossing.verifyVictory());

@@ -49,12 +49,13 @@ public class Container extends Describable {
 
     //When the player opens the container, the components in it can be reached
     public String openContainer(Player player) {
+        StringBuilder output = new StringBuilder();
         this.open = true;
         if (this.hasPoison) {
             player.changeStatus(Player.Status.poisoned);
             this.noPoison();
+            output.append("You have been poisoned! \n");
         }
-        StringBuilder output = new StringBuilder();
         components.forEach((key, value) -> {
                 output.append(key + " ");
             }
@@ -69,7 +70,7 @@ public class Container extends Describable {
     }
 
     public void removeComponent(ContainerComponent component) {
-        components.remove(component.getName());
+        Util.removeComponent(components,component.getName());
     }
 
     public ContainerComponent getChild(String name) {

@@ -1,11 +1,7 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.GameNotFoundExcpetion;
-import ar.fiuba.tdd.tp.game.types.BoxGame;
-import ar.fiuba.tdd.tp.game.types.EnterRoom;
-import ar.fiuba.tdd.tp.game.types.HanoiTower;
-import ar.fiuba.tdd.tp.game.types.RiverCrossing;
-import ar.fiuba.tdd.tp.game.types.StickGame;
+import ar.fiuba.tdd.tp.game.types.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,7 +17,7 @@ public class MainTest {
     public static void main(String[] argv) throws Exception {
 
         System.out.println("Welcome to game!");
-        Controller controller = new Controller(RiverCrossing.getGame());
+        Controller controller = new Controller(TreasureGame.getGame());
 
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String input = inFromUser.readLine();

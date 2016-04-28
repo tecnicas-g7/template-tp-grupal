@@ -17,6 +17,7 @@ public class DrinkAction implements Action {
     public String execute(String[] tokens, Player player, ContainerComponent item) {
         if (player.getStatus() == Player.Status.poisoned) {
             player.changeStatus(Player.Status.alive);
+            player.removeItem(item.getName());
             return "I feel much better now!";
         }
         return "I've wasted an antidote.";

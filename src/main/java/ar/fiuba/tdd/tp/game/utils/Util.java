@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game.utils;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
+import ar.fiuba.tdd.tp.game.Container;
 import ar.fiuba.tdd.tp.game.ContainerComponent;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
@@ -49,6 +50,23 @@ public class Util {
             }
         }
         throw new ItemNotFoundException();
+    }
+
+    public static void removeComponent(HashMap<String,ContainerComponent> items, String name) {
+        if (items.get(name) != null) {
+            items.remove(name);
+            return;
+        } else {
+            Iterator<Map.Entry<String, ContainerComponent>> iterator = items.entrySet().iterator();
+            while (iterator.hasNext()) {
+                ContainerComponent container = iterator.next().getValue();
+                ContainerComponent item = container.getChild(name);
+                if (item != null) {
+                    container.removeComponent(item);
+                    return;
+                }
+            }
+        }
     }
 
 }
