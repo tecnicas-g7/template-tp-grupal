@@ -32,4 +32,8 @@ public class EnterRoom {
 
         return game;
     }
+
+    public static String getHelp() {
+        return "The player must find the way out of the room.";
+    }
 }

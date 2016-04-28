@@ -3,6 +3,8 @@ package ar.fiuba.tdd.tp.net;
 import ar.fiuba.tdd.tp.exceptions.GameNotFoundExcpetion;
 import ar.fiuba.tdd.tp.game.Controller;
 import ar.fiuba.tdd.tp.game.Game;
+import ar.fiuba.tdd.tp.game.types.BoxGame;
+import ar.fiuba.tdd.tp.game.types.CursedItem;
 import ar.fiuba.tdd.tp.game.types.EnterRoom;
 import ar.fiuba.tdd.tp.game.types.StickGame;
 
@@ -15,18 +17,19 @@ import java.nio.charset.StandardCharsets;
  * Created by ezequiel on 20/04/16.
  */
 public class Server {
+    public static final String tokenSeparator = " ";
+    private static int socketNumber = 6789;
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Server");
 
-        //Game game = loadGame();
-        loadGame();
-        int socketNumber = 6789;
+        Game game = loadGame();
+        Controller controller = new Controller(game);
+
         ServerSocket welcomeSocket = new ServerSocket(socketNumber );
         System.out.println("game loaded in " + socketNumber);
 
         String clientSentence;
-        String capitalizedSentence;
         Socket connectionSocket = welcomeSocket.accept();
         BufferedReader inFromClient = new BufferedReader(
                 new InputStreamReader(connectionSocket.getInputStream(),StandardCharsets.UTF_8)
@@ -34,13 +37,38 @@ public class Server {
 
         while (true) {
             clientSentence = inFromClient.readLine();
-            System.out.println("Received: " + clientSentence);
-            capitalizedSentence = clientSentence.toUpperCase() + '\n';
-            DataOutputStream outToClient = new DataOutputStream(
-                    connectionSocket.getOutputStream()
-            );
-            outToClient.writeBytes(capitalizedSentence);
+            if ( clientSentence != null ) {
+                DataOutputStream outToClient = new DataOutputStream(
+                        connectionSocket.getOutputStream()
+                );
+
+                String gameFeedback = checkHelp( clientSentence );
+
+                if ( gameFeedback == null ) {
+                    gameFeedback = controller.interptetCommand(clientSentence);
+                }
+                outToClient.writeBytes(gameFeedback + '\n');
+                outToClient.writeBytes("EOMessage" + '\n');
+
+                if (controller.verify()) {
+                    break;
+                }
+            }
         }
+    }
+
+    private static String checkHelp( String token) {
+        String helpCommand = "help";
+        String[] tokens = token.split(tokenSeparator);
+        try {
+            if ( tokens[0].contains(helpCommand) ) {
+                return getDescriptionGame(tokens[1]);
+            }
+
+        } catch (GameNotFoundExcpetion e) {
+            System.out.println("Game not Found");
+        }
+        return null;
     }
 
     private static Game loadGame() throws IOException {
@@ -68,9 +96,29 @@ public class Server {
                 return StickGame.getGame();
             case "enterRoom":
                 return EnterRoom.getGame();
+            case "boxGame":
+                return StickGame.getGame();
+            case "cursedItem":
+                return EnterRoom.getGame();
+            default:
+                throw new GameNotFoundExcpetion();
+        }
+    }
+
+    public static String getDescriptionGame(String gameName) {
+        switch (gameName) {
+            case "stickGame":
+                return StickGame.getHelp();
+            case "enterRoom":
+                return EnterRoom.getHelp();
+            case "boxGame":
+                return BoxGame.getHelp();
+            case "cursedItem":
+                return CursedItem.getHelp();
             default:
                 throw new GameNotFoundExcpetion();
         }
     }
 }
+
 

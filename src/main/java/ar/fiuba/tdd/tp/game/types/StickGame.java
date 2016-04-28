@@ -36,4 +36,8 @@ public class StickGame {
 
         return game;
     }
+
+    public static String getHelp() {
+        return "The player will look for an item and find it to win";
+    }
 }
