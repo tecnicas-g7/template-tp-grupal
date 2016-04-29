@@ -57,7 +57,7 @@ public class MainTests {
     @Test
     public void stickQuest() {
 
-        Game stickGame = StickGame.getGame();
+        Game stickGame = (new StickGame()).getGame();
         Controller controller = new Controller(stickGame);
 
         String command = "pick stick";
@@ -69,7 +69,7 @@ public class MainTests {
     @Test
     public void enterRoom() {
 
-        Game enterRoom = EnterRoom.getGame();
+        Game enterRoom = (new EnterRoom()).getGame();
         Controller controller = new Controller(enterRoom);
 
         String command = "pick key";
@@ -83,7 +83,7 @@ public class MainTests {
     @Test
     public void boxGame() {
 
-        Game boxGame = BoxGame.getGame();
+        Game boxGame = (new BoxGame()).getGame();
         Controller controller = new Controller(boxGame);
 
         String command = "open box";
@@ -99,7 +99,7 @@ public class MainTests {
     @Test
     public void cursedItem() {
 
-        Game cursedItem = CursedItem.getGame();
+        Game cursedItem = (new CursedItem()).getGame();
         Controller controller = new Controller(cursedItem);
 
         String command = "pick cursed_item";
@@ -117,7 +117,7 @@ public class MainTests {
     @Test
     public void hanoiTower() {
 
-        Game hanoiTower = HanoiTower.getGame();
+        Game hanoiTower = ( new HanoiTower()).getGame();
         Controller controller = new Controller(hanoiTower);
 
         String command = "move stack1 stack3";
@@ -141,7 +141,7 @@ public class MainTests {
 
     @Test
     public void treasure() {
-        Game treasureGame = TreasureGame.getGame();
+        Game treasureGame = (new TreasureGame()).getGame();
         Controller controller = new Controller(treasureGame);
 
         String command = "open box";
@@ -355,7 +355,7 @@ public class MainTests {
     @Test
     public void riverCrossingVictory() {
 
-        Game riverCrossing = RiverCrossing.getGame();
+        Game riverCrossing = (new RiverCrossing()).getGame();
         Controller controller = new Controller(riverCrossing);
 
         simpleCross(controller,"sheep", "north-shore");
@@ -383,7 +383,7 @@ public class MainTests {
     @Test
     public void riverCrossingFail() {
 
-        Game riverCrossing = RiverCrossing.getGame();
+        Game riverCrossing = (new RiverCrossing()).getGame();
         Controller controller = new Controller(riverCrossing);
 
         String takeSheep = "take sheep";
@@ -411,7 +411,7 @@ public class MainTests {
 
     @Test
     public void moreItemsThaAllowed() {
-        Game riverCrossing = RiverCrossing.getGame();
+        Game riverCrossing = (new RiverCrossing()).getGame();
         Controller controller = new Controller(riverCrossing);
 
         String takeSheep = "take sheep";
@@ -423,7 +423,7 @@ public class MainTests {
 
     @Test
     public void getWrongItem() {
-        Game riverCrossing = RiverCrossing.getGame();
+        Game riverCrossing = (new RiverCrossing()).getGame();
         Controller controller = new Controller(riverCrossing);
         String takeWrongItem = "take wrongItem";
         controller.interpretCommand(takeWrongItem);
@@ -433,7 +433,7 @@ public class MainTests {
     @Test
     public void forbiddenMove() {
 
-        Game riverCrossing = RiverCrossing.getGame();
+        Game riverCrossing = (new RiverCrossing()).getGame();
         Controller controller = new Controller(riverCrossing);
 
         String takeCabbage = "take cabbage";

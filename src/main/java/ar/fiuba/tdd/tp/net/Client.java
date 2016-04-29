@@ -46,16 +46,5 @@ public class Client {
         }
         socket.close();
     }
-
-    private static void getServerInput(BufferedReader inFromServer) throws IOException {
-        String inputServer = inFromServer.readLine();
-        while (inputServer != null && !inputServer.equals("")) {
-            if (inputServer.equals("EOMessage")) {
-                break;
-            }
-            System.out.println("INPUT: " + inputServer);
-            inputServer = inFromServer.readLine();
-        }
-    }
-
 }
+
