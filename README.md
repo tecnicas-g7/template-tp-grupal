@@ -1,50 +1,22 @@
-# TP Grupal - Primera Entrega
+# TP Grupal - Segunda Entrega
 
 ## Enunciado ##
 
-Se desea implementar un motor de generación de juegos tipo aventura gráfica (o similares).
+Dada la repercusión que tuvo el motor de juegos de aventura gráfica, muchas personas están interesadas en crear y cargar nuevos juegos al server, pero surge la necesidad de poder crear juegos en runtime a través de configuraciones, sin necesidad de programar y extender clases del motor, es decir que dichos comandos o configuraciones instancien nuestro modelo y lo usen.  Incluso en un futuro fuera del nuestro scope se desearía que desde alguna interfaz o desde algún modo creativo o edición, se puedan crear cualquier tipo de juego dinámicamente.
 
-En ésta primera instancia se considerarán solo aventuras gráficas basadas en texto, el jugador ingresa comandos a través de una consola y el juego devuelve la salida correspondiente también en forma de texto.
-En ésta primera instancia el set de juegos a soportar será fijo y estará compuesto por los ejemplos mencionados al final del enunciado, más los juegos que el grupo quiera agregar (dentro de los comportamientos mencionados en los ejemplos).
-El tp tendrá los siguientes componentes:
- - Un **servidor** en donde se pueden cargar los juegos. El servidor debe inicializar el motor con el modelo del juego pedido y un port en donde escuchar. Los comandos que lleguen por dicho port se deben mandar al motor correspondiente. Es decir que el server tiene que mantener la relación port --> motor. 
- - Un **cliente**: se conecta a un servidor que esté ejecutando un juego y permite enviar comandos y recibir respuestas.
- - Un **motor**: Es el componente encargado de la carga y la ejecución del juego.
+Lo que se ha detectado luego de implementar los primeros juegos es que cada juego tiene cosas similares, como objetos que se relacionan con otros objetos, tienen ciertas características generales, tienen estados, tienen acciones que se pueden ejecutar (si corresponde quizás dado su estado u otras restricciones) que al ejecutarse hacen cosas sobre si mismo u otros objetos.
 
-En el servidor:
-```
-> load game game1 [Enter]
-> game1 loaded and listening on port 8081
-> load game game2 [Enter]
-> game2 loaded and listening on port 8082
-```
-En el cliente:
-```
-> connect 127.0.0.1:8081 [Enter]
-> Welcome to game1!
-> ...
-> exit game [Enter]
-> bye!
-```
+Se nos pide que nos abstraigamos y pensemos en un modelo capaz de representar a este tipo de juegos, es decir poder crear escenarios, con personajes, poder definirles estados, y agregarles acciones, que realicen cosas al ejecutarlas. Y que al juego se le defina una misión, que de cumplirla ganará el juego, o combinación de cosas que si se cumple perdiera el juego.
 
-```
-> connect 127.0.0.1:8082 [Enter]
-> Welcome to game2!
-> ...
-> exit game [Enter]
-> bye!
-```
+En resumen nos piden: Que el motor debe ser capaz de crear juegos de tipo aventuras, con distintos objetos, escenarios, y personajes, misiones, con solo configurar a los mismos, sin necesidad de programar o crear nuevas clases que extiendan el motor.
 
-El servidor tiene que soportar los siguientes comandos:
- - `load game [juego]`: carga “juego” y se queda esperando a que el jugador se conecte.
-El cliente tiene que soportar los siguientes comandos (independientes del juego):
- - `connet [ip:port]`: Trata de conectarse al juego escuchando en ip:port.
- - `exit game`: sale del juego actual.
- - `help [juego]`: Muestra una descripción de “juego”.
- 
-Cuando un cliente sale del juego el server mantiene el juego levantado esperando por otro jugador.
+Para esta segunda entrega, se nos pide modificar nuestro motor, para soportar los mismos juegos implementados, pero haciendo uso de un modelo genérico de clases, que se pueda configurar pero sin necesidad de extender o de crear clases concretas de un juego en particular. Es decir no queremos tener que escribir clases como Door, Box, Stick, Wolf, etc. Sino usar una genérica a la que le podamos configurar para que represente al cada una de ellas según el juego a implementar.
 
-La idea no es implementar estos juegos, sino diseñar un modelo que permita fácilmente la creación de los mismos.
+Se nos pide:
+- Soportar cualquier tipo de juego como los ya realizados.
+- Restricción de no poder heredar para implementar nuevos juegos, solo usar nuestro modelo.
+- La próxima entrega se deberá implementar durante el horario de la clase un juego dado y definido en la clase. El mismo deberá sólo deberá requerir implementar un Builder que configure el juego y sus reglas, para ser cargado en el server para poder jugar.
+Dicha implementación deberá estar en un proyecto separado el cual utilice o referencie el motor desarrollado.
 
 >**Los requerimientos pueden (y van a) cambiar en cualquier momento.**
 
@@ -64,128 +36,19 @@ Durante la demo y posterior corrección se cargarán issues en GitHub que deben 
    - **que no compilen en Travis-CI.**
    - **con issues abiertos.**
    - **Que no se puedan utilizar**
+   - **Que no tengan documentación de uso del sistema**
+   - **Que no tengan documentación del diseño del sistema**
+
  - **No hay re-entrega.** Es responsabilidad del grupo realizar las consultas durante las 2-3 semanas disponibles para realizar el TP.
  - Si un alumno no puede concurrir a la demo, se aceptará la entrega pero dicho alumno figurará como ausente. Esto puede repercutir en la nota final.
-
- ## Ejemplos de Juegos ##
-
- ### Fetch quest ###
- El jugador comienza en una  habitación, con un palo ubicado en dicha habitación. Es necesario tomar el palo.
-```
- > look around [Enter]
- > There’s a stick in the room.
- > pick stick [Enter]
- > You won the game!
- ```
-### Abrir Puerta ###
-El jugador está en una habitación que contiene una  llave y una puerta. Gana al atravesar la puerta y pasar a la siguiente habitación.
-```
-> look around [Enter]
-> There’s a key and a door in the room.
-> open door. [Enter]
-> Ey! Where do you go?! Room 2 is locked.
-> pick key. [Enter]
-> There you go!
-> open door. [Enter]
-> You enter room 2. You won the game!
-```
-
-### Abrir Puerta 2 ###
-El jugador está en una habitación que contiene una caja con una llave dentro y una puerta. Gana al atravesar la puerta y pasar a la siguiente habitación.
-```
-> look around [Enter]
-> There’s a box and a door in the room.
-> open door. [Enter]
-> Ey! Where do you go?! Room 2 is locked.
-> What can I do with box? [Enter]
-> You can open/close the box?
-> open box.[Enter]
-> The box is opened!.
-> look around [Enter]
-> There’re a box, a key and a door in the room.
-> pick key. [Enter]
-> There you go!
-> open door. [Enter]
-> You enter room 2. You won the game!
-```
-
-### Objeto Maldito ###
-Hay tres habitaciones en serie: En la primera, hay un objeto “maldito” que el jugador debe poseer para abrir la primer puerta, pero del que no puede deshacerse por acción propia. La segunda puerta se abre si el jugador no posee el objeto maldito. Para ayudar al jugador, en la segunda habitación hay un ladrón que toma todos los objetos del jugador cuando interactúa con él. Gana al llegar a la tercer habitacion.
-
-```
->...
-> What can I do with thief? [Enter]
-> You can talk with thief: “Hello”, “Bye”.
-> Talk to thief “Hello” [Enter]
-> Hi!
-> The thief has just stolen your object!
-> ...
-```
-
-### Acertijo del lobo, la oveja y la col ###
-Hace mucho tiempo un granjero fue al mercado y compró un lobo , una oveja y una col. Para volver a su casa tenía que cruzar un río. El granjero dispone de una barca para cruzar a la otra orilla, pero en la barca solo caben él y una de sus compras.  Si el lobo se queda solo con la oveja se la come, si la oveja se queda sola con la col se la come. El reto del granjero era cruzar él mismo y dejar sus compras a la otra orilla del río, dejando cada compra intacta. ¿Cómo lo hizo?
-
-```
-> take sheep [Enter]
-> Ok
-> take wolf [Enter]
-> You can’t do that! The boat is full.
-> cross north-shore [Enter]
-> you have crossed!
-> leave sheep [Enter]
-> Ok
-> cross south-shore [Enter]
-> you have crossed!
-> take wolf [Enter]
-> Ok
-> cross north-shore [Enter]
-> crossed!
-> leave wolf [Enter]
-> You can’t do that! The wolf will eat the sheep!
-...
-```
-
-### Torres de Hanoi ###
-El juego empieza con 3 pilares donde donde el primero tiene un pila de discos, donde el disco de mas abajo de la pila es de mayor tamaño y siendo los otros consecutivamente de menor tamaño.
-
-El objetivo del juego es mover la pila de discos a otro pilar, cumpliendo las siguientes reglas:
- - Solo se puede mover un disco por vez.
- - Cada movimiento consiste en tomar el disco superior de una pila y en la sima de otra pila. Es decir solo se puede mover un disco que está en la sima de la pila.
- - Ningun disco se puede apilar sobre otro más pequeño.
-
-```
-> …
-> What can I do with stack 1? [Enter]
-> You can check top/move top.
-> check top stack 1 [Enter]
-> Size of top from stack 1 is 5.
-> check top stack 2 [Enter]
-> Size of top from stack 2 is 6
-> move top stack 1 stack 2 [Enter]
-> moved!
->...
-```
-
-### Busqueda del Tesoro ###
-Se tienen 5 habitaciones. Algunas están cerradas y otras no. En cada habitación hay cajas, baúles, armarios, inicialmente todos cerrados. Puede ser que dentro de un armario o un baúl haya cajas. En ellos hay escondidos distintos elementos que el jugador tiene que ir recolectando, pero nunca puede tener más de dos en su posesión, por lo cual debería ir dejandolos cuando no le sirvan más. En las cajas se puede guardar sólo un elemento, pero en los baúles y los armarios se pueden guardar más de uno. Los elementos que se pueden encontrar son:
- - **Llaves**: sirven para abrir puertas. Una llave funciona con una puerta en particular.
- - **Venenos**: Cuando el player encuentra un veneno, esto no lo mata pero por razones que no alcanza a comprender si intenta salir de la habitación se muere. El jugador se envenena simplemente al abrir la caja/baúl/armario que tiene el veneno.
- - **Antídotos**: Se usan para curar al player cuando encuentra un veneno. Los antídotos funcionan con cualquier veneno, así que mejor tener uno a mano!.
- - **Tesoro**
-
-El jugador gana al encontrar el tesoro y volver a la habitación inicial.
 
 
 ## Calendario tentativo ##
 
 | Fecha       |                  |
 |-----------  | -----------------|
-| 7 de Abril  | Armado de grupos |
-| 14 de Abril | Publicación 1ra Entrega |
-| 21 de Abril | |
-| 28 de Abril | **Primera Entrega** - Publicación 2da Entrega |
-| 5 de Mayo   | Entrega de notas 1ra Entrega |
-| 12 de Mayo  | |
+| 5 de Mayo   | Publicación 2da Entrega |
+| 12 de Mayo  | Entrega de notas 1ra Entrega |
 | 19 de Mayo  | **Segunda Entrega** - Publicación 3ra Entrega |
 | 26 de Mayo  | Entrega de notas 2da Entrega |
 | 2 de junio  | **Tercera Entrega** |
