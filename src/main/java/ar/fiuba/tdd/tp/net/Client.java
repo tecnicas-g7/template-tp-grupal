@@ -12,7 +12,7 @@ public class Client {
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Client");
-        String input = "";
+        String input;
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         input = inFromUser.readLine();
         while (input != null && !input.equals("exit")) {
@@ -20,25 +20,31 @@ public class Client {
             if (message[0].equals("connect")) {
                 String[] address = message[1].split(":");
                 Socket socket = new Socket(address[0], Integer.parseInt(address[1]));
+
                 play(socket);
             }
             input = inFromUser.readLine();
         }
     }
 
-    public static void play(Socket socket) throws IOException {
+    private static void play(Socket socket) throws IOException {
         DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        //getServerInput(inFromServer);
         System.out.println(inFromServer.readLine());
-        String input = inFromUser.readLine();
+        String inputClient = inFromUser.readLine();
+        try {
+            while (inputClient != null && !inputClient.equals("exit game")) {
+                outToServer.writeBytes(inputClient + '\n');
+                System.out.println(inFromServer.readLine());
+                inputClient = inFromUser.readLine();
 
-        while (input != null && !input.equals("exit game")) {
-            outToServer.writeBytes(input + '\n');
-            System.out.println(inFromServer.readLine());
-            input = inFromUser.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println("Ganaste, chau.");
         }
         socket.close();
     }
-
 }
+

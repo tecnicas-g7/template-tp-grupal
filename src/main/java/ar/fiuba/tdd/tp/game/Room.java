@@ -1,56 +1,52 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
+import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.utils.Util;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-/**
- * Created by fran on 24/04/16.
- */
-public class Room extends Describable {
+/*
+Created by fran on 24/04/16.
+*/
 
-    private HashMap<String,Item> items;
+public class Room {
+
+    private HashMap<String,ContainerComponent> items;
 
     private HashMap<String, Door> doors;
 
-    private HashMap<String,SingleItemContainer> simplecontainers;
+    private List<Condition> enterConditions;
+    private List<Condition> leaveConditions;
 
-    private HashMap<String,MultipleItemsContainer> multiplecontainers;
+    private String name;
 
     public Room(String name) {
+        this.name = name;
         this.items = new HashMap<>();
         this.doors = new HashMap<>();
-        this.simplecontainers = new HashMap<>();
-        this.multiplecontainers = new HashMap<>();
-        this.name = name;
+        this.enterConditions = new ArrayList<>();
+        this.leaveConditions = new ArrayList<>();
     }
 
-    public Item getItem(String name) throws ItemNotFoundException {
-        Item item = this.items.get(name);
-        if (item != null) {
-            return item;
-        }
-        throw new ItemNotFoundException();
+    public ContainerComponent getItem(String name) throws ItemNotFoundException {
+        return Util.getContainerComponent(items,name);
     }
 
-    public void addItem( Item item) {
+    public void addContainerComponent( ContainerComponent item) {
         this.items.put(item.getName(), item);
     }
 
     public void removeItem(String name) {
-        this.items.remove(name);
+        Util.removeComponent(items,name);
     }
 
-
-    public Iterator<Map.Entry<String, Item>> getItemsIterator() {
+    public Iterator<Map.Entry<String, ContainerComponent>> getItemsIterator() {
         return this.items.entrySet().iterator();
     }
 
-    public Iterator<Map.Entry<String, Door>> getDoorsIterator() {
+    Iterator<Map.Entry<String, Door>> getDoorsIterator() {
         return this.doors.entrySet().iterator();
     }
 
@@ -59,24 +55,35 @@ public class Room extends Describable {
     }
 
     public String look() {
-        Set<String> items = this.getItemsNames();
-        StringBuilder output = new StringBuilder("There's a");
-        for (String item : items) {
-            output.append(item + " ");
-        }
-        output.append("in the room.");
+        StringBuilder output = new StringBuilder("You are in " + name + "  ");
+        output.append("You can see a ");
+        items.forEach((key,value) -> {
+                output.append(value.look());
+                output.append(" ");
+            }
+        );
+        doors.forEach((key, value) -> output.append(value.getName().concat(" ")));
+        output.append(" in ");
+        output.append(name);
+
         return output.toString();
     }
 
     public void addDoor(Room destination, Item key) {
         int doorNumber = this.doors.size() + 1;
+        String doorName = "door";
+        doorName = doorName.concat(String.valueOf(doorNumber));
+        addDoor(destination, key, doorName);
+    }
+
+    public void addDoor(Room destination, Item key, String name) {
         Door door;
         if (key == null) {
-            door = new Door(destination,String.valueOf(doorNumber));
+            door = new Door(destination, name);
         } else {
-            door = new Door(destination,String.valueOf(doorNumber),key);
+            door = new Door(destination, name, key);
         }
-        this.doors.put(String.valueOf(doorNumber), door);
+        this.doors.put(door.getName(), door);
     }
 
     public Door getDestinationDoor(Room destination) {
@@ -91,12 +98,33 @@ public class Room extends Describable {
         return null;
     }
 
-    public void addSimpleContainer(SingleItemContainer container) {
-        simplecontainers.put(container.getName(),container);
+    public HashMap<String, ContainerComponent> getItems() {
+        return items;
     }
 
-    public void addMultipleContainer(MultipleItemsContainer container) {
-        multiplecontainers.put(container.getName(),container);
+    /*public void openContainer(String name) {
+        ContainerComponent component = getItem(name);
+        component.openContainer();
+    }*/
+
+    public String getName() {
+        return name;
+    }
+
+    public void addEnterCondition(Condition condition) {
+        this.enterConditions.add(condition);
+    }
+
+    public void addLeaveCondition(Condition condition) {
+        this.leaveConditions.add(condition);
+    }
+
+    boolean validEnterConditions(Player player) {
+        return Util.checkConditions(this.enterConditions, player);
+    }
+
+    boolean validLeaveConditions(Player player) {
+        return Util.checkConditions(this.leaveConditions, player);
     }
 
 }

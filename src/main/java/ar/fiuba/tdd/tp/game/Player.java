@@ -6,31 +6,54 @@ import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.*;
 
-/**
- * Created by fran on 24/04/16.
- */
+/*
+Created by fran on 24/04/16.
+*/
 
 public class Player {
 
     private static final int DEFAULT_MAX_INVENTORY = 10;
 
-    private HashMap<String,Item> inventory;
+    private HashMap<String,ContainerComponent> inventory;
     private int maxInventory;
     private Room room;
 
-    //TODO: estado (envenado, maldicion)
+    private Status status;
+
+    //Se cambia por el metodo de abajo
+    /*public void openRoomContainer(String name) {
+        room.openContainer(name);
+    }*/
+
+    public String openContainer(String name) {
+        ContainerComponent component = room.getItem(name);
+        return component.openContainer(this);
+    }
+
+    public void clearInventory() {
+        inventory.clear();
+    }
+
+    public enum Status {
+        alive, poisoned
+    }
 
     public Player(Room room) {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.room = room;
+        this.status = Status.alive;
     }
 
     public void setMaxInventory(int maxInventory) {
         this.maxInventory = maxInventory;
     }
 
-    public void addItem(Item item) throws MaxInventoryException {
+    public void changeStatus(Status newStatus) {
+        this.status = newStatus;
+    }
+
+    public void addItem(ContainerComponent item) throws MaxInventoryException {
         if (inventory.size() == maxInventory) {
             throw new MaxInventoryException();
         }
@@ -41,8 +64,8 @@ public class Player {
         this.inventory.remove(name);
     }
 
-    public Item getItem(String name) throws ItemNotFoundException {
-        Item item = this.inventory.get(name);
+    public ContainerComponent getItem(String name) throws ItemNotFoundException {
+        ContainerComponent item = this.inventory.get(name);
         if (item != null) {
             return item;
         }
@@ -53,15 +76,18 @@ public class Player {
         return this.room;
     }
 
-    public String showInventory() {
+    public Status getStatus() {
+        return this.status;
+    }
+
+    String showInventory() {
         Set<String> items = this.inventory.keySet();
-        StringBuilder inventoryNames = new StringBuilder();
+        String inventoryNames = "";
         for (String item : items) {
-            inventoryNames.append(item + " ");
+            inventoryNames = inventoryNames.concat(item + " ");
         }
-        StringBuilder output = new StringBuilder();
-        output.append("You have");
-        output.append(inventoryNames.toString());
+        String output = "You have ";
+        output = output.concat(inventoryNames);
         return output.toString();
     }
 
@@ -69,13 +95,17 @@ public class Player {
         return this.inventory.size();
     }
 
-    public Iterator<Item> getInventoryIterator() {
+    public HashMap<String,ContainerComponent> getInventory() {
+        return this.inventory;
+    }
+
+    private Iterator<ContainerComponent> getInventoryIterator() {
         return this.inventory.values().iterator();
     }
 
-    private boolean checkIdenticalInventory(Iterator<Item> it) {
+    private boolean checkIdenticalInventory(Iterator<ContainerComponent> it) {
         while (it.hasNext()) {
-            Item item = it.next();
+            ContainerComponent item = it.next();
             if (!this.inventory.containsKey(item.getName())) {
                 return false;
             }
@@ -84,27 +114,33 @@ public class Player {
     }
 
     public boolean checkVictory(Player winner) {
-        Iterator<Item> it = winner.getInventoryIterator();
-        if (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize()) {
-            return true;
-        }
-        return false;
+        Iterator<ContainerComponent> it = winner.getInventoryIterator();
+        return (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize());
     }
 
-    public void move(Room room, Door door) {
-        System.out.println("Hello!");
+    public String enter(Door door) {
         if (!door.isLocked()) {
-            this.room = room;
+            this.room = door.getDestination();
+            return door.getName() +  " entered!";
         } else {
             Item key = door.getKey();
-            System.out.println(showInventory());
             if (inventory.containsValue(key)) {
                 door.unlock(key);
-                this.room = room;
-                System.out.println("Success!");
-                return;
+                this.room = door.getDestination();
+                return door.getName() + " entered!";
             }
-            System.out.println("Ey! Where do you go?! Room 2 is locked.");
+            return "You can't do that!";
         }
     }
+
+    public boolean cross(Room room) {
+        this.room = room;
+        System.out.println("Crossed!");
+        return true;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
 }

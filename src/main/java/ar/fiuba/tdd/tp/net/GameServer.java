@@ -1,5 +1,9 @@
 package ar.fiuba.tdd.tp.net;
 
+import ar.fiuba.tdd.tp.exceptions.GameNotFoundExcpetion;
+import ar.fiuba.tdd.tp.game.Controller;
+import ar.fiuba.tdd.tp.game.types.GameFactory;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,19 +13,23 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by fran on 22/04/16.
+  Created by fran on 22/04/16.
  */
 public class GameServer implements Runnable{
 
     private ServerSocket serverSocket;
+    Controller controller;
+    private GameFactory gameFactory;
 
-    public GameServer(int port) throws IOException {
+    public GameServer(int port, GameFactory gameFactory) throws IOException {
         this.serverSocket = new ServerSocket(port);
+        this.gameFactory = gameFactory;
     }
 
     public void run() {
         while (true) {
             try {
+                controller = new Controller(gameFactory.getGame());
                 Socket socket = acceptSocket();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
@@ -31,20 +39,25 @@ public class GameServer implements Runnable{
                 while (true) {
                     try {
                         String userInput = in.readLine();
-                        System.out.println("Received: " + userInput);
-                        sendMessage(out, userInput);
+                        String output = controller.interpretCommand(userInput);
+                        sendMessage(out, output);
                     } catch (IOException e) {
                         System.out.println("Read failed");
                         break;
                     }
+                    if (controller.verify()) {
+                        sendMessage(out,"You win!");
+                        socket.close();
+                        break;
+                    }
                 }
-            } catch (IOException ioe) {
-                System.out.println("Buffer failed");
+            } catch (Exception ioe) {
+                System.out.println("Error...");
             }
         }
     }
 
-    public Socket acceptSocket() {
+    private Socket acceptSocket() {
 
         Socket socket = null;
         try {
@@ -55,7 +68,8 @@ public class GameServer implements Runnable{
         return socket;
     }
 
-    public void sendMessage(DataOutputStream out, String message) throws IOException {
+    private void sendMessage(DataOutputStream out, String message) throws IOException {
         out.writeBytes(message + '\n');
     }
+
 }

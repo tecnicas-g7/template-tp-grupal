@@ -3,19 +3,25 @@ package ar.fiuba.tdd.tp.game.types;
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.PickAction;
+import ar.fiuba.tdd.tp.game.conditions.Condition;
+import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
-/**
- * Created by fran on 24/04/16.
- */
-public class StickGame {
+import java.util.ArrayList;
+import java.util.List;
 
-    public static Game getGame() {
+/*
+Created by fran on 24/04/16.
+*/
+
+public class StickGame implements GameFactory {
+
+    public Game getGame() {
         Room room = new Room("room");
 
         Item stick = new Item("stick");
         stick.addAction(new PickAction());
-        room.addItem(stick);
+        room.addContainerComponent(stick);
 
         Player player = new Player(room);
 
@@ -23,6 +29,18 @@ public class StickGame {
 
         game.addRoom(room);
 
+        List<ContainerComponent> items = new ArrayList<>();
+        items.add(stick);
+
+        Condition condition = new InventoryCondition(items, true);
+        game.addCondition(condition);
+
         return game;
     }
+
+    public String getHelp() {
+        return "The player will look for an item and find it to win";
+    }
+
+
 }
