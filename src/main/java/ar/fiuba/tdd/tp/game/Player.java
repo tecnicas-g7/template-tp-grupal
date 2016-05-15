@@ -16,7 +16,7 @@ public class Player {
 
     private HashMap<String,ContainerComponent> inventory;
     private int maxInventory;
-    private Room room;
+    private Location room;
 
     private Status status;
 
@@ -38,7 +38,7 @@ public class Player {
         alive, poisoned
     }
 
-    public Player(Room room) {
+    public Player(Location room) {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.room = room;
@@ -72,7 +72,7 @@ public class Player {
         throw new ItemNotFoundException();
     }
 
-    public Room getRoom() {
+    public Location getRoom() {
         return this.room;
     }
 
@@ -118,7 +118,7 @@ public class Player {
         return (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize());
     }
 
-    public String enter(Door door) {
+    public String enter(Linker door) {
         if (!door.isLocked()) {
             this.room = door.getDestination();
             return door.getName() +  " entered!";
@@ -133,13 +133,13 @@ public class Player {
         }
     }
 
-    public boolean cross(Room room) {
+    public boolean cross(Location room) {
         this.room = room;
         System.out.println("Crossed!");
         return true;
     }
 
-    public void setRoom(Room room) {
+    public void setRoom(Location room) {
         this.room = room;
     }
 

@@ -37,7 +37,7 @@ public class HanoiTower implements GameFactory {
         stack1.addComponent(pieza1);
 
         //agrego las 3 pilas al room
-        Room room1 = new Room("R1");
+        Location room1 = new Location("R1");
         room1.addContainerComponent(stack1);
         room1.addContainerComponent(stack2);
         room1.addContainerComponent(stack3);

@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.actions;
 
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 
 /*
@@ -14,7 +15,7 @@ public class OpenAction implements Action {
     }
 
     @Override
-    public String execute(String[] tokens, Player player, ContainerComponent item) {
+    public String execute(String[] tokens, Player player, Describable item) {
         return item.openContainer(player);
     }
 

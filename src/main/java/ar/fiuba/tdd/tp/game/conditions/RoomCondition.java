@@ -1,17 +1,17 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
+import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.Room;
 
 /**
  Created by fran on 25/04/16.
  */
 public class RoomCondition implements Condition {
 
-    private Room room;
+    private Location room;
     private boolean valid;
 
-    public RoomCondition(Room room, boolean valid) {
+    public RoomCondition(Location room, boolean valid) {
         this.room = room;
         this.valid = valid;
     }

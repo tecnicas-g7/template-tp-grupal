@@ -1,8 +1,8 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.Room;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.List;
@@ -15,9 +15,9 @@ public class RoomWithItemsCondition implements Condition {
 
 
     private List<Item> items;
-    private Room room;
+    private Location room;
 
-    public RoomWithItemsCondition(List<Item> items, Room room) {
+    public RoomWithItemsCondition(List<Item> items, Location room) {
         this.items = items;
         this.room = room;
     }

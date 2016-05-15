@@ -6,7 +6,7 @@ import ar.fiuba.tdd.tp.game.items.type.Type;
 
 import java.util.HashMap;
 
-public abstract class Describable implements ContainerComponent {
+public abstract class Describable {
 
     protected String name;
     private Type type;
@@ -45,12 +45,20 @@ public abstract class Describable implements ContainerComponent {
         return output.toString();
     }
 
-    @Override
+    //@Override
     public Type getType() {
         return type;
     }
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public String closeContainer() {
+        return "You cannot close " + name;
+    }
+
+    public String openContainer(Player player) {
+        return "You cannot open " + name;
     }
 }

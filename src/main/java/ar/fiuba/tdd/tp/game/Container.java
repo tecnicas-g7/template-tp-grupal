@@ -11,7 +11,7 @@ import java.util.HashMap;
 Created by javier on 4/25/16.
 */
 
-public class Container extends Describable {
+public class Container extends Describable implements ContainerComponent {
 
     private HashMap<String, ContainerComponent> components;
     private int maxSize;

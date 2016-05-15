@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game.actions;
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 
 /**
@@ -13,7 +14,7 @@ public class CheckAction implements Action {
     }
 
     @Override
-    public String execute(String[] tokens, Player player, ContainerComponent item) {
+    public String execute(String[] tokens, Player player, Describable item) {
         try {
             return "Size of top from " + tokens[1] + " is " + String.valueOf(player.getRoom().getItem(tokens[1]).getLast().getName());
         } catch (Exception e) {

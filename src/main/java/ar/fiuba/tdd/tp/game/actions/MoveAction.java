@@ -1,13 +1,10 @@
 package ar.fiuba.tdd.tp.game.actions;
 
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
-import ar.fiuba.tdd.tp.game.Container;
 import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
+import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.Room;
-import ar.fiuba.tdd.tp.game.items.Item;
-
-import java.util.Iterator;
 
 /**
  Created by ltessore on 28/04/16.
@@ -19,9 +16,9 @@ public class MoveAction implements Action {
     }
 
     @Override
-    public String execute(String[] tokens, Player player, ContainerComponent item) {
+    public String execute(String[] tokens, Player player, Describable item) {
         try {
-            Room room = player.getRoom();
+            Location room = player.getRoom();
             //String result = move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
             return move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
         } catch (MaxInventoryException e) {

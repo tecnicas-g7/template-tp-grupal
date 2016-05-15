@@ -3,7 +3,6 @@ package ar.fiuba.tdd.tp;
 
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.Room;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
@@ -23,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MainTests {
 
-    private Item createItemsWithCondition(String nameItem) {
+   /* private Item createItemsWithCondition(String nameItem) {
         Item itemWithActions = new Item(nameItem);
         itemWithActions.addAction(new PickAction());
         itemWithActions.addAction(new DropAction());
@@ -183,7 +182,7 @@ public class MainTests {
         controller.interpretCommand(command);
     }
 
-    public void makeRoomsAdjacent(Room room1, Room room2, Item key) {
+    public void makeRoomsAdjacent(Location room1, Location room2, Item key) {
         room1.addDoor(room2, key);
         room2.addDoor(room1, key);
     }
@@ -446,5 +445,5 @@ public class MainTests {
         Assert.assertTrue(riverCrossing.getPlayer().getRoom().getName().equals("south-shore"));
     }
 
-
+*/
 }

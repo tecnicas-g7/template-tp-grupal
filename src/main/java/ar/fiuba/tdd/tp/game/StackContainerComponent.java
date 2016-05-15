@@ -7,7 +7,7 @@ import java.util.Stack;
 /**
  Created by ltessore on 27/04/16.
  */
-public class StackContainerComponent extends Describable {
+public class StackContainerComponent extends Describable implements ContainerComponent {
 
     private Integer maxSize;
     private Stack<ContainerComponent> components;

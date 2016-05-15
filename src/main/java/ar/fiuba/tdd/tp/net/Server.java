@@ -24,13 +24,14 @@ public class Server {
         System.out.println("This is the Server");
 
         games = new HashMap<>();
-        games.put("boxGame", new BoxGame());
+        games.put("hanoiTower", new HanoiTower());
+        /*games.put("boxGame", new BoxGame());
         games.put("cursedItem", new CursedItem());
         games.put("enterRoom", new EnterRoom());
         games.put("hanoiTower", new HanoiTower());
         games.put("riverCrossing", new RiverCrossing());
         games.put("stickGame", new StickGame());
-        games.put("treasureGame", new TreasureGame());
+        games.put("treasureGame", new TreasureGame());*/
         loadGame();
 
         /*

@@ -12,7 +12,7 @@ Created by fran on 24/04/16.
 
 public class Game {
 
-    private List<Room> rooms;
+    private List<Location> rooms;
     private Player player;
     private List<Condition> conditions;
 
@@ -22,7 +22,7 @@ public class Game {
         this.conditions = new ArrayList<>();
     }
 
-    public void addRoom(Room room) {
+    public void addRoom(Location room) {
         this.rooms.add(room);
     }
 
@@ -66,11 +66,11 @@ public class Game {
     }
 
     String enter(String[] tokens) {
-        Room origin = player.getRoom();
-        Iterator<HashMap.Entry<String, Door>> it = origin.getDoorsIterator();
+        Location origin = player.getRoom();
+        Iterator<HashMap.Entry<String, Linker>> it = origin.getDoorsIterator();
         while (it.hasNext()) {
-            Door door = it.next().getValue();
-            Room destination = door.getDestination();
+            Linker door = it.next().getValue();
+            Location destination = door.getDestination();
             if (door.getName().equals(tokens[1]) && origin.validLeaveConditions(player) && destination.validEnterConditions(player)) {
                 return player.enter(door);
             }
@@ -78,7 +78,7 @@ public class Game {
         return "You can't do that!";
     }
 
-    private boolean validateEnterAndLeaveConditions(Room origin, Room destination) {
+    private boolean validateEnterAndLeaveConditions(Location origin, Location destination) {
         return origin.validLeaveConditions(player) && destination.validEnterConditions(player);
     }
 

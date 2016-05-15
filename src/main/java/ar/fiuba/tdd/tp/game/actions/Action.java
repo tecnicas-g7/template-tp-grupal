@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.game.actions;
 
-import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 
 /*
@@ -11,6 +11,6 @@ public interface Action {
 
     String getName();
 
-    String execute(String[] tokens, Player player, ContainerComponent item);
+    String execute(String[] tokens, Player player, Describable item);
 
 }
