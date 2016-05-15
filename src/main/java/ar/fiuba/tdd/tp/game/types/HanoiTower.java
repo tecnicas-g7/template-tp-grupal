@@ -1,6 +1,5 @@
 package ar.fiuba.tdd.tp.game.types;
 
-import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.*;
 
 import ar.fiuba.tdd.tp.game.actions.CheckAction;
@@ -9,7 +8,6 @@ import ar.fiuba.tdd.tp.game.conditions.ContainerCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
