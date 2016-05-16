@@ -13,7 +13,7 @@ Created by javier on 4/25/16.
 
 public class Container extends Describable implements ContainerComponent {
 
-    private HashMap<String, ContainerComponent> components;
+    private HashMap<String, Describable> components;
     private int maxSize;
     private boolean hasPoison;
     private boolean open;
@@ -71,13 +71,13 @@ public class Container extends Describable implements ContainerComponent {
         return this.name + " has been closed.";
     }
 
-    public void removeComponent(ContainerComponent component) {
-        Util.removeComponent(components,component.getName());
+    public void removeComponent(Describable component) {
+        Util.removeDescribable(components,component.getName());
     }
 
-    public ContainerComponent getChild(String name) {
+    public Describable getChild(String name) {
         if (open) {
-            return Util.getContainerComponent(components, name);
+            return Util.getDescribable(components, name);
         }
         throw new ItemNotFoundException();
     }
@@ -87,7 +87,7 @@ public class Container extends Describable implements ContainerComponent {
         return type;
     }
 
-    public void addComponent(ContainerComponent component) throws FullCapacityReachedException {
+    public void addComponent(Describable component) throws FullCapacityReachedException {
         if (components.size() < this.maxSize) {
             components.put(component.getName(), component);
         } else {

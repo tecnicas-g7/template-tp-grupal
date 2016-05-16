@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
-import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.utils.Util;
 
@@ -12,9 +12,9 @@ Created by fran on 25/04/16.
 
 public class RoomInventoryCondition implements Condition {
 
-    private List<ContainerComponent> inventory;
+    private List<Describable> inventory;
 
-    public RoomInventoryCondition(List<ContainerComponent> items) {
+    public RoomInventoryCondition(List<Describable> items) {
         this.inventory = items;
     }
 

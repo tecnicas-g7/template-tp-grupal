@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
 import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.utils.Util;
 
@@ -12,10 +13,10 @@ Created by fran on 25/04/16.
 
 public class InventoryCondition implements Condition {
 
-    private List<ContainerComponent> inventory;
+    private List<Describable> inventory;
     private boolean valid;
 
-    public InventoryCondition(List<ContainerComponent> items, boolean valid) {
+    public InventoryCondition(List<Describable> items, boolean valid) {
         this.inventory = items;
         this.valid = valid;
     }

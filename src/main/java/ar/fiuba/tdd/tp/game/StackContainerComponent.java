@@ -10,7 +10,7 @@ import java.util.Stack;
 public class StackContainerComponent extends Describable implements ContainerComponent {
 
     private Integer maxSize;
-    private Stack<ContainerComponent> components;
+    private Stack<Describable> components;
 
     public StackContainerComponent(String name, int maxSize) {
         super(name);
@@ -18,7 +18,7 @@ public class StackContainerComponent extends Describable implements ContainerCom
         this.components = new Stack<>();
     }
 
-    public void addComponent(ContainerComponent component)  throws FullCapacityReachedException {
+    public void addComponent(Describable component)  throws FullCapacityReachedException {
         if (components.size() < this.maxSize) {
             components.add(component);
         } else {
@@ -26,7 +26,7 @@ public class StackContainerComponent extends Describable implements ContainerCom
         }
     }
 
-    public ContainerComponent getLast() {
+    public Describable getLast() {
         return components.lastElement();
     }
 

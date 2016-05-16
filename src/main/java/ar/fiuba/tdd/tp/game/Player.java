@@ -14,7 +14,7 @@ public class Player {
 
     private static final int DEFAULT_MAX_INVENTORY = 10;
 
-    private HashMap<String,ContainerComponent> inventory;
+    private HashMap<String,Describable> inventory;
     private int maxInventory;
     private Location room;
 
@@ -26,7 +26,7 @@ public class Player {
     }*/
 
     public String openContainer(String name) {
-        ContainerComponent component = room.getItem(name);
+        Describable component = room.getItem(name);
         return component.openContainer(this);
     }
 
@@ -53,7 +53,7 @@ public class Player {
         this.status = newStatus;
     }
 
-    public void addItem(ContainerComponent item) throws MaxInventoryException {
+    public void addItem(Describable item) throws MaxInventoryException {
         if (inventory.size() == maxInventory) {
             throw new MaxInventoryException();
         }
@@ -64,8 +64,8 @@ public class Player {
         this.inventory.remove(name);
     }
 
-    public ContainerComponent getItem(String name) throws ItemNotFoundException {
-        ContainerComponent item = this.inventory.get(name);
+    public Describable getItem(String name) throws ItemNotFoundException {
+        Describable item = this.inventory.get(name);
         if (item != null) {
             return item;
         }
@@ -95,17 +95,17 @@ public class Player {
         return this.inventory.size();
     }
 
-    public HashMap<String,ContainerComponent> getInventory() {
+    public HashMap<String,Describable> getInventory() {
         return this.inventory;
     }
 
-    private Iterator<ContainerComponent> getInventoryIterator() {
+    private Iterator<Describable> getInventoryIterator() {
         return this.inventory.values().iterator();
     }
 
-    private boolean checkIdenticalInventory(Iterator<ContainerComponent> it) {
+    private boolean checkIdenticalInventory(Iterator<Describable> it) {
         while (it.hasNext()) {
-            ContainerComponent item = it.next();
+            Describable item = it.next();
             if (!this.inventory.containsKey(item.getName())) {
                 return false;
             }
@@ -114,7 +114,7 @@ public class Player {
     }
 
     public boolean checkVictory(Player winner) {
-        Iterator<ContainerComponent> it = winner.getInventoryIterator();
+        Iterator<Describable> it = winner.getInventoryIterator();
         return (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize());
     }
 

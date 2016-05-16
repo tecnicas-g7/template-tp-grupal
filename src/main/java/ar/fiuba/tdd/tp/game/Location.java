@@ -13,7 +13,7 @@ Created by fran on 24/04/16.
 
 public class Location {
 
-    private HashMap<String,ContainerComponent> items;
+    private HashMap<String,Describable> items;
 
     private HashMap<String, Linker> doors;
 
@@ -30,19 +30,19 @@ public class Location {
         this.leaveConditions = new ArrayList<>();
     }
 
-    public ContainerComponent getItem(String name) throws ItemNotFoundException {
-        return Util.getContainerComponent(items,name);
+    public Describable getItem(String name) throws ItemNotFoundException {
+        return Util.getDescribable(items,name);
     }
 
-    public void addContainerComponent( ContainerComponent item) {
+    public void addDescribable( Describable item) {
         this.items.put(item.getName(), item);
     }
 
     public void removeItem(String name) {
-        Util.removeComponent(items,name);
+        Util.removeDescribable(items,name);
     }
 
-    public Iterator<Map.Entry<String, ContainerComponent>> getItemsIterator() {
+    public Iterator<Map.Entry<String, Describable>> getItemsIterator() {
         return this.items.entrySet().iterator();
     }
 
@@ -98,7 +98,7 @@ public class Location {
         return null;
     }
 
-    public HashMap<String, ContainerComponent> getItems() {
+    public HashMap<String, Describable> getItems() {
         return items;
     }
 
@@ -126,5 +126,4 @@ public class Location {
     boolean validLeaveConditions(Player player) {
         return Util.checkConditions(this.leaveConditions, player);
     }
-
 }

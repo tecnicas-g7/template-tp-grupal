@@ -61,4 +61,28 @@ public abstract class Describable {
     public String openContainer(Player player) {
         return "You cannot open " + name;
     }
+
+    public Describable getChild(String name) {
+        return null;
+    }
+
+    public String look() {
+        return getName();
+    }
+
+    public void removeComponent(Describable item) {
+
+    }
+
+    public void addComponent(Describable item) {
+
+    }
+
+    public Integer getSize() {
+        return null;
+    }
+
+    public Describable getLast() {
+        return null;
+    }
 }

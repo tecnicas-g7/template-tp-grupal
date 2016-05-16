@@ -27,12 +27,12 @@ public class MoveAction implements Action {
         }
     }
 
-    private String move(Player player, ContainerComponent stackFrom, ContainerComponent stackAfter) throws MaxInventoryException {
+    private String move(Player player, Describable stackFrom, Describable stackAfter) throws MaxInventoryException {
 
         boolean isValid = isMovementValid(stackFrom,stackAfter);
 
         if (isValid) {
-            ContainerComponent item = stackFrom.getLast();
+            Describable item = stackFrom.getLast();
             stackFrom.removeComponent(item);
             stackAfter.addComponent(item);
             isValid = true;
@@ -40,14 +40,14 @@ public class MoveAction implements Action {
         return (isValid) ? "moved!" : "can't move!";
     }
 
-    private Boolean isMovementValid(ContainerComponent stackFrom, ContainerComponent stackAfter) {
+    private Boolean isMovementValid(Describable stackFrom, Describable stackAfter) {
         //chequea si el ultimo del stackAfter es mas grande del que tiene el player
         if (stackFrom.getSize() > 0) {
             if (stackAfter.getSize() == 0) {
                 return true;
             } else {
-                ContainerComponent from = stackFrom.getLast();
-                ContainerComponent after = stackAfter.getLast();
+                Describable from = stackFrom.getLast();
+                Describable after = stackAfter.getLast();
                 if ((Integer.parseInt(after.getName()) > Integer.parseInt(from.getName()))) {
                     return true;
                 }

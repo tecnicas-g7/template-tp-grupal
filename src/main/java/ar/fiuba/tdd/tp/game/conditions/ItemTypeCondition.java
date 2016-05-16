@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
-import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
 
@@ -17,7 +17,7 @@ public class ItemTypeCondition implements Condition {
     //Chequeamos si hay conflictos con los elementos dentro de la room
 
     private Boolean hasConflictsInRoom(Location room) {
-        for (ContainerComponent item: room.getItems().values() ) {
+        for (Describable item: room.getItems().values() ) {
             if (room.getItems().values().parallelStream().anyMatch(
                     item1 -> item1.getType().isEnemy(item.getType()))) {
                 return true;

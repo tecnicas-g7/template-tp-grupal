@@ -36,9 +36,9 @@ public class HanoiTower implements GameFactory {
 
         //agrego las 3 pilas al room
         Location room1 = new Location("R1");
-        room1.addContainerComponent(stack1);
-        room1.addContainerComponent(stack2);
-        room1.addContainerComponent(stack3);
+        room1.addDescribable(stack1);
+        room1.addDescribable(stack2);
+        room1.addDescribable(stack3);
 
         Player player = new Player(room1);
         player.setMaxInventory(1);

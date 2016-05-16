@@ -8,16 +8,12 @@ Created by javier on 4/27/16.
 */
 
 public interface ContainerComponent {
-    default void addComponent(ContainerComponent component) {
+   /* default void addComponent(ContainerComponent component) {
 
-    }
+    }*/
 
     default void removeComponent(ContainerComponent component) {
 
-    }
-
-    default ContainerComponent getChild(String name) {
-        return null;
     }
 
     String getName();
@@ -28,10 +24,6 @@ public interface ContainerComponent {
 
     default String openContainer(Player player) {
         return "";
-    }
-
-    default ContainerComponent getLast() {
-        return null;
     }
 
     default Integer getSize() {

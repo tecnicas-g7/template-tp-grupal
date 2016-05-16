@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.utils;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.ContainerComponent;
+import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 
@@ -16,8 +17,8 @@ Created by fran on 26/04/16.
 
 public class Util {
 
-    public static boolean itemsInInventory(List<ContainerComponent> list, HashMap<String,ContainerComponent> inventory) {
-        for (ContainerComponent item : list) {
+    public static boolean itemsInInventory(List<Describable> list, HashMap<String,Describable> inventory) {
+        for (Describable item : list) {
             if (!inventory.containsValue(item)) {
                 return false;
             }
@@ -34,7 +35,7 @@ public class Util {
         return  true;
     }
 
-    public static ContainerComponent getContainerComponent(HashMap<String,ContainerComponent> components, String name)
+   /* public static ContainerComponent getContainerComponent(HashMap<String,ContainerComponent> components, String name)
             throws ItemNotFoundException {
         ContainerComponent item = components.get(name);
         if (item != null) {
@@ -65,6 +66,38 @@ public class Util {
                 }
             }
         }
+    }*/
+
+    public static Describable getDescribable(HashMap<String, Describable> items, String name)
+        throws ItemNotFoundException {
+        Describable item = items.get(name);
+        if (item != null) {
+            return item;
+        }
+        Iterator<Map.Entry<String, Describable>> iterator = items.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Describable container = iterator.next().getValue();
+            item = container.getChild(name);
+            if (item != null) {
+                return item;
+            }
+        }
+        throw new ItemNotFoundException();
     }
 
+    public static void removeDescribable(HashMap<String, Describable> items, String name) {
+        if (items.get(name) != null) {
+            items.remove(name);
+        } else {
+            Iterator<Map.Entry<String, Describable>> iterator = items.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Describable container = iterator.next().getValue();
+                Describable item = container.getChild(name);
+                if (item != null) {
+                    container.removeComponent(item);
+                    return;
+                }
+            }
+        }
+    }
 }

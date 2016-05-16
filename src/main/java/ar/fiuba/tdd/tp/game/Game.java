@@ -39,7 +39,7 @@ public class Game {
         }
 
         try {
-            ContainerComponent item = findItem(objectName);
+            Describable item = findItem(objectName);
             if (item != null) {
                 return item.executeAction(tokens,this.player);
             }
@@ -49,7 +49,7 @@ public class Game {
         return null;
     }
 
-    private ContainerComponent findItem(String objectName) throws ItemNotFoundException {
+    private Describable findItem(String objectName) throws ItemNotFoundException {
         try {
             return this.player.getItem(objectName);
         } catch (ItemNotFoundException e) {
@@ -102,7 +102,7 @@ public class Game {
         }
         String name = tokens[1];
         try {
-            ContainerComponent item = findItem(name);
+            Describable item = findItem(name);
             if (item != null) {
                 return item.showActions();
             }
