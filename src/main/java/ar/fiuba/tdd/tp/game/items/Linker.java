@@ -1,5 +1,7 @@
-package ar.fiuba.tdd.tp.game;
+package ar.fiuba.tdd.tp.game.items;
 
+import ar.fiuba.tdd.tp.game.Location;
+import ar.fiuba.tdd.tp.game.items.Describable;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.type.Type;
 

@@ -1,6 +1,8 @@
-package ar.fiuba.tdd.tp.game;
+package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.exceptions.FullCapacityReachedException;
+import ar.fiuba.tdd.tp.game.items.ContainerComponent;
+import ar.fiuba.tdd.tp.game.items.Describable;
 
 import java.util.Stack;
 

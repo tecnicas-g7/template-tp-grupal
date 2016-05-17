@@ -1,6 +1,7 @@
-package ar.fiuba.tdd.tp.game;
+package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.type.Type;
 
 /*
