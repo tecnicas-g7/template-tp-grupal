@@ -2,7 +2,9 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
+import ar.fiuba.tdd.tp.game.items.Describable;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.Linker;
 
 import java.util.*;
 
@@ -10,7 +12,7 @@ import java.util.*;
 Created by fran on 24/04/16.
 */
 
-public class Player {
+public class Player implements HasItems {
 
     private static final int DEFAULT_MAX_INVENTORY = 10;
 
@@ -19,11 +21,6 @@ public class Player {
     private Location room;
 
     private Status status;
-
-    //Se cambia por el metodo de abajo
-    /*public void openRoomContainer(String name) {
-        room.openContainer(name);
-    }*/
 
     public String openContainer(String name) {
         Describable component = room.getItem(name);
@@ -91,7 +88,7 @@ public class Player {
         return output.toString();
     }
 
-    private int getInventorySize() {
+    public int getInventorySize() {
         return this.inventory.size();
     }
 
@@ -131,12 +128,6 @@ public class Player {
             }
             return "You can't do that!";
         }
-    }
-
-    public boolean cross(Location room) {
-        this.room = room;
-        System.out.println("Crossed!");
-        return true;
     }
 
     public void setRoom(Location room) {

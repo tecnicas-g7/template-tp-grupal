@@ -1,19 +1,18 @@
 package ar.fiuba.tdd.tp.game.utils;
 
+/*
+Created by fran on 26/04/16.
+*/
+
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.game.ContainerComponent;
-import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
+import ar.fiuba.tdd.tp.game.items.Describable;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-/*
-Created by fran on 26/04/16.
-*/
 
 public class Util {
 

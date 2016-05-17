@@ -1,8 +1,10 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
-import ar.fiuba.tdd.tp.game.ContainerComponent;
+
+
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.items.ContainerComponent;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.List;

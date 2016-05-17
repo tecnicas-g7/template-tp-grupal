@@ -4,6 +4,8 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
+import ar.fiuba.tdd.tp.game.items.Container;
+import ar.fiuba.tdd.tp.game.items.Describable;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.ArrayList;
@@ -17,21 +19,21 @@ public class TreasureGame implements GameFactory {
     public Game getGame() {
         Location room1 = new Location("Room1");
         Location room2 = new Location("Room2");
-
-        createComponentsFirstRoom(room1, room2);
+        Player player = new Player(room1);
+        createComponentsFirstRoom(room1, room2, player);
 
         Location room3 = new Location("Room3");
         Location room4 = new Location("Room4");
         Location room5 = new Location("Room5");
 
-        createComponentsSecondRoom(room2, room3, room4);
-        createComponentsThirdRoom(room3, room4, room5);
+        createComponentsSecondRoom(room2, room3, room4, player);
+        createComponentsThirdRoom(room3, room4, room5, player);
 
         Item treasure = new Item("treasure");
 
-        createComponentsFifthRoom(room5, treasure);
+        createComponentsFifthRoom(room5, treasure, player);
 
-        Player player = new Player(room1);
+
         player.setMaxInventory(2);
 
         Game game = new Game(player);
@@ -54,52 +56,52 @@ public class TreasureGame implements GameFactory {
         game.addRoom(room5);
     }
 
-    private static void createComponentsFirstRoom(Location room1, Location room2) {
+    private static void createComponentsFirstRoom(Location room1, Location room2, Player player) {
         Item key = new Item("key");
-        addPickDrop(key);
+        addPickDrop(key, player);
         Container box = new Container("box",1);
         addOpenClose(box);
         box.addComponent(key);
-        room1.addDescribable(box);
+        room1.addItem(box);
         room1.addDoor(room2, key);
         room2.addDoor(room1, null);
     }
 
-    private static void createComponentsSecondRoom(Location room2, Location room3, Location room4) {
+    private static void createComponentsSecondRoom(Location room2, Location room3, Location room4, Player player) {
         room2.addDoor(room3, null);
         room2.addDoor(room4, null);
         room3.addDoor(room2,null);
         room4.addDoor(room2,null);
     }
 
-    private static void createComponentsThirdRoom(Location room3, Location room4, Location room5) {
+    private static void createComponentsThirdRoom(Location room3, Location room4, Location room5, Player player) {
         Container trunk = new Container("trunk", 10);
         addOpenClose(trunk);
         Item antidote = new Item("antidote");
-        addPickDrop(antidote);
+        addPickDrop(antidote, player);
         antidote.addAction(new DrinkAction());
         Container box = new Container("box",1);
         addOpenClose(box);
         Item key = new Item("key2");
-        addPickDrop(key);
+        addPickDrop(key, player);
         box.addComponent(key);
         box.yesPoison();
         trunk.addComponent(antidote);
         trunk.addComponent(box);
-        room3.addDescribable(trunk);
+        room3.addItem(trunk);
         room4.addDoor(room5, key);
         room5.addDoor(room4,null);
         room3.addLeaveCondition(new PlayerStateCondition(Player.Status.poisoned));
     }
 
-    private static void createComponentsFifthRoom(Location room5, Item treasure) {
-        addPickDrop(treasure);
-        room5.addDescribable(treasure);
+    private static void createComponentsFifthRoom(Location room5, Item treasure, Player player) {
+        addPickDrop(treasure, player);
+        room5.addItem(treasure);
     }
 
-    private static void addPickDrop(Item item) {
-        item.addAction(new PickAction());
-        item.addAction(new DropAction());
+    private static void addPickDrop(Item item, Player player) {
+        item.addAction(new MoveItemAction(null,player,"pick"));
+        item.addAction(new MoveItemAction(player,null,"drop"));
     }
 
     private static void addOpenClose(Container container) {

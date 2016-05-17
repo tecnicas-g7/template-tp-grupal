@@ -1,8 +1,9 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
-import ar.fiuba.tdd.tp.game.Describable;
+
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.items.Describable;
 
 /**
  Created by nico on 27/04/16.

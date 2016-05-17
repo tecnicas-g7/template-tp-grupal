@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.StackContainerComponent;
+import ar.fiuba.tdd.tp.game.items.StackContainerComponent;
 
 import java.util.List;
 

@@ -2,7 +2,9 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
+import ar.fiuba.tdd.tp.game.items.Describable;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.Linker;
 import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.*;
@@ -11,7 +13,7 @@ import java.util.*;
 Created by fran on 24/04/16.
 */
 
-public class Location {
+public class Location implements HasItems {
 
     private HashMap<String,Describable> items;
 
@@ -34,25 +36,28 @@ public class Location {
         return Util.getDescribable(items,name);
     }
 
-    public void addDescribable( Describable item) {
+    public void addItem(Describable item) {
         this.items.put(item.getName(), item);
+    }
+
+    @Override
+    public int getInventorySize() {
+        return this.items.size();
+    }
+
+    @Override
+    public HashMap<String, Describable> getInventory() {
+        return items;
     }
 
     public void removeItem(String name) {
         Util.removeDescribable(items,name);
     }
 
-    public Iterator<Map.Entry<String, Describable>> getItemsIterator() {
-        return this.items.entrySet().iterator();
-    }
-
     Iterator<Map.Entry<String, Linker>> getDoorsIterator() {
         return this.doors.entrySet().iterator();
     }
 
-    public Set<String> getItemsNames() {
-        return items.keySet();
-    }
 
     public String look() {
         StringBuilder output = new StringBuilder("You are in " + name + "  ");
@@ -101,11 +106,6 @@ public class Location {
     public HashMap<String, Describable> getItems() {
         return items;
     }
-
-    /*public void openContainer(String name) {
-        ContainerComponent component = getItem(name);
-        component.openContainer();
-    }*/
 
     public String getName() {
         return name;

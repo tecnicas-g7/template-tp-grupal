@@ -6,6 +6,7 @@ import ar.fiuba.tdd.tp.game.actions.CheckAction;
 import ar.fiuba.tdd.tp.game.actions.MoveAction;
 import ar.fiuba.tdd.tp.game.conditions.ContainerCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.StackContainerComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,9 @@ public class HanoiTower implements GameFactory {
 
         //agrego las 3 pilas al room
         Location room1 = new Location("R1");
-        room1.addDescribable(stack1);
-        room1.addDescribable(stack2);
-        room1.addDescribable(stack3);
+        room1.addItem(stack1);
+        room1.addItem(stack2);
+        room1.addItem(stack3);
 
         Player player = new Player(room1);
         player.setMaxInventory(1);

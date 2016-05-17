@@ -38,31 +38,31 @@ public class RiverCrossing implements GameFactory {
         Player player = new Player(leftShore);
         player.setMaxInventory(1);
 
-        createComponents().forEach(item -> leftShore.addDescribable(item));
+        createComponents(player).forEach(item -> leftShore.addItem(item));
 
         Game game = new Game(player);
 
         game.addRoom(leftShore);
         game.addRoom(rightShore);
 
-        game.addCondition(setWinCondition(rightShore));
+        game.addCondition(setWinCondition(rightShore,player));
 
         return game;
     }
 
-    private static List<Item> createComponents() {
+    private static List<Item> createComponents(Player player) {
 
         Item sheep = new Item("sheep");
         sheep.setType(new HerbivorousType());
-        sheep = addActions(sheep);
+        sheep = addActions(sheep,player);
 
         Item wolf = new Item("wolf");
         wolf.setType(new CarnivorousType());
-        wolf = addActions(wolf);
+        wolf = addActions(wolf,player);
 
         Item cabbage = new Item("cabbage");
         cabbage.setType(new PlantType());
-        cabbage = addActions(cabbage);
+        cabbage = addActions(cabbage,player);
 
         List<Item> items = new ArrayList<>();
         items.add(sheep);
@@ -72,16 +72,16 @@ public class RiverCrossing implements GameFactory {
         return items;
     }
 
-    private static Item addActions(Item item) {
-        PickAction take = new PickAction("take");
-        DropAction leave = new DropAction("leave");
+    private static Item addActions(Item item, Player player) {
+        MoveItemAction take = new MoveItemAction(null,player,"take");
+        MoveItemAction leave = new MoveItemAction(player,null,"leave");
         item.addAction(take);
         item.addAction(leave);
         return item;
     }
 
-    private static RoomWithItemsCondition setWinCondition(Location room) {
-        return new RoomWithItemsCondition(createComponents(), room);
+    private static RoomWithItemsCondition setWinCondition(Location room, Player player) {
+        return new RoomWithItemsCondition(createComponents(player), room);
     }
 
     public String getHelp() {

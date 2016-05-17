@@ -2,8 +2,7 @@ package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.exceptions.FullCapacityReachedException;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.game.ContainerComponent;
-import ar.fiuba.tdd.tp.game.Describable;
+import ar.fiuba.tdd.tp.game.HasItems;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.type.Type;
 import ar.fiuba.tdd.tp.game.utils.Util;

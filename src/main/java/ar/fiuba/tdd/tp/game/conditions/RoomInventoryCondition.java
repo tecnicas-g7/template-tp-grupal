@@ -1,7 +1,9 @@
 package ar.fiuba.tdd.tp.game.conditions;
 
-import ar.fiuba.tdd.tp.game.Describable;
+
+
 import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.items.Describable;
 import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.List;

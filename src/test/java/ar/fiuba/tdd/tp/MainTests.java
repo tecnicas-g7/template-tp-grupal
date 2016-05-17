@@ -6,7 +6,7 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
-import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.*;
 import ar.fiuba.tdd.tp.game.types.*;
 
 import org.junit.Assert;
@@ -21,31 +21,33 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class MainTests {
-
-   /* private Item createItemsWithCondition(String nameItem) {
+/*
+    private Item createItemsWithCondition(String nameItem, Player player) {
         Item itemWithActions = new Item(nameItem);
-        itemWithActions.addAction(new PickAction());
-        itemWithActions.addAction(new DropAction());
+        itemWithActions.addAction(new MoveItemAction(null,player,"pick"));
+        itemWithActions.addAction(new MoveItemAction(player,null,"drop"));
         return itemWithActions;
     }
 
     private Game getGameCondition() {
-        Item key = createItemsWithCondition("key");
-        Item mouse = createItemsWithCondition("mouse");
-        Item stick = createItemsWithCondition("stick");
-        Room room1 = new Room("Room1");
-        room1.addContainerComponent(key);
-        room1.addContainerComponent(mouse);
-        room1.addContainerComponent(stick);
-        Room room2 = new Room("Room2");
+        Location room1 = new Location("Room1");
         Player player = new Player(room1);
+        Item key = createItemsWithCondition("key", player);
+        Item mouse = createItemsWithCondition("mouse", player);
+        Item stick = createItemsWithCondition("stick", player);
+
+        room1.addItem(key);
+        room1.addItem(mouse);
+        room1.addItem(stick);
+        Location room2 = new Location("Room2");
+
         player.setMaxInventory(2);
         room1.addDoor(room2,key);
         room2.addDoor(room1,key);
         Game game = new Game(player);
         game.addRoom(room1);
         game.addRoom(room2);
-        List<ContainerComponent> items = new ArrayList<>(Arrays.asList(stick,key));
+        List<Describable> items = new ArrayList<>(Arrays.asList(stick,key));
         // items.add(stick);
         //  items.add(key);
         game.addCondition(new InventoryCondition(items,true));
@@ -112,7 +114,7 @@ public class MainTests {
 
         assertTrue(cursedItem.verifyVictory());
     }
-
+/*
     @Test
     public void hanoiTower() {
 
@@ -188,46 +190,17 @@ public class MainTests {
     }
 
     @Test
-    public void openDoor2() {
-        Item key = new Item("key");
-        key.addAction(new PickAction());
-        Room room1 = new Room("Room 1");
-        Container container = new Container("Box",1);
-        container.addComponent(key);
-        room1.addContainerComponent(container);
-        Room room2 = new Room("Room 2");
-        Player player = new Player(room1);
-        Player player2 = new Player(room2);
-        makeRoomsAdjacent(room1, room2, key);
-        Door door = room1.getDestinationDoor(room2);
-        String command = "pick key";
-        try {
-            player.openContainer("Box");
-            key.executeAction(command.split(" "), player);
-        } catch (Exception e) {
-            //Do nothing
-        }
-        try {
-            player2.addItem(key);
-        } catch (Exception e) {
-            //Do nothing
-        }
-        player.enter(door);
-        assertTrue(player.checkVictory(player2));
-    }
-
-    @Test
     public void cantEnterDoor() {
         Item key = new Item("key");
-        Room room1 = new Room("Room 1");
+        Location room1 = new Location("Room 1");
         Container container = new Container("Box",1);
         container.addComponent(key);
-        room1.addContainerComponent(container);
-        Room room2 = new Room("Room 2");
+        room1.addItem(container);
+        Location room2 = new Location("Room 2");
         Player player2 = new Player(room2);
         room1.addDoor(room2,key);
         room2.addDoor(room1,key);
-        Door door = room1.getDestinationDoor(room2);
+        Linker door = room1.getDestinationDoor(room2);
         try {
             container.openContainer(player2);
             player2.addItem(room2.getItem("key"));
@@ -243,7 +216,7 @@ public class MainTests {
     public void takeAntidoteWhilePoisoned() {
         Item antidote = new Item("antidote");
         antidote.addAction(new DrinkAction());
-        Room room = new Room("room");
+        Location room = new Location("room");
         Player player = new Player(room);
         player.changeStatus(Player.Status.poisoned);
         String command = "drink antidote";
@@ -259,7 +232,7 @@ public class MainTests {
     public void takeAntidoteWhileNotPoisoned() {
         Item antidote = new Item("antidote");
         antidote.addAction(new DrinkAction());
-        Room room = new Room("room");
+        Location room = new Location("room");
         Player player = new Player(room);
         String command = "drink antidote";
         try {
@@ -273,7 +246,7 @@ public class MainTests {
     // El jugador no se envenena
     @Test
     public void noPoison() {
-        Room room1 = new Room("Room 1");
+        Location room1 = new Location("Room 1");
         Container container = new Container("Box",1);
         container.noPoison();
         Player player = new Player(room1);
@@ -288,7 +261,7 @@ public class MainTests {
     // El jugador se envenena
     @Test
     public void yesPoison() {
-        Room room1 = new Room("Room 1");
+        Location room1 = new Location("Room 1");
         Container container = new Container("Box",1);
         container.yesPoison();
         Player player = new Player(room1);
@@ -328,16 +301,16 @@ public class MainTests {
     @Test
     public void lookAroundTest() {
         Item key = new Item("key");
-        Room room1 = new Room("Room 1");
+        Location room1 = new Location("Room 1");
         Container container = new Container("Box",1);
         container.addComponent(key);
-        room1.addContainerComponent(container);
+        room1.addItem(container);
         Container container1 = new Container("Baul",10);
         Container container2 = new Container("Box2",1);
         Item stick = new Item("Stick");
         container2.addComponent(stick);
         container1.addComponent(container2);
-        room1.addContainerComponent(container1);
+        room1.addItem(container1);
         Player player = new Player(room1);
         player.openContainer("Baul");
         System.out.println(room1.look());
@@ -444,6 +417,6 @@ public class MainTests {
         //No se pudo mover.
         Assert.assertTrue(riverCrossing.getPlayer().getRoom().getName().equals("south-shore"));
     }
-
 */
+
 }

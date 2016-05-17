@@ -1,10 +1,11 @@
 package ar.fiuba.tdd.tp.game.types;
 
 import ar.fiuba.tdd.tp.game.*;
-import ar.fiuba.tdd.tp.game.actions.PickAction;
+import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.actions.ThiefAction;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
+import ar.fiuba.tdd.tp.game.items.Describable;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class CursedItem implements GameFactory {
         Location room2 = new Location("Room2");
 
         Item cursedItem = new Item("cursed_item");
-        cursedItem.addAction(new PickAction());
 
-        room1.addDescribable(cursedItem);
+
+        room1.addItem(cursedItem);
         createItemsSecondRoom(room2);
 
         Location room3 = new Location("Room3");
@@ -31,7 +32,7 @@ public class CursedItem implements GameFactory {
         addRoomConditions(room2,room3,cursedItem);
 
         Player player = new Player(room1);
-
+        cursedItem.addAction(new MoveItemAction(null,player,"pick"));
         room1.addDoor(room2,null);
 
         room2.addDoor(room3,null);
@@ -51,7 +52,7 @@ public class CursedItem implements GameFactory {
         Item thief = new Item("thief");
         thief.addAction(new ThiefAction());
 
-        room.addDescribable(thief);
+        room.addItem(thief);
     }
 
     private static void addRoomConditions(Location room2, Location room3, Describable cursedItem) {

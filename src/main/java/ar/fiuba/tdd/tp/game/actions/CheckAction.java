@@ -1,8 +1,8 @@
 package ar.fiuba.tdd.tp.game.actions;
 
-import ar.fiuba.tdd.tp.game.ContainerComponent;
-import ar.fiuba.tdd.tp.game.Describable;
 import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.items.Describable;
+
 
 /**
  Created by ltessore on 28/04/16.
