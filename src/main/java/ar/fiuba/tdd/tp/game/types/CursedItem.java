@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.actions.ThiefAction;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
-import ar.fiuba.tdd.tp.game.items.Describable;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.ArrayList;
@@ -55,8 +55,8 @@ public class CursedItem implements GameFactory {
         room.addItem(thief);
     }
 
-    private static void addRoomConditions(Location room2, Location room3, Describable cursedItem) {
-        List<Describable> items = new ArrayList<>();
+    private static void addRoomConditions(Location room2, Location room3, Actionable cursedItem) {
+        List<Actionable> items = new ArrayList<>();
         items.add(cursedItem);
 
         room2.addEnterCondition(new InventoryCondition(items, true));

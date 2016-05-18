@@ -2,7 +2,7 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
-import ar.fiuba.tdd.tp.game.items.Describable;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
 import ar.fiuba.tdd.tp.game.utils.Util;
@@ -15,7 +15,7 @@ Created by fran on 24/04/16.
 
 public class Location implements HasItems {
 
-    private HashMap<String,Describable> items;
+    private HashMap<String,Actionable> items;
 
     private HashMap<String, Linker> doors;
 
@@ -32,11 +32,11 @@ public class Location implements HasItems {
         this.leaveConditions = new ArrayList<>();
     }
 
-    public Describable getItem(String name) throws ItemNotFoundException {
+    public Actionable getItem(String name) throws ItemNotFoundException {
         return Util.getDescribable(items,name);
     }
 
-    public void addItem(Describable item) {
+    public void addItem(Actionable item) {
         this.items.put(item.getName(), item);
     }
 
@@ -46,7 +46,7 @@ public class Location implements HasItems {
     }
 
     @Override
-    public HashMap<String, Describable> getInventory() {
+    public HashMap<String, Actionable> getInventory() {
         return items;
     }
 
@@ -103,7 +103,7 @@ public class Location implements HasItems {
         return null;
     }
 
-    public HashMap<String, Describable> getItems() {
+    public HashMap<String, Actionable> getItems() {
         return items;
     }
 

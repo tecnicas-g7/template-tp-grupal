@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
-import ar.fiuba.tdd.tp.game.items.Describable;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class StickGame implements GameFactory {
 
         game.addRoom(room);
 
-        List<Describable> items = new ArrayList<>();
+        List<Actionable> items = new ArrayList<>();
         items.add(stick);
 
         Condition condition = new InventoryCondition(items, true);

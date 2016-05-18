@@ -7,14 +7,14 @@ import ar.fiuba.tdd.tp.game.items.type.Type;
 
 import java.util.HashMap;
 
-public abstract class Describable {
+public abstract class Actionable {
 
     protected String name;
     private Type type;
 
     protected HashMap<String,Action> actions;
 
-    public Describable(String name) {
+    public Actionable(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Item must have a name.");
         }
@@ -63,7 +63,7 @@ public abstract class Describable {
         return "You cannot open " + name;
     }
 
-    public Describable getChild(String name) {
+    public Actionable getChild(String name) {
         return null;
     }
 
@@ -71,11 +71,11 @@ public abstract class Describable {
         return getName();
     }
 
-    public void removeComponent(Describable item) {
+    public void removeComponent(Actionable item) {
 
     }
 
-    public void addComponent(Describable item) {
+    public void addComponent(Actionable item) {
 
     }
 
@@ -83,7 +83,7 @@ public abstract class Describable {
         return null;
     }
 
-    public Describable getLast() {
+    public Actionable getLast() {
         return null;
     }
 }

@@ -7,7 +7,7 @@ Created by fran on 26/04/16.
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
-import ar.fiuba.tdd.tp.game.items.Describable;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class Util {
 
-    public static boolean itemsInInventory(List<Describable> list, HashMap<String,Describable> inventory) {
-        for (Describable item : list) {
+    public static boolean itemsInInventory(List<Actionable> list, HashMap<String,Actionable> inventory) {
+        for (Actionable item : list) {
             if (!inventory.containsValue(item)) {
                 return false;
             }
@@ -67,15 +67,15 @@ public class Util {
         }
     }*/
 
-    public static Describable getDescribable(HashMap<String, Describable> items, String name)
+    public static Actionable getDescribable(HashMap<String, Actionable> items, String name)
         throws ItemNotFoundException {
-        Describable item = items.get(name);
+        Actionable item = items.get(name);
         if (item != null) {
             return item;
         }
-        Iterator<Map.Entry<String, Describable>> iterator = items.entrySet().iterator();
+        Iterator<Map.Entry<String, Actionable>> iterator = items.entrySet().iterator();
         while (iterator.hasNext()) {
-            Describable container = iterator.next().getValue();
+            Actionable container = iterator.next().getValue();
             item = container.getChild(name);
             if (item != null) {
                 return item;
@@ -84,14 +84,14 @@ public class Util {
         throw new ItemNotFoundException();
     }
 
-    public static void removeDescribable(HashMap<String, Describable> items, String name) {
+    public static void removeDescribable(HashMap<String, Actionable> items, String name) {
         if (items.get(name) != null) {
             items.remove(name);
         } else {
-            Iterator<Map.Entry<String, Describable>> iterator = items.entrySet().iterator();
+            Iterator<Map.Entry<String, Actionable>> iterator = items.entrySet().iterator();
             while (iterator.hasNext()) {
-                Describable container = iterator.next().getValue();
-                Describable item = container.getChild(name);
+                Actionable container = iterator.next().getValue();
+                Actionable item = container.getChild(name);
                 if (item != null) {
                     container.removeComponent(item);
                     return;

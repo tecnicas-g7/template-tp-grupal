@@ -1,0 +1,38 @@
+package ar.fiuba.tdd.tp.game.actions;
+
+import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.items.Actionable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by fran on 17/05/16.
+ */
+public class ComplexAction implements Action {
+
+    private String name;
+    private List<Action> actions;
+
+    public ComplexAction(String name) {
+        this.name = name;
+        this.actions = new ArrayList<>();
+    }
+
+    public void addAction(Action action) {
+        this.actions.add(action);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String execute(String[] tokens, Player player, Actionable item) {
+        actions.forEach((action) -> {
+                action.execute(tokens,player,item);
+            });
+        return null;
+    }
+}

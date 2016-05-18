@@ -2,7 +2,6 @@ package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.exceptions.FullCapacityReachedException;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.game.HasItems;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.type.Type;
 import ar.fiuba.tdd.tp.game.utils.Util;
@@ -13,9 +12,9 @@ import java.util.HashMap;
 Created by javier on 4/25/16.
 */
 
-public class Container extends Describable implements ContainerComponent {
+public class Container extends Actionable implements ContainerComponent {
 
-    private HashMap<String, Describable> components;
+    private HashMap<String, Actionable> components;
     private int maxSize;
     private boolean hasPoison;
     private boolean open;
@@ -73,11 +72,11 @@ public class Container extends Describable implements ContainerComponent {
         return this.name + " has been closed.";
     }
 
-    public void removeComponent(Describable component) {
+    public void removeComponent(Actionable component) {
         Util.removeDescribable(components,component.getName());
     }
 
-    public Describable getChild(String name) {
+    public Actionable getChild(String name) {
         if (open) {
             return Util.getDescribable(components, name);
         }
@@ -89,7 +88,7 @@ public class Container extends Describable implements ContainerComponent {
         return type;
     }
 
-    public void addComponent(Describable component) throws FullCapacityReachedException {
+    public void addComponent(Actionable component) throws FullCapacityReachedException {
         if (components.size() < this.maxSize) {
             components.put(component.getName(), component);
         } else {

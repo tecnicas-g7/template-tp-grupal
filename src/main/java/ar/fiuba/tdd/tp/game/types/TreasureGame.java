@@ -4,8 +4,8 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
-import ar.fiuba.tdd.tp.game.items.Describable;
 import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class TreasureGame implements GameFactory {
 
         addRooms(game, room1, room2, room3, room4, room5);
 
-        List<Describable> items = new ArrayList<>();
+        List<Actionable> items = new ArrayList<>();
         items.add(treasure);
 
         game.addCondition(new InventoryCondition(items, true));
@@ -77,21 +77,31 @@ public class TreasureGame implements GameFactory {
     private static void createComponentsThirdRoom(Location room3, Location room4, Location room5, Player player) {
         Container trunk = new Container("trunk", 10);
         addOpenClose(trunk);
-        Item antidote = new Item("antidote");
-        addPickDrop(antidote, player);
-        antidote.addAction(new DrinkAction());
         Container box = new Container("box",1);
         addOpenClose(box);
         Item key = new Item("key2");
         addPickDrop(key, player);
         box.addComponent(key);
         box.yesPoison();
+        Item antidote = createAntidote(player);
         trunk.addComponent(antidote);
         trunk.addComponent(box);
         room3.addItem(trunk);
         room4.addDoor(room5, key);
         room5.addDoor(room4,null);
         room3.addLeaveCondition(new PlayerStateCondition(Player.Status.poisoned));
+    }
+
+    private static Item createAntidote(Player player) {
+        Item antidote = new Item("antidote");
+        PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.alive, "drink");
+        MoveItemAction secondAction = new MoveItemAction(player,null,"drop");
+        ComplexAction action = new ComplexAction("drink");
+        action.addAction(firstAction);
+        action.addAction(secondAction);
+        antidote.addAction(action);
+        addPickDrop(antidote,player);
+        return antidote;
     }
 
     private static void createComponentsFifthRoom(Location room5, Item treasure, Player player) {

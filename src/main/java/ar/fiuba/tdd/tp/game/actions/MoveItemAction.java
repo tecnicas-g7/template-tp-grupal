@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.game.actions;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.HasItems;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.items.Describable;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 
 /**
  * Created by fran on 17/05/16.
@@ -32,14 +32,14 @@ public class MoveItemAction implements Action {
     }
 
     @Override
-    public String execute(String[] tokens, Player player, Describable item) {
+    public String execute(String[] tokens, Player player, Actionable item) {
         if (origin == null && destination == null) {
             return moveFromTokenToToken(tokens,player,item);
         }
         return originToDestination(tokens, player, item);
     }
 
-    private String originToDestination(String[] tokens, Player player, Describable item) {
+    private String originToDestination(String[] tokens, Player player, Actionable item) {
         //pick -> origen = room (dinamico...) , destino = player /// drop -> origen = player, destino = room (dinamico...)
         HasItems newOrigin = origin;
         HasItems newDestination = destination;
@@ -52,7 +52,7 @@ public class MoveItemAction implements Action {
         return move(tokens,player,item,newOrigin,newDestination);
     }
 
-    private String move(String[] tokens, Player player, Describable item, HasItems newOrigin, HasItems newDestination) {
+    private String move(String[] tokens, Player player, Actionable item, HasItems newOrigin, HasItems newDestination) {
         try {
             newDestination.addItem(item);
             newOrigin.removeItem(item.getName());
@@ -63,7 +63,7 @@ public class MoveItemAction implements Action {
     }
 
     //Si ambos null quiere decir que origen y destino especificado en tokens. tokens[1] = origen tokens[2] = destino;
-    private String moveFromTokenToToken(String[] tokens, Player player, Describable item) {
+    private String moveFromTokenToToken(String[] tokens, Player player, Actionable item) {
         return null;
     }
 

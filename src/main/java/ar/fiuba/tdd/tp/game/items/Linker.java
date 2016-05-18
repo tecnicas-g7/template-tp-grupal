@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.game.items;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.items.type.Type;
 
-public class Linker extends Describable {
+public class Linker extends Actionable {
 
     private boolean locked;
     private Location destination;

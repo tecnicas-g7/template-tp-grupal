@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.game;
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
-import ar.fiuba.tdd.tp.game.items.Describable;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Linker;
 
 import java.util.*;
@@ -41,7 +41,7 @@ public class Game {
         }
 
         try {
-            Describable item = findItem(objectName);
+            Actionable item = findItem(objectName);
             if (item != null) {
                 return item.executeAction(tokens,this.player);
             }
@@ -51,7 +51,7 @@ public class Game {
         return null;
     }
 
-    private Describable findItem(String objectName) throws ItemNotFoundException {
+    private Actionable findItem(String objectName) throws ItemNotFoundException {
         try {
             return this.player.getItem(objectName);
         } catch (ItemNotFoundException e) {
@@ -104,7 +104,7 @@ public class Game {
         }
         String name = tokens[1];
         try {
-            Describable item = findItem(name);
+            Actionable item = findItem(name);
             if (item != null) {
                 return item.showActions();
             }

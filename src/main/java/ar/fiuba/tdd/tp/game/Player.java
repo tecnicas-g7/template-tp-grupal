@@ -2,7 +2,7 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
-import ar.fiuba.tdd.tp.game.items.Describable;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
 
@@ -16,14 +16,14 @@ public class Player implements HasItems {
 
     private static final int DEFAULT_MAX_INVENTORY = 10;
 
-    private HashMap<String,Describable> inventory;
+    private HashMap<String,Actionable> inventory;
     private int maxInventory;
     private Location room;
 
     private Status status;
 
     public String openContainer(String name) {
-        Describable component = room.getItem(name);
+        Actionable component = room.getItem(name);
         return component.openContainer(this);
     }
 
@@ -50,7 +50,7 @@ public class Player implements HasItems {
         this.status = newStatus;
     }
 
-    public void addItem(Describable item) throws MaxInventoryException {
+    public void addItem(Actionable item) throws MaxInventoryException {
         if (inventory.size() == maxInventory) {
             throw new MaxInventoryException();
         }
@@ -61,8 +61,8 @@ public class Player implements HasItems {
         this.inventory.remove(name);
     }
 
-    public Describable getItem(String name) throws ItemNotFoundException {
-        Describable item = this.inventory.get(name);
+    public Actionable getItem(String name) throws ItemNotFoundException {
+        Actionable item = this.inventory.get(name);
         if (item != null) {
             return item;
         }
@@ -92,17 +92,17 @@ public class Player implements HasItems {
         return this.inventory.size();
     }
 
-    public HashMap<String,Describable> getInventory() {
+    public HashMap<String,Actionable> getInventory() {
         return this.inventory;
     }
 
-    private Iterator<Describable> getInventoryIterator() {
+    private Iterator<Actionable> getInventoryIterator() {
         return this.inventory.values().iterator();
     }
 
-    private boolean checkIdenticalInventory(Iterator<Describable> it) {
+    private boolean checkIdenticalInventory(Iterator<Actionable> it) {
         while (it.hasNext()) {
-            Describable item = it.next();
+            Actionable item = it.next();
             if (!this.inventory.containsKey(item.getName())) {
                 return false;
             }
@@ -111,7 +111,7 @@ public class Player implements HasItems {
     }
 
     public boolean checkVictory(Player winner) {
-        Iterator<Describable> it = winner.getInventoryIterator();
+        Iterator<Actionable> it = winner.getInventoryIterator();
         return (winner.getRoom() == this.room && checkIdenticalInventory(it) && this.getInventorySize() == winner.getInventorySize());
     }
 

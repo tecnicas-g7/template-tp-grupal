@@ -1,18 +1,16 @@
 package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.exceptions.FullCapacityReachedException;
-import ar.fiuba.tdd.tp.game.items.ContainerComponent;
-import ar.fiuba.tdd.tp.game.items.Describable;
 
 import java.util.Stack;
 
 /**
  Created by ltessore on 27/04/16.
  */
-public class StackContainerComponent extends Describable implements ContainerComponent {
+public class StackContainerComponent extends Actionable implements ContainerComponent {
 
     private Integer maxSize;
-    private Stack<Describable> components;
+    private Stack<Actionable> components;
 
     public StackContainerComponent(String name, int maxSize) {
         super(name);
@@ -20,7 +18,7 @@ public class StackContainerComponent extends Describable implements ContainerCom
         this.components = new Stack<>();
     }
 
-    public void addComponent(Describable component)  throws FullCapacityReachedException {
+    public void addComponent(Actionable component)  throws FullCapacityReachedException {
         if (components.size() < this.maxSize) {
             components.add(component);
         } else {
@@ -28,7 +26,7 @@ public class StackContainerComponent extends Describable implements ContainerCom
         }
     }
 
-    public Describable getLast() {
+    public Actionable getLast() {
         return components.lastElement();
     }
 
