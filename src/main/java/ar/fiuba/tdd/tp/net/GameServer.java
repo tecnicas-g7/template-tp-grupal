@@ -1,8 +1,7 @@
 package ar.fiuba.tdd.tp.net;
 
-import ar.fiuba.tdd.tp.exceptions.GameNotFoundExcpetion;
-import ar.fiuba.tdd.tp.game.Controller;
-import ar.fiuba.tdd.tp.game.types.GameFactory;
+import game.Controller;
+import game.types.GameFactory;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

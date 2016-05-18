@@ -1,2 +1,11 @@
 rootProject.name = 'tp-tp-grupal'
+include 'gameTreasureBox'
+include 'core'
+include 'gameBox'
+include 'gameRiverCrossing'
+include 'gameCursedItem'
+include 'gameEnterRoom'
+include 'gameHanoiTower'
+include 'gameStick'
+include 'server'
 

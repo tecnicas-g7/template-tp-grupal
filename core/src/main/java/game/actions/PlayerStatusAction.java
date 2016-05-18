@@ -1,0 +1,33 @@
+package game.actions;
+
+
+
+/*
+Created by Javier on 26/04/2016.
+*/
+
+import game.Player;
+import game.items.Actionable;
+
+public class PlayerStatusAction extends Action {
+
+    private Player.Status status;
+    //private String name;
+
+    public PlayerStatusAction(Player.Status status, String name) {
+        super(name);
+        this.status = status;
+        //this.name = name;
+    }
+
+    /*
+    public String getName() {
+        return name;
+    }
+    */
+    @Override
+    public String execute(String[] tokens, Player player, Actionable item) {
+        player.changeStatus(status);
+        return "You are now " + status;
+    }
+}

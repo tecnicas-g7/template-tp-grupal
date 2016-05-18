@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp;
 
-
+/*
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.*;
@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
+*/
 public class MainTests {
 /*
     private Item createItemsWithCondition(String nameItem, Player player) {
