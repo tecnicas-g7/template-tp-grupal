@@ -1,10 +1,10 @@
 package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
-import ar.fiuba.tdd.tp.game.utils.Messages;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.items.type.Type;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.HashMap;
 
