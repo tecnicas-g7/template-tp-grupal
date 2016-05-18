@@ -60,8 +60,8 @@ public class Location implements HasItems {
 
 
     public String look() {
-        StringBuilder output = new StringBuilder("You are in " + name + "  ");
-        output.append("You can see a ");
+        StringBuilder output = new StringBuilder(Messages.getMessage("youAreIn") + " " + name + " ");
+        output.append(Messages.getMessage("youCanSeeA") + " ");
         items.forEach((key,value) -> {
                 output.append(value.look());
                 output.append(" ");

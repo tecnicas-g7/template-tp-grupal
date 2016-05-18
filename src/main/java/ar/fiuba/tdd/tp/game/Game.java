@@ -17,6 +17,10 @@ public class Game {
     private List<Location> rooms;
     private Player player;
     private List<Condition> conditions;
+    public static String endMessage = "";
+    public static String enterDoorMessage = "";
+    public static String selectItemNeededMessage = "";
+    public static String youCantDoThatMessage = "";
 
     public Game(Player player) {
         this.rooms = new ArrayList<>();
@@ -37,7 +41,7 @@ public class Game {
         try {
             objectName = tokens[1];
         } catch (Exception e) {
-            return "You have to select an item!";
+            return Messages.getMessage("selectItemNeededMessage");
         }
 
         try {
@@ -77,7 +81,7 @@ public class Game {
                 return player.enter(door);
             }
         }
-        return "You can't do that!";
+        return Messages.getMessage("youCantDoThatMessage");
     }
 
     private boolean validateEnterAndLeaveConditions(Location origin, Location destination) {
@@ -94,13 +98,14 @@ public class Game {
                 return false;
             }
         }
-        System.out.print("You have won the game!");
+        System.out.print(Messages.getMessage("endMessage"));
         return  true;
     }
 
     String itemHelp(String[] tokens) {
         if (tokens.length <= 1) {
-            return "You have to select an item!";
+            return Messages.getMessage("selectItemNeededMessage");
+
         }
         String name = tokens[1];
         try {
@@ -109,9 +114,9 @@ public class Game {
                 return item.showActions();
             }
         } catch (ItemNotFoundException ine) {
-            return "You can enter doors";
+            return Messages.getMessage("enterDoorMessage");
         }
-        return "You can enter doors";
+        return Messages.getMessage("enterDoorMessage");
     }
 }
 

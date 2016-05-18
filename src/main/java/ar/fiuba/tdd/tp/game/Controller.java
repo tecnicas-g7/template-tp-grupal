@@ -57,7 +57,7 @@ public class Controller {
                     return Server.getDescriptionGame(tokens[1]);
                 }
             } catch (GameNotFoundExcpetion e) {
-                System.out.println("Game not Found");
+                System.out.println(Messages.getMessage("gameNotFound"));
             }
         }
         return null;
