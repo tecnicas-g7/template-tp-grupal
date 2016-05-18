@@ -3,7 +3,6 @@ package ar.fiuba.tdd.tp.game.types;
 import ar.fiuba.tdd.tp.game.*;
 
 import ar.fiuba.tdd.tp.game.actions.Action;
-import ar.fiuba.tdd.tp.game.actions.CheckAction;
 import ar.fiuba.tdd.tp.game.actions.MoveAction;
 import ar.fiuba.tdd.tp.game.conditions.ContainerCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
@@ -75,7 +74,8 @@ public class HanoiTower implements GameFactory {
             @Override
             public String execute(String[] tokens, Player player, Actionable item) {
                 try {
-                    return "Size of top from " + tokens[1] + " is " + String.valueOf(player.getRoom().getItem(tokens[1]).getLast().getName());
+                    return "Size of top from " + tokens[1] + " is " +
+                            String.valueOf(player.getRoom().getItem(tokens[1]).getLast().getName());
                 } catch (Exception e) {
                     return tokens[1] + " is empty.";
                 }
