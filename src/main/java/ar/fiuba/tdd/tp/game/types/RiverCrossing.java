@@ -25,9 +25,9 @@ public class RiverCrossing implements GameFactory {
 
         Location leftShore = new Location("south-shore");
         Location rightShore = new Location("north-shore");
-
-        leftShore.addDoor(rightShore, null, "north-shore");
-        rightShore.addDoor(leftShore, null, "south-shore");
+        EnterAction crossAction = new EnterAction("cross");
+        leftShore.addDoor(rightShore, null, "north-shore",crossAction);
+        rightShore.addDoor(leftShore, null, "south-shore",crossAction);
 
         leftShore.addEnterCondition(new ItemTypeCondition());
         leftShore.addLeaveCondition(new ItemTypeCondition());

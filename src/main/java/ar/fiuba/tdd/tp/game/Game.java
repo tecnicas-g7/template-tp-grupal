@@ -68,7 +68,7 @@ public class Game {
         return this.player.showInventory();
     }
 
-    String enter(String[] tokens) {
+    /*String enter(String[] tokens) {
         Location origin = player.getRoom();
         Iterator<HashMap.Entry<String, Linker>> it = origin.getDoorsIterator();
         while (it.hasNext()) {
@@ -79,7 +79,7 @@ public class Game {
             }
         }
         return Messages.getMessage("youCantDoThatMessage");
-    }
+    }*/
 
     private boolean validateEnterAndLeaveConditions(Location origin, Location destination) {
         return origin.validLeaveConditions(player) && destination.validEnterConditions(player);

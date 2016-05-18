@@ -63,15 +63,17 @@ public class TreasureGame implements GameFactory {
         addOpenClose(box);
         box.addComponent(key);
         room1.addItem(box);
-        room1.addDoor(room2, key);
-        room2.addDoor(room1, null);
+        EnterAction enterAction = new EnterAction("enter");
+        room1.addDoor(room2, key,enterAction);
+        room2.addDoor(room1, null,enterAction);
     }
 
     private static void createComponentsSecondRoom(Location room2, Location room3, Location room4, Player player) {
-        room2.addDoor(room3, null);
-        room2.addDoor(room4, null);
-        room3.addDoor(room2,null);
-        room4.addDoor(room2,null);
+        EnterAction enterAction = new EnterAction("enter");
+        room2.addDoor(room3, null, enterAction);
+        room2.addDoor(room4, null, enterAction);
+        room3.addDoor(room2,null, enterAction);
+        room4.addDoor(room2,null, enterAction);
     }
 
     private static void createComponentsThirdRoom(Location room3, Location room4, Location room5, Player player) {
@@ -86,8 +88,9 @@ public class TreasureGame implements GameFactory {
         trunk.addComponent(antidote);
         trunk.addComponent(box);
         room3.addItem(trunk);
-        room4.addDoor(room5, key);
-        room5.addDoor(room4,null);
+        EnterAction enterAction = new EnterAction("enter");
+        room4.addDoor(room5, key,enterAction);
+        room5.addDoor(room4,null,enterAction);
         room3.addLeaveCondition(new PlayerStateCondition(Player.Status.poisoned));
     }
 

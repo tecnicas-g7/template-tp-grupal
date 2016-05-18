@@ -3,6 +3,7 @@ package ar.fiuba.tdd.tp.game.types;
 import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.actions.EnterAction;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
@@ -23,8 +24,9 @@ public class EnterRoom implements GameFactory {
 
         Player player = new Player(room1);
         key.addAction(new MoveItemAction(null,player,"pick"));
-        room1.addDoor(room2,key);
-        room2.addDoor(room1,key);
+        EnterAction enterAction = new EnterAction("enter");
+        room1.addDoor(room2,key,enterAction);
+        room2.addDoor(room1,key,enterAction);
         Game game = new Game(player);
 
         game.addRoom(room1);

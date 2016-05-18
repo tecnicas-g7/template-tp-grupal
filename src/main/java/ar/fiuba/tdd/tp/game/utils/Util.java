@@ -8,6 +8,7 @@ import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
+import ar.fiuba.tdd.tp.game.items.Linker;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -67,8 +68,8 @@ public class Util {
         }
     }*/
 
-    public static Actionable getDescribable(HashMap<String, Actionable> items, String name)
-        throws ItemNotFoundException {
+    public static Actionable getDescribable(HashMap<String, Actionable> items, String name) {
+        //throws ItemNotFoundException {
         Actionable item = items.get(name);
         if (item != null) {
             return item;
@@ -81,7 +82,8 @@ public class Util {
                 return item;
             }
         }
-        throw new ItemNotFoundException();
+        return null;
+        //throw new ItemNotFoundException();
     }
 
     public static void removeDescribable(HashMap<String, Actionable> items, String name) {
@@ -98,5 +100,14 @@ public class Util {
                 }
             }
         }
+    }
+
+    public static Actionable getLinker(HashMap<String, Linker> doors, String name)
+        throws ItemNotFoundException {
+        Linker item = doors.get(name);
+        if (item != null) {
+            return item;
+        }
+        throw new ItemNotFoundException();
     }
 }

@@ -28,9 +28,9 @@ public class Controller {
                     return game.look();
                 case "inventory":
                     return game.showInventory();
-                case "enter":
+               /* case "enter":
                 case "cross":
-                    return game.enter(tokens);
+                    return game.enter(tokens);*/
                 case "item":
                     return game.itemHelp(tokens);
                 case "help":
