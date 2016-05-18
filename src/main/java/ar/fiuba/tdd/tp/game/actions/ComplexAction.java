@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by fran on 17/05/16.
+ Created by fran on 17/05/16.
  */
-public class ComplexAction implements Action {
+public class ComplexAction extends Action {
 
-    private String name;
     private List<Action> actions;
 
     public ComplexAction(String name) {
-        this.name = name;
+        super(name);
         this.actions = new ArrayList<>();
     }
 

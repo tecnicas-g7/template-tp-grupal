@@ -8,14 +8,20 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 Created by fran on 25/04/16.
 */
 
-public interface Action {
+public abstract class Action {
 
-    String getName();
+    protected String name;
 
-    default void setString(String name) {
-
+    public Action(String name) {
+        this.name = name;
     }
 
-    String execute(String[] tokens, Player player, Actionable item);
+    public String getName() {
+        return name;
+    }
+
+//    abstract void setString(String name);
+
+    public abstract String execute(String[] tokens, Player player, Actionable item);
 
 }

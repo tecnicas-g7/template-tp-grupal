@@ -9,11 +9,11 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 /**
  Created by ltessore on 28/04/16.
  */
-public class MoveAction implements Action {
+public class MoveAction extends Action {
 
-    @Override
-    public String getName() {
-        return "move";
+
+    public MoveAction(String name) {
+        super(name);
     }
 
     @Override

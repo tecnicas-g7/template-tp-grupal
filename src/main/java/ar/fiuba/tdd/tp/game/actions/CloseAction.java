@@ -6,10 +6,10 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 /**
  Created by fran on 28/04/16.
  */
-public class CloseAction implements Action {
+public class CloseAction extends Action {
 
-    public String getName() {
-        return "close";
+    public CloseAction(String name) {
+        super(name);
     }
 
     @Override

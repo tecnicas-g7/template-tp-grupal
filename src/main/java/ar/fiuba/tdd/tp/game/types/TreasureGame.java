@@ -93,9 +93,9 @@ public class TreasureGame implements GameFactory {
 
     private static Container createBox() {
         Container box = new Container("box",1);
-        box.addAction(new CloseAction());
+        box.addAction(new CloseAction("close"));
         PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.poisoned, "oops");
-        OpenAction secondAction = new OpenAction();
+        OpenAction secondAction = new OpenAction("open");
         ComplexAction action = new ComplexAction("open");
         action.addAction(firstAction);
         action.addAction(secondAction);
@@ -126,8 +126,8 @@ public class TreasureGame implements GameFactory {
     }
 
     private static void addOpenClose(Container container) {
-        container.addAction(new OpenAction());
-        container.addAction(new CloseAction());
+        container.addAction(new OpenAction("open"));
+        container.addAction(new CloseAction("close"));
     }
 
     public String getHelp() {

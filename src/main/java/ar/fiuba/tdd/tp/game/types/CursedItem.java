@@ -50,7 +50,7 @@ public class CursedItem implements GameFactory {
 
     private static void createItemsSecondRoom(Location room) {
         Item thief = new Item("thief");
-        thief.addAction(new ThiefAction());
+        thief.addAction(new ThiefAction("talk"));
 
         room.addItem(thief);
     }

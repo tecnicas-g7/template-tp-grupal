@@ -7,10 +7,14 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 /*
   Created by fran on 27/04/16.
  */
-public class OpenAction implements Action {
+public class OpenAction extends Action {
 
-    public String getName() {
+    /*public String getName() {
         return "open";
+    }*/
+
+    public OpenAction(String name) {
+        super(name);
     }
 
     @Override

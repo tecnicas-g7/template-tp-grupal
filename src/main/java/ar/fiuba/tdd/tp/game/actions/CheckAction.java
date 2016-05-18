@@ -7,11 +7,10 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 /**
  Created by ltessore on 28/04/16.
  */
-public class CheckAction implements Action {
+public class CheckAction extends Action {
 
-    @Override
-    public String getName() {
-        return "check";
+    public CheckAction(String name) {
+        super(name);
     }
 
     @Override

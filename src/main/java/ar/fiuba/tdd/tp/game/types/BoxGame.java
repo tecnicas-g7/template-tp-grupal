@@ -17,8 +17,8 @@ public class BoxGame implements GameFactory {
     public Game getGame() {
 
         Container box = new Container("box",1);
-        box.addAction(new OpenAction());
-        box.addAction(new CloseAction());
+        box.addAction(new OpenAction("open"));
+        box.addAction(new CloseAction("close"));
 
         Location room1 = new Location("Room1");
         room1.addItem(box);

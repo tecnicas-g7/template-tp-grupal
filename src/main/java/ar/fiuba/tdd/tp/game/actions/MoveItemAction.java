@@ -8,29 +8,31 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 /**
  * Created by fran on 17/05/16.
  */
-public class MoveItemAction implements Action {
+public class MoveItemAction extends Action {
 
-    private String name;
+    //private String name;
     private HasItems origin;
     private HasItems destination;
 
     public MoveItemAction(HasItems origin, HasItems destination) {
+        super("move");
         this.origin = origin;
         this.destination = destination;
-        this.name = "move";
+        //this.name = "move";
     }
 
     public MoveItemAction(HasItems origin, HasItems destination, String name) {
+        super(name);
         this.origin = origin;
         this.destination = destination;
-        this.name = name;
+        //this.name = name;
     }
 
-    @Override
+   /* @Override
     public String getName() {
         return name;
     }
-
+*/
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
         if (origin == null && destination == null) {

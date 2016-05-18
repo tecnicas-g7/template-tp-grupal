@@ -7,11 +7,15 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 Created by fran on 27/04/16.
 */
 
-public class ThiefAction implements Action {
+public class ThiefAction extends Action {
 
-    @Override
+   /* @Override
     public String getName() {
         return "talk";
+    }
+*/
+    public ThiefAction(String name) {
+        super(name);
     }
 
     @Override
