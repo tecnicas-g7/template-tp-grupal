@@ -118,15 +118,15 @@ public class Player implements HasItems {
     public String enter(Linker door) {
         if (!door.isLocked()) {
             this.room = door.getDestination();
-            return door.getName() +  " entered!";
+            return door.getName() + " " + Messages.getMessage("entered");
         } else {
             Item key = door.getKey();
             if (inventory.containsValue(key)) {
                 door.unlock(key);
                 this.room = door.getDestination();
-                return door.getName() + " entered!";
+                return door.getName() + " " + Messages.getMessage("entered");
             }
-            return "You can't do that!";
+            return Messages.getMessage("youCantDoThatMessage");
         }
     }
 

@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.actions;
 
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.HasItems;
+import ar.fiuba.tdd.tp.game.Messages;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 
@@ -56,7 +57,7 @@ public class MoveItemAction implements Action {
         try {
             newDestination.addItem(item);
             newOrigin.removeItem(item.getName());
-            return "Object moved";
+            return Messages.getMessage("objectMoved");
         } catch (MaxInventoryException e) {
             return e.getMessage();
         }

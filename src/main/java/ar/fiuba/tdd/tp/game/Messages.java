@@ -9,7 +9,7 @@ import java.util.Properties;
  */
 public class Messages {
 
-    private static String fileName = "messageSpanish.properties";
+    private static String fileName = "message.properties";
     private static FileInputStream fileInput;
 
     public static String getMessage(String key) {
