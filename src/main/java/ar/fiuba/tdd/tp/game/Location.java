@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 import ar.fiuba.tdd.tp.game.utils.Util;
 
 import java.util.*;

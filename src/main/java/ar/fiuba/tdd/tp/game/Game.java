@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Linker;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.*;
 
@@ -17,10 +18,6 @@ public class Game {
     private List<Location> rooms;
     private Player player;
     private List<Condition> conditions;
-    public static String endMessage = "";
-    public static String enterDoorMessage = "";
-    public static String selectItemNeededMessage = "";
-    public static String youCantDoThatMessage = "";
 
     public Game(Player player) {
         this.rooms = new ArrayList<>();
