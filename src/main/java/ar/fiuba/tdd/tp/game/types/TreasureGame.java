@@ -77,12 +77,11 @@ public class TreasureGame implements GameFactory {
     private static void createComponentsThirdRoom(Location room3, Location room4, Location room5, Player player) {
         Container trunk = new Container("trunk", 10);
         addOpenClose(trunk);
-        Container box = new Container("box",1);
-        addOpenClose(box);
+        Container box = createBox();
         Item key = new Item("key2");
         addPickDrop(key, player);
         box.addComponent(key);
-        box.yesPoison();
+        //box.yesPoison();
         Item antidote = createAntidote(player);
         trunk.addComponent(antidote);
         trunk.addComponent(box);
@@ -90,6 +89,18 @@ public class TreasureGame implements GameFactory {
         room4.addDoor(room5, key);
         room5.addDoor(room4,null);
         room3.addLeaveCondition(new PlayerStateCondition(Player.Status.poisoned));
+    }
+
+    private static Container createBox() {
+        Container box = new Container("box",1);
+        box.addAction(new CloseAction());
+        PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.poisoned, "oops");
+        OpenAction secondAction = new OpenAction();
+        ComplexAction action = new ComplexAction("open");
+        action.addAction(firstAction);
+        action.addAction(secondAction);
+        box.addAction(action);
+        return box;
     }
 
     private static Item createAntidote(Player player) {

@@ -16,7 +16,6 @@ public class Container extends Actionable implements ContainerComponent {
 
     private HashMap<String, Actionable> components;
     private int maxSize;
-    private boolean hasPoison;
     private boolean open;
     private Type type;
 
@@ -41,23 +40,11 @@ public class Container extends Actionable implements ContainerComponent {
         return output.toString();
     }
 
-    public void yesPoison() {
-        this.hasPoison = true;
-    }
-
-    public void noPoison() {
-        this.hasPoison = false;
-    }
 
     //When the player opens the container, the components in it can be reached
     public String openContainer(Player player) {
         StringBuilder output = new StringBuilder();
         this.open = true;
-        if (this.hasPoison) {
-            player.changeStatus(Player.Status.poisoned);
-            this.noPoison();
-            output.append("You have been poisoned! \n");
-        }
         components.forEach((key, value) -> {
                 output.append(key);
                 output.append(" ");
