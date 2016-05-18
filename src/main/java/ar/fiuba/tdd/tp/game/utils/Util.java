@@ -68,8 +68,8 @@ public class Util {
         }
     }*/
 
-    public static Actionable getDescribable(HashMap<String, Actionable> items, String name) {
-        //throws ItemNotFoundException {
+    public static Actionable getDescribable(HashMap<String, Actionable> items, String name)
+        throws ItemNotFoundException {
         Actionable item = items.get(name);
         if (item != null) {
             return item;
@@ -82,8 +82,7 @@ public class Util {
                 return item;
             }
         }
-        return null;
-        //throw new ItemNotFoundException();
+        throw new ItemNotFoundException();
     }
 
     public static void removeDescribable(HashMap<String, Actionable> items, String name) {
@@ -102,12 +101,11 @@ public class Util {
         }
     }
 
-    public static Actionable getLinker(HashMap<String, Linker> doors, String name)
-        throws ItemNotFoundException {
+    public static Actionable getLinker(HashMap<String, Linker> doors, String name) {
         Linker item = doors.get(name);
         if (item != null) {
             return item;
         }
-        throw new ItemNotFoundException();
+        return null;
     }
 }

@@ -35,8 +35,8 @@ public class Location implements HasItems {
     }
 
     public Actionable getItem(String name) throws ItemNotFoundException {
-        Actionable actionable = Util.getDescribable(items,name);
-        actionable = (actionable != null) ? actionable : Util.getLinker(doors,name);
+        Actionable actionable = Util.getLinker(doors,name);
+        actionable = (actionable != null) ? actionable : Util.getDescribable(items,name);
         return actionable;
     }
 
