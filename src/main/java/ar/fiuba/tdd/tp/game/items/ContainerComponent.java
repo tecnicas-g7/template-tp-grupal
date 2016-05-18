@@ -12,12 +12,12 @@ public interface ContainerComponent {
 
    /* default void addComponent(ContainerComponent component) {
 
-    }*/
+    }
 
     default void removeComponent(ContainerComponent component) {
 
     }
-
+*/
     String getName();
 
     Type getType();
