@@ -7,9 +7,8 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.utils.Messages;
 
-/**
- * Created by fran on 17/05/16.
- */
+//Created by fran on 17/05/16.
+
 public class MoveItemAction extends Action {
 
     //private String name;
@@ -67,8 +66,8 @@ public class MoveItemAction extends Action {
     }
 
     private String move(Actionable stackFrom, Actionable stackAfter) throws MaxInventoryException {
-        if (stackFrom.getSize() > 0) {
-            Actionable item = stackFrom.getLast();
+        Actionable item = stackFrom.getLast();
+        if (stackFrom.getSize() > 0 && stackAfter.isValidMovement(item)) {
             stackFrom.removeComponent(item);
             stackAfter.addComponent(item);
             return "moved!";
