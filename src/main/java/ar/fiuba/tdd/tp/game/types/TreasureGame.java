@@ -106,7 +106,7 @@ public class TreasureGame implements GameFactory {
     private static Item createAntidote(Player player) {
         Item antidote = new Item("antidote");
         PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.alive, "drink");
-        MoveItemAction secondAction = new MoveItemAction(player,null,"drop");
+        MoveItemAction secondAction = new MoveItemAction(player,new Container("void",666),"drop");
         ComplexAction action = new ComplexAction("drink");
         action.addAction(firstAction);
         action.addAction(secondAction);
