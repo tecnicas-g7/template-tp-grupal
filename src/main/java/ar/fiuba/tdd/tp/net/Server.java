@@ -24,14 +24,13 @@ public class Server {
         System.out.println("This is the Server");
 
         games = new HashMap<>();
-        games.put("hanoiTower", new HanoiTower());
-        games.put("boxGame", new BoxGame());
-        games.put("cursedItem", new CursedItem());
-        games.put("enterRoom", new EnterRoom());
-        games.put("hanoiTower", new HanoiTower());
-        games.put("riverCrossing", new RiverCrossing());
-        games.put("stickGame", new StickGame());
-        games.put("treasureGame", new TreasureGame());
+        games.put("HANOITOWER", new HanoiTower());
+        games.put("BOXGAME", new BoxGame());
+        games.put("CURSEDITEM", new CursedItem());
+        games.put("ENTERROOM", new EnterRoom());
+        games.put("RIVERCROSSING", new RiverCrossing());
+        games.put("STICKGAME", new StickGame());
+        games.put("TREASUREGAME", new TreasureGame());
         loadGame();
 
         /*
@@ -81,8 +80,8 @@ public class Server {
         String loadGameCommand = "load game ";
         String gameName;
         while (input != null) {
-            if (input.contains(loadGameCommand)) {
-                gameName = input.replace(loadGameCommand,"");
+            if (input.toUpperCase().contains(loadGameCommand.toUpperCase())) {
+                gameName = input.replace(loadGameCommand,"").toUpperCase();
                 try {
                     (new Thread(new GameServer(initialPort, games.get(gameName)))).start();
                     System.out.println("Game " + gameName + " created in port " + initialPort);

@@ -18,8 +18,22 @@ public class StackContainerComponent extends Actionable implements ContainerComp
         this.components = new Stack<>();
     }
 
+    private Boolean isMovementValid(Actionable component) {
+        //chequea si el ultimo del stackAfter es mas grande del que tiene el player
+        if (this.getSize() == 0) {
+            return true;
+        } else {
+            Actionable after = this.getLast();
+            if ((Integer.parseInt(after.getName()) > Integer.parseInt(component.getName()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public void addComponent(Actionable component)  throws FullCapacityReachedException {
-        if (components.size() < this.maxSize) {
+        if (components.size() < this.maxSize && isMovementValid(component)) {
             components.add(component);
         } else {
             throw new FullCapacityReachedException();

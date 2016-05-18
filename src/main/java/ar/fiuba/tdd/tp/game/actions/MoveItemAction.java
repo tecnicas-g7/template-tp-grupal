@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.actions;
 
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.HasItems;
+import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.utils.Messages;
@@ -65,10 +66,25 @@ public class MoveItemAction extends Action {
         }
     }
 
-    //Si ambos null quiere decir que origen y destino especificado en tokens. tokens[1] = origen tokens[2] = destino;
-    private String moveFromTokenToToken(String[] tokens, Player player, Actionable item) {
-        return null;
+    private String move(Actionable stackFrom, Actionable stackAfter) throws MaxInventoryException {
+        if (stackFrom.getSize() > 0) {
+            Actionable item = stackFrom.getLast();
+            stackFrom.removeComponent(item);
+            stackAfter.addComponent(item);
+            return "moved!";
+        }
+        return "can't move!";
     }
 
-
+    //Si ambos null quiere decir que origen y destino especificado en tokens. tokens[1] = origen tokens[2] = destino;
+    private String moveFromTokenToToken(String[] tokens, Player player, Actionable item) {
+        try {
+            Location room = player.getRoom();
+            //String result = move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
+            return move(room.getItem(tokens[1]), room.getItem(tokens[2]));
+        } catch (MaxInventoryException e) {
+            //Do nothing
+            return null;
+        }
+    }
 }

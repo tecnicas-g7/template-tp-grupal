@@ -4,6 +4,7 @@ import ar.fiuba.tdd.tp.game.*;
 
 import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.actions.MoveAction;
+import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.ContainerCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
@@ -60,22 +61,21 @@ public class HanoiTower implements GameFactory {
     }
 
     private void addActionsToStacks(StackContainerComponent stack1, StackContainerComponent stack2, StackContainerComponent stack3) {
-        stack1.addAction(new MoveAction("move"));
+        stack1.addAction(new MoveItemAction(null, null, "move"));
         stack1.addAction(createCheckAction());
-        stack2.addAction(new MoveAction("move"));
+        stack2.addAction(new MoveItemAction(null, null, "move"));
         stack2.addAction(createCheckAction());
-        stack3.addAction(new MoveAction("move"));
+        stack3.addAction(new MoveItemAction(null, null, "move"));
         stack3.addAction(createCheckAction());
     }
 
     private Action createCheckAction() {
-
         return new Action("check") {
             @Override
             public String execute(String[] tokens, Player player, Actionable item) {
                 try {
-                    return "Size of top from " + tokens[1] + " is " +
-                            String.valueOf(player.getRoom().getItem(tokens[1]).getLast().getName());
+                    return "Size of top from " + tokens[1] + " is "
+                            + String.valueOf(player.getRoom().getItem(tokens[1]).getLast().getName());
                 } catch (Exception e) {
                     return tokens[1] + " is empty.";
                 }
