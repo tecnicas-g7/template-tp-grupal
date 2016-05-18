@@ -4,6 +4,7 @@ import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.items.type.Type;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.HashMap;
 
@@ -16,7 +17,7 @@ public abstract class Actionable {
 
     public Actionable(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Item must have a name.");
+            throw new IllegalArgumentException(Messages.getMessage("ItemMustHaveAName"));
         }
         this.actions = new HashMap<>();
         this.name = name;
@@ -39,7 +40,7 @@ public abstract class Actionable {
     }
 
     public String showActions() {
-        StringBuilder output = new StringBuilder("You can ");
+        StringBuilder output = new StringBuilder(Messages.getMessage("youCan") + " ");
         actions.forEach((key,value) -> output.append(key.concat(" ")));
         output.append("with ");
         output.append(name);
@@ -56,11 +57,11 @@ public abstract class Actionable {
     }
 
     public String closeContainer() {
-        return "You cannot close " + name;
+        return Messages.getMessage("YouCannotClose") + " " + name;
     }
 
     public String openContainer(Player player) {
-        return "You cannot open " + name;
+        return Messages.getMessage("YouCanNotOpen") + " " + name;
     }
 
     public Actionable getChild(String name) {

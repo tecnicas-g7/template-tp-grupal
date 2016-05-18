@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.game;
+package ar.fiuba.tdd.tp.game.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +22,7 @@ public class Messages {
             fileInput.close();
             String message = properties.getProperty(key);
             if (message == null) {
-                message = "";
+                message = "Message not found for key " + key;
             }
             return message;
         } catch (Exception e) {
@@ -35,7 +35,7 @@ public class Messages {
                 e.printStackTrace();
             }
         }
-        return "";
+        return "Message not found for key " + key;
     }
 
 }
