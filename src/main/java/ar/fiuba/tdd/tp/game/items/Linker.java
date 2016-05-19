@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.items;
 
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.items.type.Type;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 
 public class Linker extends Actionable {
 
@@ -29,14 +30,14 @@ public class Linker extends Actionable {
 
     public void lock(Item key) {
         if (key == null || key != this.key) {
-            throw new IllegalArgumentException("Can't lock " + this.name);
+            throw new IllegalArgumentException(Messages.getMessage("cantLock") + " " + this.name);
         }
         this.locked = true;
     }
 
     public void unlock(Item key) {
         if (key == null || key != this.key) {
-            throw new IllegalArgumentException("Can't unlock " + this.name);
+            throw new IllegalArgumentException(Messages.getMessage("cantUnlock") + " " + this.name);
         }
         this.locked = false;
     }
