@@ -21,7 +21,6 @@ public class MoveAction extends Action {
     public String execute(String[] tokens, Player player, Actionable item) {
         try {
             Location room = player.getRoom();
-            //String result = move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
             return move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
         } catch (MaxInventoryException e) {
             //Do nothing

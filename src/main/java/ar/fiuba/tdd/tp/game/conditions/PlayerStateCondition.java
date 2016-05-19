@@ -15,10 +15,6 @@ public class PlayerStateCondition implements Condition {
 
     @Override
     public boolean isValid(Player player) {
-       /* if (player.getStatus() == status) {
-            return false;
-            }
-        return true;*/
         return (player.getStatus() != status);
     }
 }

@@ -13,10 +13,6 @@ import java.util.Iterator;
 
 public class EnterAction extends Action {
 
-    /*public String getName() {
-        return "open";
-    }*/
-
     public EnterAction(String name) {
         super(name);
     }

@@ -27,11 +27,6 @@ public class Controller {
                 return game.executeAction(tokens);
             } else {
                 switch (action) {
-                /*case "look":
-                    return game.look();
-                case "inventory":
-                    return game.showInventory();
-                */
                     case "item":
                         return game.itemHelp(tokens);
                     case "help":
