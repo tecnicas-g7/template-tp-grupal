@@ -65,4 +65,8 @@ public class Controller {
         }
         return null;
     }
+
+    public boolean gameOver() {
+        return game.gameOver();
+    }
 }

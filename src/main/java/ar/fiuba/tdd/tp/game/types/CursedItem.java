@@ -14,6 +14,7 @@ import java.util.List;
 Created by fran on 27/04/16.
 */
 
+@SuppressWarnings("CPD-START")
 public class CursedItem implements GameFactory {
 
     public Game getGame() {
@@ -61,6 +62,8 @@ public class CursedItem implements GameFactory {
         room2.addEnterCondition(new InventoryCondition(items, true));
         room3.addEnterCondition(new InventoryCondition(items, false));
     }
+
+    @SuppressWarnings("CPD-END")
 
     public String getHelp() {
         return "The player needs to find the cursed artifact and get rid of it somehow to win";

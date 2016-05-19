@@ -49,16 +49,22 @@ public class GameServer implements Runnable{
             try {
                 String userInput = in.readLine();
                 output = controller.interpretCommand(userInput);
+                if (controller.verify()) {
+                    sendMessage(out,"W");
+                    socket.close();
+                    break;
+                }
+                if (controller.gameOver()) {
+                    sendMessage(out,"L");
+                    socket.close();
+                    break;
+                }
+                sendMessage(out,output);
             } catch (IOException e) {
                 System.out.println("Read failed");
                 break;
             }
-            if (controller.verify()) {
-                sendMessage(out,"W");
-                socket.close();
-                break;
-            }
-            sendMessage(out,output);
+
         }
 
     }

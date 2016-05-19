@@ -18,11 +18,13 @@ public class Game {
     private List<Location> rooms;
     private Player player;
     private List<Condition> conditions;
+    private List<Condition> loseConditions;
 
     public Game(Player player) {
         this.rooms = new ArrayList<>();
         this.player = player;
         this.conditions = new ArrayList<>();
+        this.loseConditions = new ArrayList<>();
     }
 
     public void addRoom(Location room) {
@@ -89,6 +91,10 @@ public class Game {
         this.conditions.add(condition);
     }
 
+    public void addLoseCondition(Condition condition) {
+        this.loseConditions.add(condition);
+    }
+
     public boolean verifyVictory() {
         for (Condition condition : this.conditions) {
             if (!condition.isValid(this.player)) {
@@ -122,6 +128,19 @@ public class Game {
         } catch (WrongItemActionException e) {
             return Messages.getMessage("ActionNotSupported");
         }
+    }
+
+    public boolean gameOver() {
+        if (loseConditions.size() > 0) {
+            for (Condition condition : this.loseConditions) {
+                if (condition.isValid(this.player)) {
+                    return false;
+                }
+            }
+            System.out.print(Messages.getMessage("GameOver"));
+            return true;
+        }
+        return false;
     }
 }
 

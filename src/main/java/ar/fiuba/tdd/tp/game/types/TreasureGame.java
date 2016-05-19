@@ -4,16 +4,20 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
+import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.Linker;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  Created by fran on 28/04/16.
  */
+
+@SuppressWarnings("CPD-START")
 public class TreasureGame implements GameFactory {
 
     public Game getGame() {
@@ -30,9 +34,7 @@ public class TreasureGame implements GameFactory {
         createComponentsThirdRoom(room3, room4, room5, player);
 
         Item treasure = new Item("treasure");
-
         createComponentsFifthRoom(room5, treasure, player);
-
 
         player.setMaxInventory(2);
 
@@ -40,12 +42,19 @@ public class TreasureGame implements GameFactory {
 
         addRooms(game, room1, room2, room3, room4, room5);
 
-        List<Actionable> items = new ArrayList<>();
-        items.add(treasure);
-
-        game.addCondition(new InventoryCondition(items, true));
+        addConditions(game, room3, treasure);
 
         return game;
+    }
+
+    private void addConditions(Game game, Location room, Item treasure) {
+        List<Actionable> items = new ArrayList<>();
+        items.add(treasure);
+        game.addCondition(new InventoryCondition(items, true));
+
+        game.addLoseCondition(new PlayerStateCondition(Player.Status.poisoned));
+        game.addLoseCondition(new RoomCondition(room, true));
+
     }
 
     private static void addRooms(Game game, Location room1, Location room2, Location room3, Location room4, Location room5) {
@@ -91,7 +100,7 @@ public class TreasureGame implements GameFactory {
         EnterAction enterAction = new EnterAction("enter");
         room4.addDoor(room5, key,enterAction);
         room5.addDoor(room4,null,enterAction);
-        room3.addLeaveCondition(new PlayerStateCondition(Player.Status.poisoned));
+        //room3.addLeaveCondition(new PlayerStateCondition(Player.Status.poisoned));
     }
 
     private static Container createBox() {
@@ -132,6 +141,8 @@ public class TreasureGame implements GameFactory {
         container.addAction(new OpenAction("open"));
         container.addAction(new CloseAction("close"));
     }
+
+    @SuppressWarnings("CPD-END")
 
     public String getHelp() {
         return "The player will look for the treasure!";
