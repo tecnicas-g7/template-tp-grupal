@@ -44,14 +44,19 @@ public class Configuration implements GameBuilder {
 
         Player player = new Player(room1);
         player.setMaxInventory(1);
-        game.Game game = new game.Game(player);
+        Game game = new Game(player);
 
         addConditions(game, stack2, stack3);
 
-        return null;
+        return game;
     }
 
-    private static void addConditions(game.Game game, StackContainerComponent stack2, StackContainerComponent stack3) {
+    @Override
+    public String getName() {
+        return "hanoiTower";
+    }
+
+    private static void addConditions(Game game, StackContainerComponent stack2, StackContainerComponent stack3) {
 
         List<StackContainerComponent> containers = new ArrayList<StackContainerComponent>();
         containers.add(stack2);

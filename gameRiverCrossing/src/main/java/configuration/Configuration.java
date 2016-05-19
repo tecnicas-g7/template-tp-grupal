@@ -2,6 +2,7 @@ package configuration;
 
 import game.Location;
 import game.Player;
+import game.actions.EnterAction;
 import game.actions.MoveItemAction;
 import game.conditions.ItemTypeCondition;
 import game.conditions.RoomWithItemsCondition;
@@ -11,6 +12,7 @@ import game.items.type.HerbivorousType;
 import game.items.type.PlantType;
 import model.Game;
 import model.GameBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +25,9 @@ public class Configuration implements GameBuilder{
 
         Location leftShore = new Location("south-shore");
         Location rightShore = new Location("north-shore");
-
-        leftShore.addDoor(rightShore, null, "north-shore");
-        rightShore.addDoor(leftShore, null, "south-shore");
+        EnterAction crossAction = new EnterAction("cross");
+        leftShore.addDoor(rightShore, null, "north-shore",crossAction);
+        rightShore.addDoor(leftShore, null, "south-shore",crossAction);
 
         leftShore.addEnterCondition(new ItemTypeCondition());
         leftShore.addLeaveCondition(new ItemTypeCondition());
@@ -36,19 +38,24 @@ public class Configuration implements GameBuilder{
         Player player = new Player(leftShore);
         player.setMaxInventory(1);
 
-        //createComponents(player).forEach(item -> leftShore.addItem(item));
-        for (Item item :createComponents(player)) {
+//        createComponents(player).forEach(item -> leftShore.addItem(item));
+
+        for ( Item item: createComponents(player)) {
             leftShore.addItem(item);
         }
 
-        //FIXME Verificar que es el correcto Game class
-        game.Game game = new game.Game(player);
+        Game game = new Game(player);
 
         game.addRoom(leftShore);
         game.addRoom(rightShore);
 
         game.addCondition(setWinCondition(rightShore,player));
-        return null;
+
+        return game;
+    }
+
+    public String getName() {
+        return "riverCrossing";
     }
 
 

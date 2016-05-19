@@ -2,6 +2,7 @@ package configuration;
 
 import game.Location;
 import game.Player;
+import game.actions.EnterAction;
 import game.actions.MoveItemAction;
 import game.actions.ThiefAction;
 import game.conditions.InventoryCondition;
@@ -36,11 +37,12 @@ public class Configuration implements GameBuilder {
 
         Player player = new Player(room1);
         cursedItem.addAction(new MoveItemAction(null,player,"pick"));
-        room1.addDoor(room2,null);
+        EnterAction enterAction = new EnterAction("enter");
+        room1.addDoor(room2,null,enterAction);
 
-        room2.addDoor(room3,null);
+        room2.addDoor(room3,null,enterAction);
 
-        game.Game game = new game.Game(player);
+        Game game = new Game(player);
 
         game.addRoom(room1);
         game.addRoom(room2);
@@ -48,13 +50,18 @@ public class Configuration implements GameBuilder {
 
         game.addCondition(new RoomCondition(room3, true));
 
-        return null;
+        return game;
+    }
+
+    @Override
+    public String getName() {
+        return "cursedItem";
     }
 
 
     private static void createItemsSecondRoom(Location room) {
         Item thief = new Item("thief");
-        thief.addAction(new ThiefAction("steal"));
+        thief.addAction(new ThiefAction("talk"));
 
         room.addItem(thief);
     }

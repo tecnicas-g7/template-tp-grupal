@@ -87,4 +87,8 @@ public abstract class Actionable {
     public Actionable getLast() {
         return null;
     }
+
+    public boolean isValidMovement(Actionable item) {
+        return true;
+    }
 }

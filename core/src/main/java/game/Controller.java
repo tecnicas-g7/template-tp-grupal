@@ -4,6 +4,7 @@ import exceptions.GameNotFoundExcpetion;
 import exceptions.WrongItemActionException;
 import game.types.GameFactory;
 import game.utils.Messages;
+import model.Game;
 //import net.Server;
 
 /**
@@ -29,9 +30,9 @@ public class Controller {
                     return game.look();
                 case "inventory":
                     return game.showInventory();
-                case "enter":
+               /* case "enter":
                 case "cross":
-                    return game.enter(tokens);
+                    return game.enter(tokens);*/
                 case "item":
                     return game.itemHelp(tokens);
                 case "help":
@@ -51,25 +52,20 @@ public class Controller {
 
 
     private static String checkHelp( String token) {
-
         String helpCommand = "help";
-        //String[] tokens = token.split(Server.tokenSeparator);
-        String[] tokens = token.split(" ");
+        String[] tokens = token.split(tokenSeparator);
         if (tokens.length > 1) {
             try {
                 if (tokens[0].contains(helpCommand)) {
-//                    return getDescriptionGame(tokens[1]);
-                    //FIXME Tiene relacion con el server , verificar si es ok.
-                    return "nombre";
+                    //return Server.getDescriptionGame(tokens[1]);
+                    return "hola";
                 }
             } catch (GameNotFoundExcpetion e) {
                 System.out.println(Messages.getMessage("gameNotFound"));
             }
         }
-
         return null;
     }
-
 
 }
 

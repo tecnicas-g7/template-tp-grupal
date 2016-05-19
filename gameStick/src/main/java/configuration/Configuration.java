@@ -28,7 +28,7 @@ public class Configuration implements GameBuilder {
 
         Player player = new Player(room);
         stick.addAction(new MoveItemAction(null,player,"pick"));
-        game.Game game = new game.Game(player);
+        Game game = new Game(player);
 
         game.addRoom(room);
 
@@ -38,7 +38,12 @@ public class Configuration implements GameBuilder {
         Condition condition = new InventoryCondition(items, true);
         game.addCondition(condition);
 
-        return null;
+        return game;
+    }
+
+    @Override
+    public String getName() {
+        return "gameStick";
     }
 
     public String getHelp() {

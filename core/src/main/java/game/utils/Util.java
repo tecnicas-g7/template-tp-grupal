@@ -8,6 +8,7 @@ import exceptions.ItemNotFoundException;
 import game.Player;
 import game.conditions.Condition;
 import game.items.Actionable;
+import game.items.Linker;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -99,4 +100,13 @@ public class Util {
             }
         }
     }
+
+    public static Actionable getLinker(HashMap<String, Linker> doors, String name) {
+        Linker item = doors.get(name);
+        if (item != null) {
+            return item;
+        }
+        return null;
+    }
+
 }

@@ -2,6 +2,7 @@ package configuration;
 import game.Location;
 import game.Player;
 import game.actions.CloseAction;
+import game.actions.EnterAction;
 import game.actions.MoveItemAction;
 import game.actions.OpenAction;
 import game.conditions.RoomCondition;
@@ -27,22 +28,28 @@ public class Configuration  implements GameBuilder {
 
         box.addComponent(key);
         Location room2 = new Location("Room2");
-        room1.addDoor(room2,key);
-        room2.addDoor(room1,key);
+        EnterAction enterAction = new EnterAction("enter");
+        //room1.addDoor(room2,key,enterAction);
+//        room2.addDoor(room1,key,enterAction);
 
         Player player = new Player(room1);
-        MoveItemAction moveAction = new MoveItemAction(null,player,"pick");
+        key.addAction(new MoveItemAction(null,player,"pick"));
+        Game game = new Game(player);
 
-        key.addAction(moveAction);
-
-        game.Game game = new game.Game(player);
         game.addCondition(new RoomCondition(room2,true));
 
         game.addRoom(room1);
         game.addRoom(room2);
 
-        //return game;
-
-        return null;
+        return game;
     }
+
+    public String getName() {
+        return "gameBox";
+    }
+
+    public String getHelp() {
+        return "To leave the room the player must find the hidden key";
+    }
+	
 }

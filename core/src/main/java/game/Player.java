@@ -80,7 +80,7 @@ public class Player implements HasItems {
         return this.status;
     }
 
-    String showInventory() {
+    public String showInventory() {
         Set<String> items = this.inventory.keySet();
         String inventoryNames = "";
         for (String item : items) {

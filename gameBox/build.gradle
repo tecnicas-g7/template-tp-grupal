@@ -2,8 +2,19 @@ group 'ar.fiuba.tdd.tp-tp-grupal'
 version '1.0'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
-sourceCompatibility = 1.5
+
+
+jar {
+    mainClassName='BoxGame'
+    manifest{
+        attributes 'Main-Class': 'src.main.java.BoxGame'
+    }
+}
+
+
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()

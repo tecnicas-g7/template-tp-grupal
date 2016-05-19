@@ -1,11 +1,10 @@
 package game.types;
 
-import game.Game;
+import model.Game;
 
 public interface GameFactory {
 
     Game getGame();
 
     String getHelp();
-
 }

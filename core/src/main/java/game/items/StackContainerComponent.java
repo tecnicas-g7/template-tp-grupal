@@ -18,13 +18,13 @@ public class StackContainerComponent extends Actionable implements ContainerComp
         this.components = new Stack<>();
     }
 
-    private Boolean isMovementValid(Actionable component) {
+    public boolean isValidMovement(Actionable component) {
         //chequea si el ultimo del stackAfter es mas grande del que tiene el player
         if (this.getSize() == 0) {
             return true;
         } else {
-            Actionable after = this.getLast();
-            if ((Integer.parseInt(after.getName()) > Integer.parseInt(component.getName()))) {
+            Actionable top = this.getLast();
+            if ((Integer.parseInt(top.getName()) > Integer.parseInt(component.getName()))) {
                 return true;
             }
         }
@@ -33,7 +33,7 @@ public class StackContainerComponent extends Actionable implements ContainerComp
 
 
     public void addComponent(Actionable component)  throws FullCapacityReachedException {
-        if (components.size() < this.maxSize && isMovementValid(component)) {
+        if (components.size() < this.maxSize) {
             components.add(component);
         } else {
             throw new FullCapacityReachedException();
@@ -54,7 +54,8 @@ public class StackContainerComponent extends Actionable implements ContainerComp
         return this.components.size();
     }
 
-    public void removeComponent(ContainerComponent component) {
-        components.remove(component);
+
+    public void removeComponent(Actionable item) {
+        components.remove(item);
     }
 }

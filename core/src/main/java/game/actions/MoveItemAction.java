@@ -68,8 +68,8 @@ public class MoveItemAction extends Action {
     }
 
     private String move(Actionable stackFrom, Actionable stackAfter) throws MaxInventoryException {
-        if (stackFrom.getSize() > 0) {
-            Actionable item = stackFrom.getLast();
+        Actionable item = stackFrom.getLast();
+        if (stackFrom.getSize() > 0 && stackAfter.isValidMovement(item)) {
             stackFrom.removeComponent(item);
             stackAfter.addComponent(item);
             return "moved!";

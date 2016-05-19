@@ -2,12 +2,23 @@ group 'ar.fiuba.tdd.tp-tp-grupal'
 version '1.0'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
+
+
+
+jar {
+    mainClassName='HanoiTower'
+    manifest{
+        attributes 'Main-Class': 'src.main.java.HanoiTower'
+    }
+}
+
 
 dependencies {
     compile project(':core')

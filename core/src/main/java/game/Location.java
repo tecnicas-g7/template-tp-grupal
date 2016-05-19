@@ -1,6 +1,7 @@
 package game;
 
 import exceptions.ItemNotFoundException;
+import game.actions.Action;
 import game.conditions.Condition;
 import game.items.Actionable;
 import game.items.Item;
@@ -34,7 +35,9 @@ public class Location implements HasItems {
     }
 
     public Actionable getItem(String name) throws ItemNotFoundException {
-        return Util.getDescribable(items,name);
+        Actionable actionable = Util.getLinker(doors,name);
+        actionable = (actionable != null) ? actionable : Util.getDescribable(items,name);
+        return actionable;
     }
 
     public void addItem(Actionable item) {
@@ -55,7 +58,7 @@ public class Location implements HasItems {
         Util.removeDescribable(items,name);
     }
 
-    Iterator<Map.Entry<String, Linker>> getDoorsIterator() {
+    public Iterator<Map.Entry<String, Linker>> getDoorsIterator() {
         return this.doors.entrySet().iterator();
     }
 
@@ -75,20 +78,21 @@ public class Location implements HasItems {
         return output.toString();
     }
 
-    public void addDoor(Location destination, Item key) {
+    public void addDoor(Location destination, Item key, Action action) {
         int doorNumber = this.doors.size() + 1;
         String doorName = "door";
         doorName = doorName.concat(String.valueOf(doorNumber));
-        addDoor(destination, key, doorName);
+        addDoor(destination, key, doorName, action);
     }
 
-    public void addDoor(Location destination, Item key, String name) {
+    public void addDoor(Location destination, Item key, String name, Action action) {
         Linker door;
         if (key == null) {
             door = new Linker(destination, name);
         } else {
             door = new Linker(destination, name, key);
         }
+        door.addAction(action);
         this.doors.put(door.getName(), door);
     }
 
@@ -120,11 +124,11 @@ public class Location implements HasItems {
         this.leaveConditions.add(condition);
     }
 
-    boolean validEnterConditions(Player player) {
+    public boolean validEnterConditions(Player player) {
         return Util.checkConditions(this.enterConditions, player);
     }
 
-    boolean validLeaveConditions(Player player) {
+    public boolean validLeaveConditions(Player player) {
         return Util.checkConditions(this.leaveConditions, player);
     }
 }

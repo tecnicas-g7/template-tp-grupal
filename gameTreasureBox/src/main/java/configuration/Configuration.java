@@ -8,6 +8,8 @@ import game.conditions.PlayerStateCondition;
 import game.items.Actionable;
 import game.items.Container;
 import game.items.Item;
+import model.Game;
+import model.GameBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +17,9 @@ import java.util.List;
 /**
  * Created by nicol on 18/5/2016.
  */
-public class Configuration {
+public class Configuration implements GameBuilder{
 
-    public void build() {
+    public Game build() {
 
         Location room1 = new Location("Room1");
         Location room2 = new Location("Room2");
@@ -38,7 +40,7 @@ public class Configuration {
 
         player.setMaxInventory(2);
 
-       game.Game game = new game.Game(player);
+       Game game = new Game(player);
 
       //  addRooms(game, room1, room2, room3, room4, room5);
 
@@ -47,9 +49,15 @@ public class Configuration {
 
         game.addCondition(new InventoryCondition(items, true));
 
+        return game;
     }
 
-    private static void addRooms(game.Game game, Location room1, Location room2, Location room3, Location room4, Location room5) {
+    @Override
+    public String getName() {
+        return "treasureBox";
+    }
+
+    private static void addRooms(Game game, Location room1, Location room2, Location room3, Location room4, Location room5) {
         game.addRoom(room1);
         game.addRoom(room2);
         game.addRoom(room3);
@@ -64,15 +72,17 @@ public class Configuration {
         addOpenClose(box);
         box.addComponent(key);
         room1.addItem(box);
-        room1.addDoor(room2, key);
-        room2.addDoor(room1, null);
+        EnterAction enterAction = new EnterAction("enter");
+        room1.addDoor(room2, key,enterAction);
+        room2.addDoor(room1, null,enterAction);
     }
 
     private static void createComponentsSecondRoom(Location room2, Location room3, Location room4, Player player) {
-        room2.addDoor(room3, null);
-        room2.addDoor(room4, null);
-        room3.addDoor(room2,null);
-        room4.addDoor(room2,null);
+        EnterAction enterAction = new EnterAction("enter");
+        room2.addDoor(room3, null, enterAction);
+        room2.addDoor(room4, null, enterAction);
+        room3.addDoor(room2,null, enterAction);
+        room4.addDoor(room2,null, enterAction);
     }
 
     private static void createComponentsThirdRoom(Location room3, Location room4, Location room5, Player player) {
@@ -87,8 +97,9 @@ public class Configuration {
         trunk.addComponent(antidote);
         trunk.addComponent(box);
         room3.addItem(trunk);
-        room4.addDoor(room5, key);
-        room5.addDoor(room4,null);
+        EnterAction enterAction = new EnterAction("enter");
+        room4.addDoor(room5, key,enterAction);
+        room5.addDoor(room4,null,enterAction);
         room3.addLeaveCondition(new PlayerStateCondition(Player.Status.poisoned));
     }
 

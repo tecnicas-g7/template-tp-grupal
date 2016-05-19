@@ -1,4 +1,5 @@
 import configuration.Configuration;
+import model.GameBuilder;
 
 /**
  * Created by nicol on 18/5/2016.
