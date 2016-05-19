@@ -21,12 +21,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class MainTests {
-/*
+
     private Item createItemsWithCondition(String nameItem, Player player) {
         Item itemWithActions = new Item(nameItem);
         itemWithActions.addAction(new MoveItemAction(null,player,"pick"));
         itemWithActions.addAction(new MoveItemAction(player,null,"drop"));
         return itemWithActions;
+    }
+
+    private void makeLocationsAdjacent(Location room1, Location room2, Item key) {
+        EnterAction enterAction = new EnterAction("enter");
+        room1.addDoor(room2,key,enterAction);
+        room2.addDoor(room1,key,enterAction);
     }
 
     private Game getGameCondition() {
@@ -40,16 +46,13 @@ public class MainTests {
         room1.addItem(mouse);
         room1.addItem(stick);
         Location room2 = new Location("Room2");
+        makeLocationsAdjacent(room1,room2,key);
 
         player.setMaxInventory(2);
-        room1.addDoor(room2,key);
-        room2.addDoor(room1,key);
         Game game = new Game(player);
         game.addRoom(room1);
         game.addRoom(room2);
-        List<Describable> items = new ArrayList<>(Arrays.asList(stick,key));
-        // items.add(stick);
-        //  items.add(key);
+        List<Actionable> items = new ArrayList<>(Arrays.asList(stick,key));
         game.addCondition(new InventoryCondition(items,true));
         game.addCondition(new RoomCondition(room2,true));
         return game;
@@ -114,7 +117,7 @@ public class MainTests {
 
         assertTrue(cursedItem.verifyVictory());
     }
-/*
+
     @Test
     public void hanoiTower() {
 
@@ -184,11 +187,6 @@ public class MainTests {
         controller.interpretCommand(command);
     }
 
-    public void makeRoomsAdjacent(Location room1, Location room2, Item key) {
-        room1.addDoor(room2, key);
-        room2.addDoor(room1, key);
-    }
-
     @Test
     public void cantEnterDoor() {
         Item key = new Item("key");
@@ -198,8 +196,9 @@ public class MainTests {
         room1.addItem(container);
         Location room2 = new Location("Room 2");
         Player player2 = new Player(room2);
-        room1.addDoor(room2,key);
-        room2.addDoor(room1,key);
+        EnterAction enterAction = new EnterAction("enter");
+        room1.addDoor(room2,key,enterAction);
+        room2.addDoor(room1,key,enterAction);
         Linker door = room1.getDestinationDoor(room2);
         try {
             container.openContainer(player2);
@@ -210,67 +209,6 @@ public class MainTests {
         Player player = new Player(room1);
         player.enter(door);
         assertFalse(player.checkVictory(player2));
-    }
-
-    @Test
-    public void takeAntidoteWhilePoisoned() {
-        Item antidote = new Item("antidote");
-        antidote.addAction(new DrinkAction());
-        Location room = new Location("room");
-        Player player = new Player(room);
-        player.changeStatus(Player.Status.poisoned);
-        String command = "drink antidote";
-        try {
-            antidote.executeAction(command.split(" "), player);
-        } catch (Exception e) {
-            //Do nothing
-        }
-        assertTrue(Player.Status.alive == player.getStatus());
-    }
-
-    @Test
-    public void takeAntidoteWhileNotPoisoned() {
-        Item antidote = new Item("antidote");
-        antidote.addAction(new DrinkAction());
-        Location room = new Location("room");
-        Player player = new Player(room);
-        String command = "drink antidote";
-        try {
-            antidote.executeAction(command.split(" "), player);
-        } catch (Exception e) {
-            //Do nothing
-        }
-        assertTrue(Player.Status.alive == player.getStatus());
-    }
-
-    // El jugador no se envenena
-    @Test
-    public void noPoison() {
-        Location room1 = new Location("Room 1");
-        Container container = new Container("Box",1);
-        container.noPoison();
-        Player player = new Player(room1);
-        try {
-            container.openContainer(player);
-        } catch (Exception e) {
-            //Do nothing
-        }
-        assertTrue(player.getStatus().equals(Player.Status.alive));
-    }
-
-    // El jugador se envenena
-    @Test
-    public void yesPoison() {
-        Location room1 = new Location("Room 1");
-        Container container = new Container("Box",1);
-        container.yesPoison();
-        Player player = new Player(room1);
-        try {
-            container.openContainer(player);
-        } catch (Exception e) {
-            //Do nothing
-        }
-        assertTrue(player.getStatus().equals(Player.Status.poisoned));
     }
 
     @Test
@@ -417,6 +355,6 @@ public class MainTests {
         //No se pudo mover.
         Assert.assertTrue(riverCrossing.getPlayer().getRoom().getName().equals("south-shore"));
     }
-*/
+
 
 }
