@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.items.Actionable;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 
 /**
  Created by ltessore on 28/04/16.
@@ -38,7 +39,7 @@ public class MoveAction extends Action {
             stackAfter.addComponent(item);
             isValid = true;
         }
-        return (isValid) ? "moved!" : "can't move!";
+        return (isValid) ? Messages.getMessage("moved") : Messages.getMessage("cantMove");
     }
 
     private Boolean isMovementValid(Actionable stackFrom, Actionable stackAfter) {

@@ -70,9 +70,9 @@ public class MoveItemAction extends Action {
         if (stackFrom.getSize() > 0 && stackAfter.isValidMovement(item)) {
             stackFrom.removeComponent(item);
             stackAfter.addComponent(item);
-            return "moved!";
+            return Messages.getMessage("moved");
         }
-        return "can't move!";
+        return Messages.getMessage("cantMove");
     }
 
     //Si ambos null quiere decir que origen y destino especificado en tokens. tokens[1] = origen tokens[2] = destino;
