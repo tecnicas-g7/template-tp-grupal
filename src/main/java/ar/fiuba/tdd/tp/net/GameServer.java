@@ -36,25 +36,31 @@ public class GameServer implements Runnable{
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
                 sendMessage(out, "Welcome to game on port " + serverSocket.getLocalPort());
-                while (true) {
-                    try {
-                        String userInput = in.readLine();
-                        String output = controller.interpretCommand(userInput);
-                        sendMessage(out, output);
-                    } catch (IOException e) {
-                        System.out.println("Read failed");
-                        break;
-                    }
-                    if (controller.verify()) {
-                        sendMessage(out,"You win!");
-                        socket.close();
-                        break;
-                    }
-                }
+                cycle(in,out,socket);
             } catch (Exception ioe) {
                 System.out.println("Error...");
             }
         }
+    }
+
+    private void cycle(BufferedReader in, DataOutputStream out, Socket socket) throws Exception {
+        while (true) {
+            String output;
+            try {
+                String userInput = in.readLine();
+                output = controller.interpretCommand(userInput);
+            } catch (IOException e) {
+                System.out.println("Read failed");
+                break;
+            }
+            if (controller.verify()) {
+                sendMessage(out,"W");
+                socket.close();
+                break;
+            }
+            sendMessage(out,output);
+        }
+
     }
 
     private Socket acceptSocket() {
