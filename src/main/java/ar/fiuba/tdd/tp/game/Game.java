@@ -115,5 +115,13 @@ public class Game {
         }
         return Messages.getMessage("enterDoorMessage");
     }
+
+    public String executeAction(String[] tokens) {
+        try {
+            return player.execute(tokens);
+        } catch (WrongItemActionException e) {
+            return Messages.getMessage("ActionNotSupported");
+        }
+    }
 }
 

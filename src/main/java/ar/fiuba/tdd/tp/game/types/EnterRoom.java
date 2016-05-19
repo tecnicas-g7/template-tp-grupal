@@ -4,6 +4,8 @@ import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.EnterAction;
+import ar.fiuba.tdd.tp.game.actions.ListInventoryAction;
+import ar.fiuba.tdd.tp.game.actions.LookAction;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
@@ -12,6 +14,7 @@ import ar.fiuba.tdd.tp.game.items.Item;
 Created by fran on 24/04/16.
 */
 
+@SuppressWarnings("CPD-START")
 public class EnterRoom implements GameFactory {
 
     public Game getGame() {
@@ -22,11 +25,10 @@ public class EnterRoom implements GameFactory {
         room1.addItem(key);
         Location room2 = new Location("Room2");
 
-        Player player = new Player(room1);
+        makeLocationsAdjacent(room1, room2, key);
+
+        Player player = createPlayer(room1);
         key.addAction(new MoveItemAction(null,player,"pick"));
-        EnterAction enterAction = new EnterAction("enter");
-        room1.addDoor(room2,key,enterAction);
-        room2.addDoor(room1,key,enterAction);
         Game game = new Game(player);
 
         game.addRoom(room1);
@@ -36,6 +38,8 @@ public class EnterRoom implements GameFactory {
 
         return game;
     }
+
+    @SuppressWarnings("CPD-END")
 
     public String getHelp() {
         return "The player must find the way out of the room.";

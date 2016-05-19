@@ -36,6 +36,8 @@ public class RiverCrossing implements GameFactory {
         rightShore.addLeaveCondition(new ItemTypeCondition());
 
         Player player = new Player(leftShore);
+        player.addAction(new LookAction("look"));
+        player.addAction(new ListInventoryAction("inventory"));
         player.setMaxInventory(1);
 
         createComponents(player).forEach(item -> leftShore.addItem(item));

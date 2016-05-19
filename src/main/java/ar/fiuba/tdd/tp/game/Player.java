@@ -2,6 +2,8 @@ package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
+import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
+import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
@@ -18,6 +20,7 @@ public class Player implements HasItems {
     private static final int DEFAULT_MAX_INVENTORY = 10;
 
     private HashMap<String,Actionable> inventory;
+    private HashMap<String,Action> actions;
     private int maxInventory;
     private Location room;
 
@@ -28,8 +31,24 @@ public class Player implements HasItems {
         return component.openContainer(this);
     }
 
+    public void addAction(Action action) {
+        this.actions.put(action.getName(), action);
+    }
+
     public void clearInventory() {
         inventory.clear();
+    }
+
+    public boolean supports(String action) {
+        return this.actions.containsKey(action);
+    }
+
+    public String execute(String[] tokens) throws WrongItemActionException {
+        String actionName = tokens[0];
+        if (!supports(actionName)) {
+            throw new WrongItemActionException();
+        }
+        return actions.get(actionName).execute(tokens, this, null);
     }
 
     public enum Status {
@@ -41,6 +60,7 @@ public class Player implements HasItems {
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.room = room;
         this.status = Status.alive;
+        this.actions = new HashMap<>();
     }
 
     public void setMaxInventory(int maxInventory) {
@@ -78,7 +98,7 @@ public class Player implements HasItems {
         return this.status;
     }
 
-    String showInventory() {
+    public String showInventory() {
         Set<String> items = this.inventory.keySet();
         String inventoryNames = "";
         for (String item : items) {

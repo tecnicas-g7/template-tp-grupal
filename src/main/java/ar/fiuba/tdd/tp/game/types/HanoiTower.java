@@ -2,9 +2,7 @@ package ar.fiuba.tdd.tp.game.types;
 
 import ar.fiuba.tdd.tp.game.*;
 
-import ar.fiuba.tdd.tp.game.actions.Action;
-import ar.fiuba.tdd.tp.game.actions.MoveAction;
-import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
+import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.ContainerCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
@@ -43,7 +41,7 @@ public class HanoiTower implements GameFactory {
         room1.addItem(stack2);
         room1.addItem(stack3);
 
-        Player player = new Player(room1);
+        Player player = createPlayer(room1);
         player.setMaxInventory(1);
         Game game = new Game(player);
 

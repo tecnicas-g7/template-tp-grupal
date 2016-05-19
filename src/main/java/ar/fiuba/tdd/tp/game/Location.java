@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
+import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
@@ -131,4 +132,5 @@ public class Location implements HasItems {
     public boolean validLeaveConditions(Player player) {
         return Util.checkConditions(this.leaveConditions, player);
     }
+
 }

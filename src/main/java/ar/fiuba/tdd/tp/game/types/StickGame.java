@@ -2,6 +2,8 @@ package ar.fiuba.tdd.tp.game.types;
 
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.actions.ListInventoryAction;
+import ar.fiuba.tdd.tp.game.actions.LookAction;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
@@ -25,6 +27,8 @@ public class StickGame implements GameFactory {
         room.addItem(stick);
 
         Player player = new Player(room);
+        player.addAction(new LookAction("look"));
+        player.addAction(new ListInventoryAction("inventory"));
         stick.addAction(new MoveItemAction(null,player,"pick"));
         Game game = new Game(player);
 

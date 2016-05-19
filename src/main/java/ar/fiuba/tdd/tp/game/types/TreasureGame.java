@@ -19,7 +19,7 @@ public class TreasureGame implements GameFactory {
     public Game getGame() {
         Location room1 = new Location("Room1");
         Location room2 = new Location("Room2");
-        Player player = new Player(room1);
+        Player player = createPlayer(room1);
         createComponentsFirstRoom(room1, room2, player);
 
         Location room3 = new Location("Room3");

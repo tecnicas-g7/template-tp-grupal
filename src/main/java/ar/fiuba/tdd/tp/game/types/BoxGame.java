@@ -2,10 +2,7 @@ package ar.fiuba.tdd.tp.game.types;
 
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Location;
-import ar.fiuba.tdd.tp.game.actions.CloseAction;
-import ar.fiuba.tdd.tp.game.actions.EnterAction;
-import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
-import ar.fiuba.tdd.tp.game.actions.OpenAction;
+import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Container;
 import ar.fiuba.tdd.tp.game.items.Item;
@@ -13,6 +10,8 @@ import ar.fiuba.tdd.tp.game.items.Item;
 /**
  Created by fran on 27/04/16.
  */
+
+@SuppressWarnings("CPD-START")
 public class BoxGame implements GameFactory {
 
     public Game getGame() {
@@ -28,11 +27,9 @@ public class BoxGame implements GameFactory {
 
         box.addComponent(key);
         Location room2 = new Location("Room2");
-        EnterAction enterAction = new EnterAction("enter");
-        room1.addDoor(room2,key,enterAction);
-        room2.addDoor(room1,key,enterAction);
+        makeLocationsAdjacent(room1, room2, key);
 
-        Player player = new Player(room1);
+        Player player = createPlayer(room1);
         key.addAction(new MoveItemAction(null,player,"pick"));
         Game game = new Game(player);
 
@@ -44,6 +41,8 @@ public class BoxGame implements GameFactory {
         return game;
     }
 
+
+    @SuppressWarnings("CPD-END")
     public String getHelp() {
         return "To leave the room the player must find the hidden key";
     }

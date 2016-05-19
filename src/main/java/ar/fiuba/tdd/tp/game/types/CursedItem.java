@@ -1,9 +1,7 @@
 package ar.fiuba.tdd.tp.game.types;
 
 import ar.fiuba.tdd.tp.game.*;
-import ar.fiuba.tdd.tp.game.actions.EnterAction;
-import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
-import ar.fiuba.tdd.tp.game.actions.ThiefAction;
+import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
@@ -31,14 +29,13 @@ public class CursedItem implements GameFactory {
         Location room3 = new Location("Room3");
 
         addRoomConditions(room2,room3,cursedItem);
-
-        Player player = new Player(room1);
-        cursedItem.addAction(new MoveItemAction(null,player,"pick"));
         EnterAction enterAction = new EnterAction("enter");
         room1.addDoor(room2,null,enterAction);
 
         room2.addDoor(room3,null,enterAction);
 
+        Player player = createPlayer(room1);
+        cursedItem.addAction(new MoveItemAction(null,player,"pick"));
         Game game = new Game(player);
 
         game.addRoom(room1);

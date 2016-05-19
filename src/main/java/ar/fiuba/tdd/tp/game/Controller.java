@@ -21,22 +21,24 @@ public class Controller {
 
     public String interpretCommand(String command) {
         String[] tokens = command.split(tokenSeparator);
-        String action = tokens[0];
+        String action = tokens[0].toLowerCase();
         try {
-            switch (action) {
-                case "look":
+            if (tokens.length == 1) {
+                return game.executeAction(tokens);
+            } else {
+                switch (action) {
+                /*case "look":
                     return game.look();
                 case "inventory":
                     return game.showInventory();
-               /* case "enter":
-                case "cross":
-                    return game.enter(tokens);*/
-                case "item":
-                    return game.itemHelp(tokens);
-                case "help":
-                    return this.checkHelp(command);
-                default:
-                    return game.executeActionOnItem(tokens);
+                */
+                    case "item":
+                        return game.itemHelp(tokens);
+                    case "help":
+                        return this.checkHelp(command);
+                    default:
+                        return game.executeActionOnItem(tokens);
+                }
             }
         } catch (WrongItemActionException e) {
             return e.getMessage();
