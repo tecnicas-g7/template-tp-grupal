@@ -10,17 +10,18 @@ repositories {
     mavenCentral()
 }
 
-
-
-jar {
-    mainClassName='EnterRoom'
-    manifest{
-        attributes 'Main-Class': 'src.main.java.EnterRoom'
-    }
-}
-
-
 dependencies {
     compile project(':core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+
+mainClassName = 'EnterRoom'
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "Enter Room",
+                "Implementation-Version": version, 'Main-Class': 'EnterRoom'
+        )
+    }
 }

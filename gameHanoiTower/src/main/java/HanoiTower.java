@@ -1,5 +1,3 @@
-import configuration.Configuration;
-
 /**
  * Created by nicol on 18/5/2016.
  */

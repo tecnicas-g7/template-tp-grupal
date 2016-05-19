@@ -11,15 +11,17 @@ repositories {
 }
 
 
-jar {
-    mainClassName='RiverCrossing'
-    manifest{
-        attributes 'Main-Class': 'src.main.java.RiverCrossing'
-    }
-}
-
-
 dependencies {
     compile project(':core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+mainClassName = 'RiverCrossing'
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "River Crossing",
+                "Implementation-Version": version, 'Main-Class': 'RiverCrossing'
+        )
+    }
 }

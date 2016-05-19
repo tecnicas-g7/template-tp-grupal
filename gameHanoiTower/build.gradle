@@ -10,17 +10,17 @@ repositories {
     mavenCentral()
 }
 
-
-
-jar {
-    mainClassName='HanoiTower'
-    manifest{
-        attributes 'Main-Class': 'src.main.java.HanoiTower'
-    }
-}
-
-
 dependencies {
     compile project(':core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+mainClassName = 'HanoiTower'
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "Hanoi Tower",
+                "Implementation-Version": version, 'Main-Class': 'HanoiTower'
+        )
+    }
 }

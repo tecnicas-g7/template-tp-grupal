@@ -2,6 +2,7 @@ group 'ar.fiuba.tdd.tp-tp-grupal'
 version '1.0'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
@@ -9,18 +10,18 @@ repositories {
     mavenCentral()
 }
 
-apply plugin: 'application'
-
-
-jar {
-    mainClassName='StickGame'
-    manifest{
-        attributes 'Main-Class': 'src.main.java.StickGame'
-    }
-}
-
-
 dependencies {
     compile project(':core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+
+mainClassName = 'StickGame'
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "Stick Game",
+                "Implementation-Version": version, 'Main-Class': 'StickGame'
+        )
+    }
 }

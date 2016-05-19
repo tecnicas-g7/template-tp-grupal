@@ -1,5 +1,3 @@
-package configuration;
-
 import game.Location;
 import game.Player;
 //import game.actions.CheckAction;

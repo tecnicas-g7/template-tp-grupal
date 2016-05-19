@@ -5,13 +5,6 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 
-jar {
-    mainClassName='TreasureBox'
-    manifest{
-        attributes 'Main-Class': 'src.main.java.TreasureBox'
-    }
-}
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -21,4 +14,15 @@ repositories {
 dependencies {
     compile project(':core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+mainClassName = 'TreasureGame'
+
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "Treasure Box",
+                "Implementation-Version": version, 'Main-Class': 'TreasureGame'
+        )
+    }
 }
