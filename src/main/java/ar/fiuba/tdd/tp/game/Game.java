@@ -4,7 +4,6 @@ import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
-import ar.fiuba.tdd.tp.game.items.Linker;
 import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.*;
@@ -67,19 +66,6 @@ public class Game {
     String showInventory() {
         return this.player.showInventory();
     }
-
-    /*String enter(String[] tokens) {
-        Location origin = player.getRoom();
-        Iterator<HashMap.Entry<String, Linker>> it = origin.getDoorsIterator();
-        while (it.hasNext()) {
-            Linker door = it.next().getValue();
-            Location destination = door.getDestination();
-            if (door.getName().equals(tokens[1]) && origin.validLeaveConditions(player) && destination.validEnterConditions(player)) {
-                return player.enter(door);
-            }
-        }
-        return Messages.getMessage("youCantDoThatMessage");
-    }*/
 
     private boolean validateEnterAndLeaveConditions(Location origin, Location destination) {
         return origin.validLeaveConditions(player) && destination.validEnterConditions(player);

@@ -10,11 +10,6 @@ Created by fran on 27/04/16.
 
 public class ThiefAction extends Action {
 
-   /* @Override
-    public String getName() {
-        return "talk";
-    }
-*/
     public ThiefAction(String name) {
         super(name);
     }

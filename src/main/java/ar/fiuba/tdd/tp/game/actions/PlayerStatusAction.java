@@ -19,11 +19,6 @@ public class PlayerStatusAction extends Action {
         //this.name = name;
     }
 
-    /*
-    public String getName() {
-        return name;
-    }
-    */
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
         player.changeStatus(status);

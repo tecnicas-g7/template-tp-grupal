@@ -23,6 +23,9 @@ public class GameServer implements Runnable{
 
     public GameServer(int port, GameFactory gameFactory) throws IOException {
         this.serverSocket = new ServerSocket(port);
+        if (gameFactory == null) {
+            throw new GameNotFoundExcpetion();
+        }
         this.gameFactory = gameFactory;
     }
 

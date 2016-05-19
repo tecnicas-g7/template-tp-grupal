@@ -9,10 +9,6 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
  */
 public class OpenAction extends Action {
 
-    /*public String getName() {
-        return "open";
-    }*/
-
     public OpenAction(String name) {
         super(name);
     }
