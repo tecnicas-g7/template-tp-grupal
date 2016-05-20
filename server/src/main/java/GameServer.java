@@ -1,7 +1,5 @@
-package ar.fiuba.tdd.tp.net;
-
 import game.Controller;
-import game.types.GameFactory;
+import model.GameBuilder;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -18,17 +16,17 @@ public class GameServer implements Runnable{
 
     private ServerSocket serverSocket;
     Controller controller;
-    private GameFactory gameFactory;
+    private GameBuilder gameBuilder;
 
-    public GameServer(int port, GameFactory gameFactory) throws IOException {
+    public GameServer(int port, GameBuilder gameBuilder) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.gameFactory = gameFactory;
+        this.gameBuilder = gameBuilder;
     }
 
     public void run() {
         while (true) {
             try {
-                controller = new Controller(gameFactory.getGame());
+                controller = new Controller(gameBuilder.build());
                 Socket socket = acceptSocket();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));

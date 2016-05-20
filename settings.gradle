@@ -8,4 +8,4 @@ include 'gameEnterRoom'
 include 'gameHanoiTower'
 include 'gameStick'
 include 'server'
-
+include 'client'

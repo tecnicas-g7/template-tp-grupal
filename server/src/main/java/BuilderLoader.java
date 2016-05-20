@@ -1,6 +1,3 @@
-package ar.fiuba.tdd.tp.server;
-
-
 import model.GameBuilder;
 
 import java.io.File;
