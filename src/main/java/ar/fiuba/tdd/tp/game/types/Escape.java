@@ -38,18 +38,9 @@ public class Escape implements GameFactory {
         Location acceso = new Location("acceso");
         Location salonTres = new Location("salonTres");
         createSalonUno(player,pasillo,acceso,salonTres);
-        createSalonDos(player,pasillo);
+        /*createSalonDos(player,pasillo);
         createSalonTres(player,pasillo);
-        createAccesoBiblioteca(player,pasillo);
-
-
-
-
-
-
-
-
-
+        createAccesoBiblioteca(player,pasillo);*/
 
         return null;
     }
@@ -93,7 +84,7 @@ public class Escape implements GameFactory {
         Item licor = new Item("licor");
         salonUno.addItem(licor);
         addPickDrop(licor,player);
-        createLicorCredentialConditions(credencial,player.getItem("foto"),licor,acceso);
+        //createLicorCredentialConditions(credencial,player.getItem("foto"),licor,acceso);
     }
 
     private void createLicorCredentialConditions(Container credencial, Actionable foto, Item licor, Location acceso) {

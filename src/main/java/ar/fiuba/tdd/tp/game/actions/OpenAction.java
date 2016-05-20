@@ -32,7 +32,7 @@ public class OpenAction extends Action {
     }
 
     private boolean checkConditions(Player player) {
-        for(Condition condition : conditions) {
+        for (Condition condition : conditions) {
             if (!condition.isValid(player)) {
                 return false;
             }
