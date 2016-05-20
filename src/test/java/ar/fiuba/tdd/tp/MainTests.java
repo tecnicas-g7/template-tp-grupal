@@ -31,8 +31,8 @@ public class MainTests {
 
     private void makeLocationsAdjacent(Location room1, Location room2, Item key) {
         EnterAction enterAction = new EnterAction("enter");
-        room1.addDoor(room2,key,enterAction);
-        room2.addDoor(room1,key,enterAction);
+        room1.addDoor(room2, key, enterAction);
+        room2.addDoor(room1, key, enterAction);
     }
 
     private Game getGameCondition() {
@@ -198,7 +198,7 @@ public class MainTests {
         Player player2 = new Player(room2);
         EnterAction enterAction = new EnterAction("enter");
         room1.addDoor(room2,key,enterAction);
-        room2.addDoor(room1,key,enterAction);
+        room2.addDoor(room1, key, enterAction);
         Linker door = room1.getDestinationDoor(room2);
         try {
             container.openContainer(player2);
@@ -354,6 +354,25 @@ public class MainTests {
         controller.interpretCommand(northShore);
         //No se pudo mover.
         Assert.assertTrue(riverCrossing.getPlayer().getRoom().getName().equals("south-shore"));
+    }
+
+    @Test
+    public void escape() {
+        Game escape = (new Escape().getGame());
+        Controller controller = new Controller(escape);
+
+        controller.interpretCommand("goto BibliotecaAcceso");
+        controller.interpretCommand("goto Pasillo");
+        controller.interpretCommand("goto Salon3");
+        controller.interpretCommand("pick Llave");
+        controller.interpretCommand("goto Pasillo");
+        controller.interpretCommand("goto Salon1");
+        controller.interpretCommand("move CuadroBarco");
+        controller.interpretCommand("open CajaFuerte");
+        controller.interpretCommand("pick Credencial");
+        controller.interpretCommand("put Foto Credencial");
+
+        controller.interpretCommand("put Foto in Credencial");
     }
 
 

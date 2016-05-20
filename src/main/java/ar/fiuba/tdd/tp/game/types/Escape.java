@@ -150,12 +150,14 @@ public class Escape implements GameFactory {
         addPickDrop(credencial, player);
         Item licor = new Item("licor");
         salonUno.addItem(licor);
-        addPickDrop(licor,player);
-        //createLicorCredentialConditions(credencial,player.getItem("foto"),licor,acceso);
+
+        createLicorCredentialConditions(player, credencial, player.getItem("Foto"), licor, acceso);
     }
 
-    private void createLicorCredentialConditions(Container credencial, Actionable foto, Item licor, Location acceso) {
-
+    private void createLicorCredentialConditions(Player player, Container credencial, Actionable foto, Item licor, Location acceso) {
+        foto.addAction(new MoveItemAction(player,null,"put"));
+        addPickDrop(licor,player);
+        addPickDrop(foto,player);
     }
 
     private void addPickDrop(Actionable actionable, Player player) {

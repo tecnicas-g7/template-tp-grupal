@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.game.actions;
 
+import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
 import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.HasItems;
 import ar.fiuba.tdd.tp.game.Location;
@@ -37,7 +38,7 @@ public class MoveItemAction extends Action {
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
         if (origin == null && destination == null) {
-            return moveFromTokenToToken(tokens,player,item);
+            return moveFromTokenToToken(tokens, player, item);
         }
         return originToDestination(tokens, player, item);
     }
@@ -49,13 +50,33 @@ public class MoveItemAction extends Action {
         if (newOrigin == null) {
             newOrigin = player.getRoom();
         }
+        if (tokens.length == 2) {
+            return moveDefaultDestination(newOrigin, newDestination, player,item);
+        } else {
+            return moveSpecifiedDestination(tokens, newOrigin, player, item);
+        }
+
+    }
+
+    private String moveDefaultDestination(HasItems newOrigin, HasItems newDestination, Player player, Actionable item) {
         if (newDestination == null) {
             newDestination = player.getRoom();
         }
-        return move(tokens,player,item,newOrigin,newDestination);
+        return move(player, item, newOrigin, newDestination);
     }
 
-    private String move(String[] tokens, Player player, Actionable item, HasItems newOrigin, HasItems newDestination) {
+    private String moveSpecifiedDestination(String[] tokens, HasItems newOrigin, Player player, Actionable item) {
+        String name = tokens[2];
+        Actionable destination;
+        try {
+            destination = player.getItem(name);
+        } catch (ItemNotFoundException e) {
+            destination = player.getRoom().getItem(name);
+        }
+        return move(player,item,newOrigin,destination);
+    }
+
+    private String move(Player player, Actionable item, HasItems newOrigin, HasItems newDestination) {
         try {
             newDestination.addItem(item);
             newOrigin.removeItem(item.getName());
@@ -63,6 +84,12 @@ public class MoveItemAction extends Action {
         } catch (MaxInventoryException e) {
             return e.getMessage();
         }
+    }
+
+    private String move( Player player, Actionable item, HasItems newOrigin, Actionable newDestination) {
+        newDestination.addComponent(item);
+        newOrigin.removeItem(item.getName());
+        return Messages.getMessage("objectMoved");
     }
 
     private String move(Actionable stackFrom, Actionable stackAfter) throws MaxInventoryException {
