@@ -41,7 +41,7 @@ public class GameServer implements Runnable{
                 sendMessage(out, "Welcome to game on port " + serverSocket.getLocalPort());
                 cycle(in,out,socket);
             } catch (Exception ioe) {
-                System.out.println("Error...");
+                System.out.println(ioe.getMessage());
             }
         }
     }

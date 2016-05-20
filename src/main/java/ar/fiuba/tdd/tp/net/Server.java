@@ -29,6 +29,7 @@ public class Server {
         games.put("RIVERCROSSING", new RiverCrossing());
         games.put("STICKGAME", new StickGame());
         games.put("TREASUREGAME", new TreasureGame());
+        games.put("ESCAPE", new Escape());
         loadGame();
     }
 

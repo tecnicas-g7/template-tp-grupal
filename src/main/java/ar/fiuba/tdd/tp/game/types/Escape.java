@@ -8,6 +8,7 @@ import ar.fiuba.tdd.tp.game.actions.EnterAction;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.actions.OpenAction;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
+import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
 import ar.fiuba.tdd.tp.game.items.Item;
@@ -31,13 +32,30 @@ public class Escape implements GameFactory {
             createAccesoBiblioteca(pasillo, acceso);
             Location biblioteca = createBiblioteca(acceso);
             Location pasaje = createPasaje(biblioteca);
-            Location sotano = createSotano(salon2.getItem("Martillo"));
-            pasaje.addDoor(sotano,null,"puerta",new EnterAction("enter"));
-            return null;
+            Location afuera = new Location("Afuera");
+            Location sotano = createSotano(afuera,salon2.getItem("Martillo"));
+            pasaje.addDoor(sotano, null, "puerta", new EnterAction("enter"));
+
+            return createGame(player, pasillo,salon1,salon2,salonTres,acceso,biblioteca,sotano,afuera);
         } catch (MaxInventoryException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private Game createGame(Player player,Location pasillo, Location salon1,
+                            Location salon2, Location salonTres, Location acceso, Location biblioteca, Location sotano, Location afuera) {
+        Game game = new Game(player);
+        game.addRoom(pasillo);
+        game.addRoom(salon1);
+        game.addRoom(salon2);
+        game.addRoom(salonTres);
+        game.addRoom(acceso);
+        game.addRoom(biblioteca);
+        game.addRoom(sotano);
+        game.addRoom(afuera);
+        game.addCondition(new RoomCondition(afuera,true));
+        return game;
     }
 
     private void setPlayerInitialInventory(Player player) throws MaxInventoryException {
@@ -48,9 +66,8 @@ public class Escape implements GameFactory {
         player.addItem(lapicera);
     }
 
-    private Location createSotano(Actionable martillo) {
+    private Location createSotano(Location afuera, Actionable martillo) {
         Location sotano = new Location("Sotano");
-        Location afuera = new Location("Afuera");
         sotano.addDoor(afuera,(Item)martillo,"ventana",new EnterAction("break"));
         return sotano;
     }
@@ -105,9 +122,10 @@ public class Escape implements GameFactory {
         return salon2;
     }
 
-    private Container createCuadroBarco() {
+    private Container createCuadroBarco(Location salonUno) {
         Container cuadroBarco = new Container("CuadroBarco",1);
         cuadroBarco.addAction(new OpenAction("move"));
+        salonUno.addItem(cuadroBarco);
         return cuadroBarco;
     }
 
@@ -117,9 +135,8 @@ public class Escape implements GameFactory {
         addPickDrop(key,player);
         salonTres.addItem(key);
         Container cajaFuerte = new Container("CajaFuerte",1);
-
+        Container cuadroBarco = createCuadroBarco(salonUno);
         try {
-            Container cuadroBarco = createCuadroBarco();
             cuadroBarco.addComponent(cajaFuerte);
             cajaFuerte.addItem(credencial);
         } catch (MaxInventoryException e) {
@@ -128,9 +145,9 @@ public class Escape implements GameFactory {
         OpenAction open = new OpenAction("open");
         List<Actionable> list = new ArrayList<>();
         list.add(key);
-        open.addCondition(new InventoryCondition(list,true));
+        open.addCondition(new InventoryCondition(list, true));
         cajaFuerte.addAction(open);
-        addPickDrop(credencial,player);
+        addPickDrop(credencial, player);
         Item licor = new Item("licor");
         salonUno.addItem(licor);
         addPickDrop(licor,player);
@@ -144,6 +161,13 @@ public class Escape implements GameFactory {
     private void addPickDrop(Actionable actionable, Player player) {
         actionable.addAction(new MoveItemAction(null,player,"pick"));
         actionable.addAction(new MoveItemAction(player,null,"drop"));
+    }
+
+    @Override
+    public void makeLocationsAdjacent(Location room1, Location room2, Item key) {
+        EnterAction enterAction = new EnterAction("goto");
+        room1.addDoor(room2,key,room2.getName(),enterAction);
+        room2.addDoor(room1,key,room1.getName(),enterAction);
     }
 
     @SuppressWarnings("CPD-END")
