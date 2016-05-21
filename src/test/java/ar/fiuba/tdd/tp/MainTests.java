@@ -370,9 +370,13 @@ public class MainTests {
         controller.interpretCommand("move CuadroBarco");
         controller.interpretCommand("open CajaFuerte");
         controller.interpretCommand("pick Credencial");
-        controller.interpretCommand("put Foto Credencial");
+        //controller.interpretCommand("put Foto Credencial");
+        controller.interpretCommand("goto Pasillo");
+        controller.interpretCommand("goto BibliotecaAcceso");
+        controller.interpretCommand("show Credencial Bibliotecario");
 
-        controller.interpretCommand("put Foto in Credencial");
+        controller.interpretCommand("show Credencial Bibliotecario");
+
     }
 
 

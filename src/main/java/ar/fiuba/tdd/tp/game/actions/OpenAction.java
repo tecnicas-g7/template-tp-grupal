@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class OpenAction extends Action {
 
-    List<Condition> conditions = new ArrayList<>();
-
     public OpenAction(String name) {
         super(name);
     }
@@ -27,17 +25,6 @@ public class OpenAction extends Action {
         return "Couldnt open container";
     }
 
-    public void addCondition(Condition condition) {
-        conditions.add(condition);
-    }
 
-    private boolean checkConditions(Player player) {
-        for (Condition condition : conditions) {
-            if (!condition.isValid(player)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 }

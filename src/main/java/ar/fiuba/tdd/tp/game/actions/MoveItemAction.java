@@ -20,27 +20,23 @@ public class MoveItemAction extends Action {
         super("move");
         this.origin = origin;
         this.destination = destination;
-        //this.name = "move";
     }
 
     public MoveItemAction(HasItems origin, HasItems destination, String name) {
         super(name);
         this.origin = origin;
         this.destination = destination;
-        //this.name = name;
     }
 
-   /* @Override
-    public String getName() {
-        return name;
-    }
-*/
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
-        if (origin == null && destination == null) {
-            return moveFromTokenToToken(tokens, player, item);
+        if (checkConditions(player)) {
+            if (origin == null && destination == null) {
+                return moveFromTokenToToken(tokens, player, item);
+            }
+            return originToDestination(tokens, player, item);
         }
-        return originToDestination(tokens, player, item);
+        return "Can't do that";
     }
 
     private String originToDestination(String[] tokens, Player player, Actionable item) {

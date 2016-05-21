@@ -4,14 +4,14 @@ import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.actions.EnterAction;
-import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
-import ar.fiuba.tdd.tp.game.actions.OpenAction;
+import ar.fiuba.tdd.tp.game.actions.*;
+import ar.fiuba.tdd.tp.game.conditions.HasItemsWithItemsCondition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.Linker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +26,15 @@ public class Escape implements GameFactory {
             setPlayerInitialInventory(player);
             Location acceso = new Location("BibliotecaAcceso");
             Location salonTres = new Location("Salon3");
-            Location salon1 = createSalonUno(player,pasillo,acceso,salonTres);
-            makeLocationsAdjacent(salon1,pasillo,null);
+            Location pasaje = new Location("Pasaje");
+            Location biblioteca = createBiblioteca(player, acceso, pasaje);
+            Location salon1 = createSalonUno(player, pasillo, acceso, biblioteca, salonTres);
+            makeLocationsAdjacent(salon1, pasillo, null);
             Location salon2 = createSalonDos(pasillo);
-            createAccesoBiblioteca(pasillo, acceso);
-            Location biblioteca = createBiblioteca(acceso);
-            Location pasaje = createPasaje(biblioteca);
+
+            makeLocationsAdjacent(acceso, pasillo, null);
+
+
             Location afuera = new Location("Afuera");
             Location sotano = createSotano(afuera,salon2.getItem("Martillo"));
             pasaje.addDoor(sotano, null, "puerta", new EnterAction("enter"));
@@ -68,7 +71,7 @@ public class Escape implements GameFactory {
 
     private Location createSotano(Location afuera, Actionable martillo) {
         Location sotano = new Location("Sotano");
-        sotano.addDoor(afuera,(Item)martillo,"ventana",new EnterAction("break"));
+        sotano.addDoor(afuera, (Item) martillo, "ventana", new EnterAction("break"));
         return sotano;
     }
 
@@ -78,27 +81,32 @@ public class Escape implements GameFactory {
         return pasaje;
     }
 
-    private Location createBiblioteca(Location acceso) {
+    private Location createBiblioteca(Player player, Location acceso, Location pasaje) {
         Location biblioteca = new Location("Biblioteca");
         makeLocationsAdjacent(acceso, biblioteca,null);
-        Item estante = new Item("Estante");
+        Container estante = new Container("Estante",10);
+        estante.openContainer(player);
         biblioteca.addItem(estante);
         for (int i = 0; i < 9 ; i++) {
             int bookNumber = i + 1;
             String bookName = "book";
             bookName = bookName.concat(String.valueOf(bookNumber));
             Item libro = new Item(bookName);
-            biblioteca.addItem(libro);
+            estante.addComponent(libro);
         }
+
+        Container libroViejo = new Container("LibroViejo",10);
+        estante.addComponent(libroViejo);
+        libroViejo.addAction(new OpenAction("move"));
+        Linker sotano = new Linker(pasaje,"Sotano");
+        libroViejo.addComponent(sotano);
+        pasaje.addDoor(biblioteca,null,"Biblioteca",new EnterAction("goto"));
         return biblioteca;
     }
 
-    private void createAccesoBiblioteca(Location pasillo, Location acceso) {
-        makeLocationsAdjacent(acceso, pasillo, null);
-        //TODO FALTA LO DEL bibliotecario
-    }
 
-    private Location createSalonUno(Player player, Location pasillo, Location acceso, Location salonTres) {
+
+    private Location createSalonUno(Player player, Location pasillo, Location acceso, Location biblioteca, Location salonTres) {
         Location salonUno = new Location("Salon1");
         makeLocationsAdjacent(salonTres,pasillo,null);
         salonUno.addItem(new Item("mesa"));
@@ -107,7 +115,7 @@ public class Escape implements GameFactory {
         salonUno.addItem(new Item("silla1"));
         salonUno.addItem(new Item("silla2"));
         salonUno.addItem(new Item("cuadroTren"));
-        createUsableItems(player,salonUno, acceso, salonTres);
+        createUsableItems(player, salonUno, acceso, biblioteca, salonTres);
 
 
         return salonUno;
@@ -115,7 +123,7 @@ public class Escape implements GameFactory {
 
     private Location createSalonDos(Location pasillo) {
         Location salon2 = new Location("Salon2");
-        makeLocationsAdjacent(salon2,pasillo,null);
+        makeLocationsAdjacent(salon2, pasillo, null);
         salon2.addItem(new Item("Martillo"));
         salon2.addItem(new Item("Destornillador1"));
         salon2.addItem(new Item("Destornillador2"));
@@ -129,7 +137,7 @@ public class Escape implements GameFactory {
         return cuadroBarco;
     }
 
-    private void createUsableItems(Player player,Location salonUno, Location acceso, Location salonTres) {
+    private void createUsableItems(Player player, Location salonUno, Location acceso, Location biblioteca, Location salonTres) {
         Container credencial = new Container("Credencial",1);
         Item key = new Item("Llave");
         addPickDrop(key,player);
@@ -151,13 +159,30 @@ public class Escape implements GameFactory {
         Item licor = new Item("licor");
         salonUno.addItem(licor);
 
-        createLicorCredentialConditions(player, credencial, player.getItem("Foto"), licor, acceso);
+        createLicorCredentialConditions(player, acceso, credencial, player.getItem("Foto"), licor, biblioteca);
     }
 
-    private void createLicorCredentialConditions(Player player, Container credencial, Actionable foto, Item licor, Location acceso) {
-        foto.addAction(new MoveItemAction(player,null,"put"));
-        addPickDrop(licor,player);
-        addPickDrop(foto,player);
+    private void createLicorCredentialConditions(Player player, Location acceso,
+                                                 Container credencial, Actionable foto, Item licor, Location biblioteca) {
+        foto.addAction(new MoveItemAction(player, null, "put"));
+        addPickDrop(licor, player);
+        addPickDrop(foto, player);
+        List<Actionable> list = new ArrayList<>();
+        list.add(foto);
+        MoveItemAction show = new MoveItemAction(player,null,"show");
+        show.addCondition(new HasItemsWithItemsCondition(list, credencial, true));
+        credencial.addAction(show);
+        createAccesoBiblioteca(player, credencial, acceso, biblioteca);
+
+    }
+
+    private void createAccesoBiblioteca(Player player, Container credencial, Location acceso, Location biblioteca) {
+        //TODO FALTA LO DEL bibliotecario con licor y q se acuerde de no dejar pasar
+        Container bibliotecario = new Container("Bibliotecario",1);
+        acceso.addItem(bibliotecario);
+        List<Actionable> listCredencial = new ArrayList<>();
+        listCredencial.add(credencial);
+        biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listCredencial, bibliotecario, true));
     }
 
     private void addPickDrop(Actionable actionable, Player player) {
