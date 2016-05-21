@@ -1,3 +1,5 @@
+package server;
+
 import game.Controller;
 import model.GameBuilder;
 

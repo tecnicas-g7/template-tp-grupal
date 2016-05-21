@@ -1,3 +1,5 @@
+package server;
+
 import exceptions.GameNotFoundExcpetion;
 import game.types.*;
 import model.Game;

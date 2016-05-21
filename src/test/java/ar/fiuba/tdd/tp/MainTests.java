@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp;
 
+import org.junit.Before;
+
 /*
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
@@ -21,6 +23,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 */
 public class MainTests {
+
+
 /*
     private Item createItemsWithCondition(String nameItem, Player player) {
         Item itemWithActions = new Item(nameItem);

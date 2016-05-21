@@ -1,3 +1,5 @@
+package server;
+
 import model.GameBuilder;
 
 import java.io.File;

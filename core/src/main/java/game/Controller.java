@@ -17,6 +17,10 @@ public class Controller {
 
     private Game game;
 
+    public enum GameState {
+        Lost, Win, InProgress
+    }
+
     public Controller(Game game) {
         this.game = game;
     }
@@ -65,6 +69,13 @@ public class Controller {
             }
         }
         return null;
+    }
+
+    public GameState getGameState() {
+        if (verify()) {
+            return GameState.Win;
+        }
+        return GameState.Lost;
     }
 
 }
