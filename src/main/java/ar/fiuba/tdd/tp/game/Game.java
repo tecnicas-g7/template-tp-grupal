@@ -119,12 +119,12 @@ public class Game {
     public boolean gameOver() {
         if (loseConditions.size() > 0) {
             for (Condition condition : this.loseConditions) {
-                if (!condition.isValid(this.player)) {
-                    return false;
+                if (condition.isValid(this.player)) {
+                    return true;
                 }
             }
             System.out.print(Messages.getMessage("GameOver"));
-            return true;
+            return false;
         }
         return false;
     }

@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.*;
+import ar.fiuba.tdd.tp.game.conditions.ComplexCondition;
 import ar.fiuba.tdd.tp.game.conditions.HasItemsWithItemsCondition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
@@ -30,7 +31,7 @@ public class Escape implements GameFactory {
             Location biblioteca = createBiblioteca(player, acceso, pasaje);
             Location salon1 = createSalonUno(player, pasillo, acceso, biblioteca, salonTres);
             makeLocationsAdjacent(salon1, pasillo, null);
-            Location salon2 = createSalonDos(pasillo);
+            Location salon2 = createSalonDos(player,pasillo);
 
             makeLocationsAdjacent(acceso, pasillo, null);
 
@@ -42,7 +43,7 @@ public class Escape implements GameFactory {
 
             Game game =  createGame(player, pasillo,salon1,salon2,salonTres,acceso,biblioteca,sotano,afuera);
 
-            addPathsPasaje(game,pasaje,sotano);
+            addPathsPasaje(game,pasaje,sotano,salon2.getItem("Martillo"));
 
             return game;
         } catch (MaxInventoryException e) {
@@ -51,11 +52,20 @@ public class Escape implements GameFactory {
         return null;
     }
 
-    private void addPathsPasaje(Game game, Location pasaje, Location sotano) {
+    private void addPathsPasaje(Game game, Location pasaje, Location sotano, Actionable martillo) {
         Location escaleras = new Location("Escalera");
         pasaje.addDoor(escaleras,null,"Escalera",new EnterAction("use"));
-        pasaje.addDoor(sotano,null,"Baranda",new EnterAction("use"));
-        game.addLoseCondition(new RoomCondition(escaleras,true));
+        pasaje.addDoor(sotano, null, "Baranda", new EnterAction("use"));
+        game.addLoseCondition(new RoomCondition(escaleras, true));
+
+        RoomCondition roomCondition = new RoomCondition(sotano,true);
+        List<Actionable> list = new ArrayList<>();
+        list.add(martillo);
+        InventoryCondition inventoryCondition = new InventoryCondition(list,false);
+        ComplexCondition complexCondition = new ComplexCondition();
+        complexCondition.addCondition(roomCondition);
+        complexCondition.addCondition(inventoryCondition);
+        game.addLoseCondition(complexCondition);
     }
 
     private Game createGame(Player player,Location pasillo, Location salon1,
@@ -136,10 +146,12 @@ public class Escape implements GameFactory {
         return salonUno;
     }
 
-    private Location createSalonDos(Location pasillo) {
+    private Location createSalonDos(Player player, Location pasillo) {
         Location salon2 = new Location("Salon2");
         makeLocationsAdjacent(salon2, pasillo, null);
-        salon2.addItem(new Item("Martillo"));
+        Item martillo = new Item("Martillo");
+        addPickDrop(martillo,player);
+        salon2.addItem(martillo);
         salon2.addItem(new Item("Destornillador1"));
         salon2.addItem(new Item("Destornillador2"));
         return salon2;
