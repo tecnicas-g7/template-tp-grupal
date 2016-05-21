@@ -34,16 +34,28 @@ public class Escape implements GameFactory {
 
             makeLocationsAdjacent(acceso, pasillo, null);
 
-
             Location afuera = new Location("Afuera");
+
             Location sotano = createSotano(afuera,salon2.getItem("Martillo"));
+
             pasaje.addDoor(sotano, null, "puerta", new EnterAction("enter"));
 
-            return createGame(player, pasillo,salon1,salon2,salonTres,acceso,biblioteca,sotano,afuera);
+            Game game =  createGame(player, pasillo,salon1,salon2,salonTres,acceso,biblioteca,sotano,afuera);
+
+            addPathsPasaje(game,pasaje,sotano);
+
+            return game;
         } catch (MaxInventoryException e) {
-            e.printStackTrace();
+           //kkk
         }
         return null;
+    }
+
+    private void addPathsPasaje(Game game, Location pasaje, Location sotano) {
+        Location escaleras = new Location("Escalera");
+        pasaje.addDoor(escaleras,null,"Escalera",new EnterAction("use"));
+        pasaje.addDoor(sotano,null,"Baranda",new EnterAction("use"));
+        game.addLoseCondition(new RoomCondition(escaleras,true));
     }
 
     private Game createGame(Player player,Location pasillo, Location salon1,
@@ -83,10 +95,23 @@ public class Escape implements GameFactory {
 
     private Location createBiblioteca(Player player, Location acceso, Location pasaje) {
         Location biblioteca = new Location("Biblioteca");
-        makeLocationsAdjacent(acceso, biblioteca,null);
+        makeLocationsAdjacent(acceso, biblioteca, null);
         Container estante = new Container("Estante",10);
         estante.openContainer(player);
         biblioteca.addItem(estante);
+        addBooks(estante);
+        Item libroViejo = new Item("LibroViejo");
+        estante.addComponent(libroViejo);
+        List<Actionable> list = new ArrayList<>();
+        list.add(libroViejo);
+        pasaje.addEnterCondition(new HasItemsWithItemsCondition(list, estante, false));
+        libroViejo.addAction(new MoveItemAction(null, player, "move"));
+        biblioteca.addDoor(pasaje, null, "Sotano", new EnterAction("goto"));
+        pasaje.addDoor(biblioteca,null,"Biblioteca",new EnterAction("goto"));
+        return biblioteca;
+    }
+
+    private void addBooks(Container estante) {
         for (int i = 0; i < 9 ; i++) {
             int bookNumber = i + 1;
             String bookName = "book";
@@ -94,17 +119,7 @@ public class Escape implements GameFactory {
             Item libro = new Item(bookName);
             estante.addComponent(libro);
         }
-
-        Container libroViejo = new Container("LibroViejo",10);
-        estante.addComponent(libroViejo);
-        libroViejo.addAction(new OpenAction("move"));
-        Linker sotano = new Linker(pasaje,"Sotano");
-        libroViejo.addComponent(sotano);
-        pasaje.addDoor(biblioteca,null,"Biblioteca",new EnterAction("goto"));
-        return biblioteca;
     }
-
-
 
     private Location createSalonUno(Player player, Location pasillo, Location acceso, Location biblioteca, Location salonTres) {
         Location salonUno = new Location("Salon1");
