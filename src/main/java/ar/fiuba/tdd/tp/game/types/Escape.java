@@ -42,7 +42,8 @@ public class Escape implements GameFactory {
             pasaje.addDoor(sotano, null, "puerta", new EnterAction("enter"));
 
             Game game =  createGame(player, pasillo,salon1,salon2,salonTres,acceso,biblioteca,sotano,afuera);
-
+            RoomCondition roomCondition = new RoomCondition(afuera,true);
+            game.addLoseCondition(roomCondition);
             addPathsPasaje(game,pasaje,sotano,salon2.getItem("Martillo"));
 
             return game;
@@ -93,7 +94,7 @@ public class Escape implements GameFactory {
 
     private Location createSotano(Location afuera, Actionable martillo) {
         Location sotano = new Location("Sotano");
-        sotano.addDoor(afuera, (Item) martillo, "ventana", new EnterAction("break"));
+        sotano.addDoor(afuera, (Item) martillo, "Ventana", new EnterAction("break"));
         return sotano;
     }
 
