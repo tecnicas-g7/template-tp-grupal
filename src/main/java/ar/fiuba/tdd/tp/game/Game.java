@@ -119,7 +119,7 @@ public class Game {
     public boolean gameOver() {
         if (loseConditions.size() > 0) {
             for (Condition condition : this.loseConditions) {
-                if (condition.isValid(this.player)) {
+                if (!condition.isValid(this.player)) {
                     return false;
                 }
             }
