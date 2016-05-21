@@ -436,7 +436,7 @@ public class MainTests {
         controller.interpretCommand("use Baranda");
         controller.interpretCommand("break Ventana");
         controller.interpretCommand("goto Afuera");
-        Assert.assertTrue(controller.gameOver());
+        Assert.assertTrue(controller.verify());
 
     }
 }
