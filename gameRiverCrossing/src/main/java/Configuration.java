@@ -36,11 +36,7 @@ public class Configuration implements GameBuilder{
         Player player = new Player(leftShore);
         player.setMaxInventory(1);
 
-//        createComponents(player).forEach(item -> leftShore.addItem(item));
-
-        for ( Item item: createComponents(player)) {
-            leftShore.addItem(item);
-        }
+        createComponents(player).forEach(item -> leftShore.addItem(item));
 
         Game game = new Game(player);
 
@@ -48,7 +44,6 @@ public class Configuration implements GameBuilder{
         game.addRoom(rightShore);
 
         game.addCondition(setWinCondition(rightShore,player));
-
         return game;
     }
 
@@ -71,7 +66,7 @@ public class Configuration implements GameBuilder{
         cabbage.setType(new PlantType());
         cabbage = addActions(cabbage,player);
 
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         items.add(sheep);
         items.add(wolf);
         items.add(cabbage);

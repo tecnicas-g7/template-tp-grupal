@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class BuilderLoader {
+class BuilderLoader {
 
     private static String escape(String name) {
         if (name.contains("/")) {
@@ -42,7 +42,7 @@ public class BuilderLoader {
         return foundClasses;
     }
 
-    public static GameBuilder load(String filePath)
+    static GameBuilder load(String filePath)
             throws ClassNotFoundException, IOException,
             IllegalAccessException, InstantiationException {
         File file = new File(filePath);
@@ -62,4 +62,5 @@ public class BuilderLoader {
         }
         return null;
     }
+
 }

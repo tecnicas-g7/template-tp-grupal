@@ -9,3 +9,5 @@ include 'gameHanoiTower'
 include 'gameStick'
 include 'server'
 include 'client'
+include 'server'
+
