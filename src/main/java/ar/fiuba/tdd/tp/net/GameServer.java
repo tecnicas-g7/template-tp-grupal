@@ -58,7 +58,7 @@ public class GameServer implements Runnable{
                     break;
                 }
                 if (controller.gameOver()) {
-                    sendMessage(out,"L");
+                    sendMessage(out,"Perdiste");
                     socket.close();
                     break;
                 }

@@ -52,7 +52,7 @@ public class Player implements HasItems {
     }
 
     public enum Status {
-        alive, poisoned
+        alive, poisoned, dead
     }
 
     public Player(Location room) {

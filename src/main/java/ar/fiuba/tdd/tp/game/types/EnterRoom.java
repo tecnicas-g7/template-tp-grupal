@@ -6,6 +6,7 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 /*
 Created by fran on 24/04/16.
@@ -30,10 +31,24 @@ public class EnterRoom implements GameFactory {
 
         game.addRoom(room1);
         game.addRoom(room2);
+        game.addTask(createScheduledTask(game),50000,150000);
 
         game.addCondition(new RoomCondition(room2,true));
 
         return game;
+    }
+
+    private ScheduledTask createScheduledTask(Game game) {
+        return new ScheduledTask() {
+            @Override
+            public void run() {
+                try {
+                    game.getPlayer().changeStatus(Player.Status.dead);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
     }
 
     @SuppressWarnings("CPD-END")

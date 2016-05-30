@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.utils.Messages;
+import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 import java.util.*;
 
@@ -117,7 +118,9 @@ public class Game {
     }
 
     public boolean gameOver() {
-        if (loseConditions.size() > 0) {
+        if (Player.Status.dead.equals(this.getPlayer().getStatus())) {
+            return true;
+        } else  if (loseConditions.size() > 0) {
             for (Condition condition : this.loseConditions) {
                 if (condition.isValid(this.player)) {
                     return true;
@@ -127,6 +130,11 @@ public class Game {
             return false;
         }
         return false;
+    }
+
+    public void addTask(ScheduledTask task, int delay, int period) {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(task, delay, period);
     }
 }
 

@@ -9,6 +9,7 @@ import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,22 @@ public class StickGame implements GameFactory {
 
         Condition condition = new InventoryCondition(items, true);
         game.addCondition(condition);
+        game.addTask(createScheduledTask(game),50000,150000);
 
         return game;
+    }
+
+    private ScheduledTask createScheduledTask(Game game) {
+        return new ScheduledTask() {
+            @Override
+            public void run() {
+                try {
+                    game.getPlayer().changeStatus(Player.Status.dead);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
     }
 
     public String getHelp() {
