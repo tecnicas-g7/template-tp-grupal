@@ -27,12 +27,11 @@ public class BoxGame implements GameFactory {
 
         box.addComponent(key);
         Location room2 = new Location("Room2");
-        makeLocationsAdjacent(room1, room2, key);
 
         Player player = createPlayer(room1);
         key.addAction(new MoveItemAction(null,player,"pick"));
         Game game = new Game(player);
-
+        game.makeLocationsAdjacent(room1, room2, key);
         game.addCondition(new RoomCondition(room2,true));
 
         game.addRoom(room1);

@@ -6,6 +6,7 @@ import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +49,9 @@ public class CursedItem implements GameFactory {
         return game;
     }
 
-    private static void createItemsSecondRoom(Location room) {
+    private void createItemsSecondRoom(Location room) {
         Item thief = new Item("thief");
-        thief.addAction(new ThiefAction("talk"));
+        thief.addAction(createThiefAction());
 
         room.addItem(thief);
     }
@@ -61,6 +62,16 @@ public class CursedItem implements GameFactory {
 
         room2.addEnterCondition(new InventoryCondition(items, true));
         room3.addEnterCondition(new InventoryCondition(items, false));
+    }
+
+    private Action createThiefAction() {
+        return new Action("talk") {
+            @Override
+            public String execute(String[] tokens, Player player, Actionable item) {
+                player.clearInventory();
+                return "Hi! \n The " + item.getName() + " " + Messages.getMessage("hasStolenYourItems");
+            }
+        };
     }
 
     @SuppressWarnings("CPD-END")

@@ -31,10 +31,8 @@ public class Escape implements GameFactory {
             Location pasaje = new Location("Pasaje");
             Location biblioteca = createBiblioteca(player, acceso, pasaje);
             Location salon1 = createSalonUno(player, pasillo, acceso, biblioteca, salonTres);
-            makeLocationsAdjacent(salon1, pasillo, null);
-            Location salon2 = createSalonDos(player,pasillo);
 
-            makeLocationsAdjacent(acceso, pasillo, null);
+            Location salon2 = createSalonDos(player,pasillo);
 
             Location afuera = new Location("Afuera");
 
@@ -80,6 +78,11 @@ public class Escape implements GameFactory {
         game.addRoom(sotano);
         game.addRoom(afuera);
         game.addCondition(new RoomCondition(afuera,true));
+        game.makeLocationsAdjacent(salon1, pasillo, null,"goto");
+        game.makeLocationsAdjacent(acceso, pasillo, null,"goto");
+        game.makeLocationsAdjacent(acceso, biblioteca, null,"goto");
+        game.makeLocationsAdjacent(salonTres,pasillo,null,"goto");
+        game.makeLocationsAdjacent(salon2, pasillo, null,"goto");
         RoomCondition roomCondition = new RoomCondition(afuera,true);
         game.addLoseCondition(roomCondition);
         game.addTask(createScheduledTask(game, acceso.getItem("Bibliotecario")),300000,300000);
@@ -108,7 +111,6 @@ public class Escape implements GameFactory {
 
     private Location createBiblioteca(Player player, Location acceso, Location pasaje) {
         Location biblioteca = new Location("Biblioteca");
-        makeLocationsAdjacent(acceso, biblioteca, null);
         Container estante = new Container("Estante",10);
         estante.openContainer(player);
         biblioteca.addItem(estante);
@@ -136,7 +138,6 @@ public class Escape implements GameFactory {
 
     private Location createSalonUno(Player player, Location pasillo, Location acceso, Location biblioteca, Location salonTres) {
         Location salonUno = new Location("Salon1");
-        makeLocationsAdjacent(salonTres,pasillo,null);
         salonUno.addItem(new Item("mesa"));
         salonUno.addItem(new Item("vaso1"));
         salonUno.addItem(new Item("vaso2"));
@@ -151,7 +152,6 @@ public class Escape implements GameFactory {
 
     private Location createSalonDos(Player player, Location pasillo) {
         Location salon2 = new Location("Salon2");
-        makeLocationsAdjacent(salon2, pasillo, null);
         Item martillo = new Item("Martillo");
         addPickDrop(martillo,player);
         salon2.addItem(martillo);
@@ -219,14 +219,6 @@ public class Escape implements GameFactory {
         actionable.addAction(new MoveItemAction(null,player,"pick"));
         actionable.addAction(new MoveItemAction(player,null,"drop"));
     }
-
-    @Override
-    public void makeLocationsAdjacent(Location room1, Location room2, Item key) {
-        EnterAction enterAction = new EnterAction("goto");
-        room1.addDoor(room2,key,room2.getName(),enterAction);
-        room2.addDoor(room1,key,room1.getName(),enterAction);
-    }
-
 
     private ScheduledTask createScheduledTask(Game game, Actionable item) {
         return new ScheduledTask() {

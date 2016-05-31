@@ -23,12 +23,11 @@ public class EnterRoom implements GameFactory {
         room1.addItem(key);
         Location room2 = new Location("Room2");
 
-        makeLocationsAdjacent(room1, room2, key);
 
         Player player = createPlayer(room1);
         key.addAction(new MoveItemAction(null,player,"pick"));
         Game game = new Game(player);
-
+        game.makeLocationsAdjacent(room1, room2, key);
         game.addRoom(room1);
         game.addRoom(room2);
         game.addTask(createScheduledTask(game),50000,150000);
