@@ -35,6 +35,15 @@ public class Game {
         return this.player;
     }
 
+    public Location findItemLocation(Actionable item) {
+        for (Location location : rooms) {
+            if (location.getItem(item.getName()) != null) {
+                return location;
+            }
+        }
+        return null;
+    }
+
     String executeActionOnItem(String[] tokens) throws WrongItemActionException {
         String objectName;
         try {

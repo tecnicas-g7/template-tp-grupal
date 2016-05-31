@@ -13,6 +13,7 @@ import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
+import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,6 @@ public class Escape implements GameFactory {
             pasaje.addDoor(sotano, null, "puerta", new EnterAction("enter"));
 
             Game game =  createGame(player, pasillo,salon1,salon2,salonTres,acceso,biblioteca,sotano,afuera);
-            RoomCondition roomCondition = new RoomCondition(afuera,true);
-            game.addLoseCondition(roomCondition);
             addPathsPasaje(game,pasaje,sotano,salon2.getItem("Martillo"));
 
             return game;
@@ -81,6 +80,9 @@ public class Escape implements GameFactory {
         game.addRoom(sotano);
         game.addRoom(afuera);
         game.addCondition(new RoomCondition(afuera,true));
+        RoomCondition roomCondition = new RoomCondition(afuera,true);
+        game.addLoseCondition(roomCondition);
+        game.addTask(createScheduledTask(game, acceso.getItem("Bibliotecario")),300000,300000);
         return game;
     }
 
@@ -225,7 +227,25 @@ public class Escape implements GameFactory {
         room2.addDoor(room1,key,room1.getName(),enterAction);
     }
 
+
+    private ScheduledTask createScheduledTask(Game game, Actionable item) {
+        return new ScheduledTask() {
+            @Override
+            public void run() {
+                try {
+                    Location location = game.findItemLocation(item);
+                    location.removeItem(item.getName());
+                    Location newLocation = location.getRandomAdjacentLocation();
+                    newLocation.addItem(item);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
     @SuppressWarnings("CPD-END")
+
     @Override
     public String getHelp() {
         return null;

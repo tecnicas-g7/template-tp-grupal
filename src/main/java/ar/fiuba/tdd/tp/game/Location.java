@@ -133,4 +133,10 @@ public class Location implements HasItems {
         return Util.checkConditions(this.leaveConditions, player);
     }
 
+    public Location getRandomAdjacentLocation() {
+        List<Linker> valuesList = new ArrayList<>(doors.values());
+        int randomIndex = new Random().nextInt(valuesList.size());
+        Linker randomLinker = valuesList.get(randomIndex);
+        return randomLinker.getDestination();
+    }
 }
