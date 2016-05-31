@@ -132,7 +132,7 @@ public class Game {
         return Messages.getMessage("enterDoorMessage");
     }
 
-    private String executeAction(String[] tokens) {
+    public String executeAction(String[] tokens) {
         try {
             return player.execute(tokens);
         } catch (WrongItemActionException e) {
@@ -140,7 +140,7 @@ public class Game {
         }
     }
 
-    private boolean gameOver() {
+    public boolean gameOver() {
         if (Player.Status.dead.equals(this.getPlayer().getStatus())) {
             return true;
         } else  if (loseConditions.size() > 0) {
