@@ -7,6 +7,8 @@ import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
+import ar.fiuba.tdd.tp.game.states.State;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
 import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.*;
@@ -24,7 +26,7 @@ public class Player implements HasItems {
     private int maxInventory;
     private Location room;
 
-    private Status status;
+    private State status;
 
     public String openContainer(String name) {
         Actionable component = room.getItem(name);
@@ -50,16 +52,16 @@ public class Player implements HasItems {
         }
         return actions.get(actionName).execute(tokens, this, null);
     }
-
+/*
     public enum Status {
         alive, poisoned
     }
-
+*/
     public Player(Location room) {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.room = room;
-        this.status = Status.alive;
+        this.status = new StatePlayer("ALIVE");
         this.actions = new HashMap<>();
     }
 
@@ -67,7 +69,7 @@ public class Player implements HasItems {
         this.maxInventory = maxInventory;
     }
 
-    public void changeStatus(Status newStatus) {
+    public void changeStatus(State newStatus) {
         this.status = newStatus;
     }
 
@@ -94,7 +96,7 @@ public class Player implements HasItems {
         return this.room;
     }
 
-    public Status getStatus() {
+    public State getStatus() {
         return this.status;
     }
 
