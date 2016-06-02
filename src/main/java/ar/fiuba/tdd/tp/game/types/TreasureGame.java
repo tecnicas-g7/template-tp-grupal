@@ -8,8 +8,7 @@ import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
 import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.items.Linker;
-import ar.fiuba.tdd.tp.game.utils.Messages;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
 
 import java.util.*;
 
@@ -52,7 +51,7 @@ public class TreasureGame implements GameFactory {
         items.add(treasure);
         game.addCondition(new InventoryCondition(items, true));
 
-        game.addLoseCondition(new PlayerStateCondition(Player.Status.poisoned));
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("POISONED")));
         game.addLoseCondition(new RoomCondition(room, true));
 
     }
@@ -106,7 +105,7 @@ public class TreasureGame implements GameFactory {
     private static Container createBox() {
         Container box = new Container("box",1);
         box.addAction(new CloseAction("close"));
-        PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.poisoned, "oops");
+        PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("POISONED"), "oops");
         OpenAction secondAction = new OpenAction("open");
         ComplexAction action = new ComplexAction("open");
         action.addAction(firstAction);
@@ -117,7 +116,7 @@ public class TreasureGame implements GameFactory {
 
     private static Item createAntidote(Player player) {
         Item antidote = new Item("antidote");
-        PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.alive, "drink");
+        PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("ALIVE"), "drink");
         MoveItemAction secondAction = new MoveItemAction(player,new Container("void",666),"drop");
         ComplexAction action = new ComplexAction("drink");
         action.addAction(firstAction);
