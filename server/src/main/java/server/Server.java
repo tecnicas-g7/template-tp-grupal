@@ -1,23 +1,27 @@
 package server;
 
+import model.Game;
 import model.GameBuilder;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  Created by ezequiel on 20/04/16.
  */
 public class Server {
     public static final String tokenSeparator = " ";
-    private static int initialPort = 6789;
+    private static int initialPort = 6800;
     //FOLDER DONDE ESTAN LOS JARS
     //FIXME .properties , argumento del main ?
     //private static final String GAMES_PATH = "E:\\Escritorio\\games";
 
-    private static HashMap<String, GameBuilder> games;
+    private static HashMap<String, String> games;
+    private static List<GameServer> gameServers;
 
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Server");
@@ -30,16 +34,17 @@ public class Server {
         games.put("RIVERCROSSING", new RiverCrossing());
         games.put("STICKGAME", new StickGame());
         games.put("TREASUREGAME", new TreasureGame());
-
-        games.put("HANOITOWER", GAMES_PATH + "//gameHanoiTower" + "-1.0.jar");
-        games.put("BOXGAME", GAMES_PATH + "//gameBoxGame" + "-1.0.jar");
-        games.put("CURSEDITEM",GAMES_PATH + "//gameCursedItem" + "-1.0.jar");
-        games.put("ENTERROOM", GAMES_PATH + "//gameEnterRoom" + "-1.0.jar");
-        games.put("RIVERCROSSING", GAMES_PATH + "//gameRiverCrossing" + "-1.0.jar");
-        games.put("STICKGAME", GAMES_PATH + "//gameStick" + "-1.0.jar");
-        games.put("TREASUREGAME", GAMES_PATH + "//gameTreasureBox" + "-1.0.jar");
 */
+        games = new HashMap<>();
+        games.put("HANOITOWER", GamePaths.getGamePath("gameHanoiTower"));
+        games.put("BOXGAME", GamePaths.getGamePath("gameBox"));
+        games.put("CURSEDITEM",GamePaths.getGamePath("gameCursedItem"));
+        games.put("ENTERROOM", GamePaths.getGamePath("gameEnterRoom"));
+        games.put("RIVERCROSSING", GamePaths.getGamePath("gameRiverCrossing"));
+        games.put("STICKGAME", GamePaths.getGamePath("gameStick"));
+        games.put("TREASUREGAME", GamePaths.getGamePath("gameTreasureBox"));
 
+        gameServers = new ArrayList<>();
         loadGame();
     }
 
@@ -58,21 +63,31 @@ public class Server {
         String input = inFromUser.readLine();
         String loadGameCommand = "load game ";
         String gameName;
-        while (input != null) {
+        while (input != null && !input.equals("exit")) {
             if (input.toUpperCase().contains(loadGameCommand.toUpperCase())) {
                 gameName = input.replace(loadGameCommand,"").toUpperCase();
                 try {
-                    //(new Thread(new GameServer(initialPort, BuilderLoader.load(games.get(gameName))))).start();
-                    (new Thread(new GameServer(initialPort,games.get(gameName)))).start();
+                    GameServer gameServer = new GameServer(initialPort, BuilderLoader.load(games.get(gameName)));
+                    Thread thread = new Thread(gameServer);
+                    thread.start();
+                    gameServers.add(gameServer);
                     System.out.println("Game " + gameName + " created in port " + initialPort);
                     initialPort++;
                     //FIXME Agregue generic Excepcion
                 } catch (Exception e) {
-                    System.out.println("Game not Found");
+                    System.out.println(e.getMessage());
                 }
             }
             input = inFromUser.readLine();
         }
+        terminate();
     }
+
+    private static void terminate() {
+        for (GameServer gameServer : gameServers) {
+            gameServer.terminate();
+        }
+    }
+
 
 }

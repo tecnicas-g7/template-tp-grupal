@@ -19,20 +19,23 @@ import java.nio.charset.StandardCharsets;
 public class GameServer implements Runnable{
 
     private ServerSocket serverSocket;
+    private boolean running;
+
     Controller controller;
     private GameBuilder gameBuilder;
 
-    public GameServer(int port, GameBuilder gameFactory) throws IOException {
+    public GameServer(int port, GameBuilder gameBuilder) throws IOException {
+
         this.serverSocket = new ServerSocket(port);
-        this.gameBuilder = gameFactory;
-        if (gameFactory == null) {
+        this.running = true;
+        if (gameBuilder == null) {
             throw new GameNotFoundExcpetion();
         }
-        this.gameBuilder = gameFactory;
+        this.gameBuilder = gameBuilder;
     }
 
     public void run() {
-        while (true) {
+        while (running) {
             try {
                 controller = new Controller(gameBuilder.build());
                 Socket socket = acceptSocket();
@@ -41,7 +44,7 @@ public class GameServer implements Runnable{
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
                 sendMessage(out, "Welcome to game on port " + serverSocket.getLocalPort());
-                cycle(in,out,socket);
+                cycle(in, out, socket);
             } catch (Exception ioe) {
                 System.out.println(ioe.getMessage());
             }
@@ -49,7 +52,7 @@ public class GameServer implements Runnable{
     }
 
     private void cycle(BufferedReader in, DataOutputStream out, Socket socket) throws Exception {
-        while (true) {
+        while (running) {
             String output;
             try {
                 String userInput = in.readLine();
@@ -64,7 +67,7 @@ public class GameServer implements Runnable{
                     socket.close();
                     break;
                 }
-                sendMessage(out,output);
+                sendMessage(out, output);
             } catch (IOException e) {
                 System.out.println("Read failed");
                 break;
@@ -89,4 +92,12 @@ public class GameServer implements Runnable{
         out.writeBytes(message + '\n');
     }
 
+    public void terminate() {
+        running = false;
+        try {
+            this.serverSocket.close();
+        } catch (IOException e) {
+            System.out.println(" D::::");
+        }
+    }
 }
