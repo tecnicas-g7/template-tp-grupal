@@ -39,6 +39,7 @@ public class Server {
         games.put("STICKGAME", GAMES_PATH + "//gameStick" + "-1.0.jar");
         games.put("TREASUREGAME", GAMES_PATH + "//gameTreasureBox" + "-1.0.jar");
 */
+
         loadGame();
     }
 

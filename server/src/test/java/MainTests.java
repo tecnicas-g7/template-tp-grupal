@@ -14,6 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import server.Driver;
 import server.GameDriver;
+import server.GamePaths;
 
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-/*
+
 public class MainTests {
 
     private GameDriver driver;
@@ -74,8 +75,8 @@ public class MainTests {
 
     @Test
     public void stickQuest() {
-        initGame("/home/fran/git/template-tp-grupal/gameStick/build/libs/gameStick-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameStick"));
         driver.sendCommand("pick stick");
 
         assert (Controller.GameState.Win == driver.getGameState());
@@ -83,8 +84,8 @@ public class MainTests {
 
     @Test
     public void enterRoom() {
-        initGame("/home/fran/git/template-tp-grupal/gameEnterRoom/build/libs/gameEnterRoom-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameEnterRoom"));
         driver.sendCommand("pick key");
         driver.sendCommand("enter door1");
 
@@ -93,8 +94,8 @@ public class MainTests {
 
     @Test
     public void boxGame() {
-        initGame("/home/fran/git/template-tp-grupal/gameBox/build/libs/gameBox-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameBox"));
         String command = "open box";
         driver.sendCommand(command);
         String command2 = "pick key";
@@ -108,8 +109,7 @@ public class MainTests {
     @Test
     public void cursedItem() {
 
-        initGame("/home/fran/git/template-tp-grupal/gameCursedItem/build/libs/gameCursedItem-1.0.jar");
-
+        initGame(GamePaths.getGamePath("gameCursedItem"));
         String command = "pick cursed_item";
         driver.sendCommand(command);
         String command2 = "enter door1";
@@ -126,8 +126,7 @@ public class MainTests {
     @Test
     public void hanoiTower() {
 
-        initGame("/home/fran/git/template-tp-grupal/gameHanoiTower/build/libs/gameHanoiTower-1.0.jar");
-
+        initGame(GamePaths.getGamePath("gameHanoiTower"));
         String command = "move stack1 stack3";
         driver.sendCommand(command);
         String command2 = "move stack1 stack2";
@@ -149,8 +148,8 @@ public class MainTests {
 
     @Test
     public void treasure() {
-        initGame("/home/fran/git/template-tp-grupal/gameTreasureBox/build/libs/gameTreasureBox-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameTreasureBox"));
 
         String command = "open box";
         driver.sendCommand(command);
@@ -268,8 +267,8 @@ public class MainTests {
     @Test
     public void riverCrossingVictory() {
 
-        initGame("/home/fran/git/template-tp-grupal/gameRiverCrossing/build/libs/gameRiverCrossing-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameRiverCrossing"));
 
         simpleCross("sheep", "north-shore");
 
@@ -300,8 +299,8 @@ public class MainTests {
     @Test
     public void riverCrossingFail() {
 
-        initGame("/home/fran/git/template-tp-grupal/gameRiverCrossing/build/libs/gameRiverCrossing-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameRiverCrossing"));
         String takeSheep = "take sheep";
         String leaveSheep = "leave sheep";
 
@@ -352,8 +351,8 @@ public class MainTests {
 
     @Test
     public void escapeStairs() {
-        initGame("/home/fran/git/template-tp-grupal/gameEscape/build/libs/gameEscape-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameEscape"));
         bibliotecaToSotano();
         driver.sendCommand("use Escalera");
         assert(Controller.GameState.Lost == driver.getGameState());
@@ -362,8 +361,8 @@ public class MainTests {
 
     @Test
     public void escapeBaranda() {
-        initGame("/home/fran/git/template-tp-grupal/gameEscape/build/libs/gameEscape-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameEscape"));
         bibliotecaToSotano();
         driver.sendCommand("use Baranda");
         assert(Controller.GameState.Lost == driver.getGameState());
@@ -372,8 +371,8 @@ public class MainTests {
 
     @Test
     public void escapeYouWin() {
-        initGame("/home/fran/git/template-tp-grupal/gameEscape/build/libs/gameEscape-1.0.jar");
 
+        initGame(GamePaths.getGamePath("gameEscape"));
 
         credencialConFoto();
         driver.sendCommand("goto Salon2");
@@ -391,4 +390,3 @@ public class MainTests {
 
     }
 }
-*/
