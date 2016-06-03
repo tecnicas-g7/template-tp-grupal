@@ -1,5 +1,6 @@
 package game;
 
+
 import exceptions.ItemNotFoundException;
 import game.actions.Action;
 import game.conditions.Condition;
@@ -131,4 +132,5 @@ public class Location implements HasItems {
     public boolean validLeaveConditions(Player player) {
         return Util.checkConditions(this.leaveConditions, player);
     }
+
 }

@@ -8,6 +8,7 @@ Created by Javier on 26/04/2016.
 
 import game.Player;
 import game.items.Actionable;
+import game.utils.Messages;
 
 public class PlayerStatusAction extends Action {
 
@@ -20,14 +21,9 @@ public class PlayerStatusAction extends Action {
         //this.name = name;
     }
 
-    /*
-    public String getName() {
-        return name;
-    }
-    */
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
         player.changeStatus(status);
-        return "You are now " + status;
+        return Messages.getMessage("youAreNow") + " " + status;
     }
 }

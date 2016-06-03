@@ -1,3 +1,4 @@
+
 package game.items;
 
 import exceptions.FullCapacityReachedException;
@@ -6,7 +7,9 @@ import exceptions.MaxInventoryException;
 import game.HasItems;
 import game.Player;
 import game.items.type.Type;
+import game.utils.Messages;
 import game.utils.Util;
+
 
 import java.util.HashMap;
 
@@ -52,13 +55,13 @@ public class Container extends Actionable implements ContainerComponent, HasItem
                 output.append(" ");
             }
         );
-        output.append("added to the room.");
+        output.append(Messages.getMessage("addedToTheRoom"));
         return output.toString();
     }
 
     public String closeContainer() {
         this.open = false;
-        return this.name + " has been closed.";
+        return this.name + " " + Messages.getMessage("hasBeenClosed");
     }
 
     public void removeComponent(Actionable component) {

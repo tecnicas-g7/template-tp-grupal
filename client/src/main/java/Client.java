@@ -35,12 +35,17 @@ public class Client {
         try {
             while (inputClient != null && !inputClient.equals("exit game")) {
                 outToServer.writeBytes(inputClient + '\n');
-                System.out.println(inFromServer.readLine());
+                String serverMessage = inFromServer.readLine();
+                if (serverMessage != null && serverMessage.equals("W")) {
+                    System.out.println("Ganaste, chau.");
+                    socket.close();
+                    break;
+                }
+                System.out.println(serverMessage);
                 inputClient = inFromUser.readLine();
-
             }
         } catch (Exception e) {
-            System.out.println("Ganaste, chau.");
+            System.out.println("Error with connection...");
         }
         socket.close();
     }

@@ -1,11 +1,15 @@
 package game;
 
+
 import exceptions.ItemNotFoundException;
 import exceptions.MaxInventoryException;
+import exceptions.WrongItemActionException;
+import game.actions.Action;
 import game.items.Actionable;
 import game.items.Item;
 import game.items.Linker;
 import game.utils.Messages;
+
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +24,7 @@ public class Player implements HasItems {
     private static final int DEFAULT_MAX_INVENTORY = 10;
 
     private HashMap<String,Actionable> inventory;
+    private HashMap<String,Action> actions;
     private int maxInventory;
     private Location room;
 
@@ -30,8 +35,24 @@ public class Player implements HasItems {
         return component.openContainer(this);
     }
 
+    public void addAction(Action action) {
+        this.actions.put(action.getName(), action);
+    }
+
     public void clearInventory() {
         inventory.clear();
+    }
+
+    public boolean supports(String action) {
+        return this.actions.containsKey(action);
+    }
+
+    public String execute(String[] tokens) throws WrongItemActionException {
+        String actionName = tokens[0];
+        if (!supports(actionName)) {
+            throw new WrongItemActionException();
+        }
+        return actions.get(actionName).execute(tokens, this, null);
     }
 
     public enum Status {
@@ -43,6 +64,7 @@ public class Player implements HasItems {
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.room = room;
         this.status = Status.alive;
+        this.actions = new HashMap<>();
     }
 
     public void setMaxInventory(int maxInventory) {

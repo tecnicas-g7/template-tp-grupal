@@ -1,6 +1,8 @@
 package server;
 
 import game.Controller;
+
+import exceptions.GameNotFoundExcpetion;
 import model.GameBuilder;
 
 import java.io.BufferedReader;
@@ -20,9 +22,13 @@ public class GameServer implements Runnable{
     Controller controller;
     private GameBuilder gameBuilder;
 
-    public GameServer(int port, GameBuilder gameBuilder) throws IOException {
+    public GameServer(int port, GameBuilder gameFactory) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.gameBuilder = gameBuilder;
+        this.gameBuilder = gameFactory;
+        if (gameFactory == null) {
+            throw new GameNotFoundExcpetion();
+        }
+        this.gameBuilder = gameFactory;
     }
 
     public void run() {
@@ -35,25 +41,37 @@ public class GameServer implements Runnable{
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
                 sendMessage(out, "Welcome to game on port " + serverSocket.getLocalPort());
-                while (true) {
-                    try {
-                        String userInput = in.readLine();
-                        String output = controller.interpretCommand(userInput);
-                        sendMessage(out, output);
-                    } catch (IOException e) {
-                        System.out.println("Read failed");
-                        break;
-                    }
-                    if (controller.verify()) {
-                        sendMessage(out,"You win!");
-                        socket.close();
-                        break;
-                    }
-                }
+                cycle(in,out,socket);
             } catch (Exception ioe) {
-                System.out.println("Error...");
+                System.out.println(ioe.getMessage());
             }
         }
+    }
+
+    private void cycle(BufferedReader in, DataOutputStream out, Socket socket) throws Exception {
+        while (true) {
+            String output;
+            try {
+                String userInput = in.readLine();
+                output = controller.interpretCommand(userInput);
+                if (controller.verify()) {
+                    sendMessage(out,"W");
+                    socket.close();
+                    break;
+                }
+                if (controller.gameOver()) {
+                    sendMessage(out,"L");
+                    socket.close();
+                    break;
+                }
+                sendMessage(out,output);
+            } catch (IOException e) {
+                System.out.println("Read failed");
+                break;
+            }
+
+        }
+
     }
 
     private Socket acceptSocket() {

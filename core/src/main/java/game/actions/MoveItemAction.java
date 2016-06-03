@@ -1,6 +1,6 @@
 package game.actions;
 
-
+import exceptions.ItemNotFoundException;
 import exceptions.MaxInventoryException;
 import game.HasItems;
 import game.Location;
@@ -8,9 +8,9 @@ import game.Player;
 import game.items.Actionable;
 import game.utils.Messages;
 
-/**
- * Created by fran on 17/05/16.
- */
+
+//Created by fran on 17/05/16.
+
 public class MoveItemAction extends Action {
 
     //private String name;
@@ -21,27 +21,23 @@ public class MoveItemAction extends Action {
         super("move");
         this.origin = origin;
         this.destination = destination;
-        //this.name = "move";
     }
 
     public MoveItemAction(HasItems origin, HasItems destination, String name) {
         super(name);
         this.origin = origin;
         this.destination = destination;
-        //this.name = name;
     }
 
-   /* @Override
-    public String getName() {
-        return name;
-    }
-*/
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
-        if (origin == null && destination == null) {
-            return moveFromTokenToToken(tokens,player,item);
+        if (checkConditions(player)) {
+            if (origin == null && destination == null) {
+                return moveFromTokenToToken(tokens, player, item);
+            }
+            return originToDestination(tokens, player, item);
         }
-        return originToDestination(tokens, player, item);
+        return "Can't do that";
     }
 
     private String originToDestination(String[] tokens, Player player, Actionable item) {
@@ -51,13 +47,33 @@ public class MoveItemAction extends Action {
         if (newOrigin == null) {
             newOrigin = player.getRoom();
         }
+        if (tokens.length == 2) {
+            return moveDefaultDestination(newOrigin, newDestination, player,item);
+        } else {
+            return moveSpecifiedDestination(tokens, newOrigin, player, item);
+        }
+
+    }
+
+    private String moveDefaultDestination(HasItems newOrigin, HasItems newDestination, Player player, Actionable item) {
         if (newDestination == null) {
             newDestination = player.getRoom();
         }
-        return move(tokens,player,item,newOrigin,newDestination);
+        return move(player, item, newOrigin, newDestination);
     }
 
-    private String move(String[] tokens, Player player, Actionable item, HasItems newOrigin, HasItems newDestination) {
+    private String moveSpecifiedDestination(String[] tokens, HasItems newOrigin, Player player, Actionable item) {
+        String name = tokens[2];
+        Actionable destination;
+        try {
+            destination = player.getItem(name);
+        } catch (ItemNotFoundException e) {
+            destination = player.getRoom().getItem(name);
+        }
+        return move(player,item,newOrigin,destination);
+    }
+
+    private String move(Player player, Actionable item, HasItems newOrigin, HasItems newDestination) {
         try {
             newDestination.addItem(item);
             newOrigin.removeItem(item.getName());
@@ -67,14 +83,20 @@ public class MoveItemAction extends Action {
         }
     }
 
+    private String move( Player player, Actionable item, HasItems newOrigin, Actionable newDestination) {
+        newDestination.addComponent(item);
+        newOrigin.removeItem(item.getName());
+        return Messages.getMessage("objectMoved");
+    }
+
     private String move(Actionable stackFrom, Actionable stackAfter) throws MaxInventoryException {
         Actionable item = stackFrom.getLast();
         if (stackFrom.getSize() > 0 && stackAfter.isValidMovement(item)) {
             stackFrom.removeComponent(item);
             stackAfter.addComponent(item);
-            return "moved!";
+            return Messages.getMessage("moved");
         }
-        return "can't move!";
+        return Messages.getMessage("cantMove");
     }
 
     //Si ambos null quiere decir que origen y destino especificado en tokens. tokens[1] = origen tokens[2] = destino;

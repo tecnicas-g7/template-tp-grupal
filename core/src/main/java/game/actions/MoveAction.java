@@ -1,10 +1,11 @@
 package game.actions;
 
-
 import exceptions.MaxInventoryException;
 import game.Location;
 import game.Player;
 import game.items.Actionable;
+import game.utils.Messages;
+
 
 /**
  Created by ltessore on 28/04/16.
@@ -20,7 +21,6 @@ public class MoveAction extends Action {
     public String execute(String[] tokens, Player player, Actionable item) {
         try {
             Location room = player.getRoom();
-            //String result = move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
             return move(player, room.getItem(tokens[1]), room.getItem(tokens[2]));
         } catch (MaxInventoryException e) {
             //Do nothing
@@ -38,7 +38,7 @@ public class MoveAction extends Action {
             stackAfter.addComponent(item);
             isValid = true;
         }
-        return (isValid) ? "moved!" : "can't move!";
+        return (isValid) ? Messages.getMessage("moved") : Messages.getMessage("cantMove");
     }
 
     private Boolean isMovementValid(Actionable stackFrom, Actionable stackAfter) {

@@ -14,7 +14,10 @@ apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: "jacoco"
 
-
+dependencies {
+    compile project(':core')
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
 
 apply from: 'gradle/fatjar.gradle'
 apply from: 'gradle/quality.gradle'
@@ -29,10 +32,6 @@ repositories {
     maven {
         url "http://nexus-tecnicas7510.rhcloud.com/nexus/content/repositories/third-party"
     }
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 configurations.all {

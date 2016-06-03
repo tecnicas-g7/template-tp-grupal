@@ -8,6 +8,7 @@ import game.conditions.Condition;
 import game.items.Actionable;
 import game.utils.Messages;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,13 @@ public class Game {
     private List<Location> rooms;
     private Player player;
     private List<Condition> conditions;
+    private List<Condition> loseConditions;
 
     public Game(Player player) {
         this.rooms = new ArrayList<>();
         this.player = player;
         this.conditions = new ArrayList<>();
+        this.loseConditions = new ArrayList<>();
     }
 
     public void addRoom(Location room) {
@@ -67,25 +70,16 @@ public class Game {
         return this.getPlayer().showInventory();
     }
 
-    /*String enter(String[] tokens) {
-        Location origin = player.getRoom();
-        Iterator<HashMap.Entry<String, Linker>> it = origin.getDoorsIterator();
-        while (it.hasNext()) {
-            Linker door = it.next().getValue();
-            Location destination = door.getDestination();
-            if (door.getName().equals(tokens[1]) && origin.validLeaveConditions(player) && destination.validEnterConditions(player)) {
-                return player.enter(door);
-            }
-        }
-        return Messages.getMessage("youCantDoThatMessage");
-    }*/
-
     private boolean validateEnterAndLeaveConditions(Location origin, Location destination) {
         return origin.validLeaveConditions(player) && destination.validEnterConditions(player);
     }
 
     public void addCondition(Condition condition) {
         this.conditions.add(condition);
+    }
+
+    public void addLoseCondition(Condition condition) {
+        this.loseConditions.add(condition);
     }
 
     public boolean verifyVictory() {
@@ -115,4 +109,25 @@ public class Game {
         return Messages.getMessage("enterDoorMessage");
     }
 
+    public String executeAction(String[] tokens) {
+        try {
+            return player.execute(tokens);
+        } catch (WrongItemActionException e) {
+            return Messages.getMessage("ActionNotSupported");
+        }
+    }
+
+    public boolean gameOver() {
+        if (loseConditions.size() > 0) {
+            for (Condition condition : this.loseConditions) {
+                if (condition.isValid(this.player)) {
+                    return true;
+                }
+            }
+            System.out.print(Messages.getMessage("GameOver"));
+            return false;
+        }
+        return false;
+    }
 }
+
