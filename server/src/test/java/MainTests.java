@@ -36,7 +36,7 @@ public class MainTests {
             //
         }
     }
-
+/*
     private Item createItemsWithCondition(String nameItem, Player player) {
         Item itemWithActions = new Item(nameItem);
         itemWithActions.addAction(new MoveItemAction(null, player, "pick"));
@@ -388,5 +388,5 @@ public class MainTests {
         driver.sendCommand("goto Afuera");
         assert(Controller.GameState.Win == driver.getGameState());
 
-    }
+    }*/
 }
