@@ -1,11 +1,9 @@
 package ar.fiuba.tdd.tp.game;
 
 import ar.fiuba.tdd.tp.exceptions.ItemNotFoundException;
-import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
-import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
 import ar.fiuba.tdd.tp.game.utils.Messages;
 import ar.fiuba.tdd.tp.game.utils.Util;
@@ -79,14 +77,14 @@ public class Location implements HasItems {
         return output.toString();
     }
 
-    public void addDoor(Location destination, Item key, Action action) {
+    public void addDoor(Location destination, Actionable key, Action action) {
         int doorNumber = this.doors.size() + 1;
         String doorName = "door";
         doorName = doorName.concat(String.valueOf(doorNumber));
         addDoor(destination, key, doorName, action);
     }
 
-    public void addDoor(Location destination, Item key, String name, Action action) {
+    public void addDoor(Location destination, Actionable key, String name, Action action) {
         Linker door;
         if (key == null) {
             door = new Linker(destination, name);

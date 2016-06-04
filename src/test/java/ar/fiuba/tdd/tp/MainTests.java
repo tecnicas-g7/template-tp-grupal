@@ -22,8 +22,8 @@ import static org.junit.Assert.assertTrue;
 
 public class MainTests {
 
-    private Item createItemsWithCondition(String nameItem, Player player) {
-        Item itemWithActions = new Item(nameItem);
+    private Actionable createItemsWithCondition(String nameItem, Player player) {
+        Actionable itemWithActions = new Actionable(nameItem);
         itemWithActions.addAction(new MoveItemAction(null,player,"pick"));
         itemWithActions.addAction(new MoveItemAction(player,null,"drop"));
         return itemWithActions;
@@ -32,9 +32,9 @@ public class MainTests {
     private Game getGameCondition() {
         Location room1 = new Location("Room1");
         Player player = new Player(room1);
-        Item key = createItemsWithCondition("key", player);
-        Item mouse = createItemsWithCondition("mouse", player);
-        Item stick = createItemsWithCondition("stick", player);
+        Actionable key = createItemsWithCondition("key", player);
+        Actionable mouse = createItemsWithCondition("mouse", player);
+        Actionable stick = createItemsWithCondition("stick", player);
 
         room1.addItem(key);
         room1.addItem(mouse);
@@ -54,7 +54,7 @@ public class MainTests {
 
     @Test
     public void cantEnterDoor() {
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
         Location room1 = new Location("Room 1");
         Container container = new Container("Box",1);
         container.addComponent(key);
@@ -103,14 +103,14 @@ public class MainTests {
 
     @Test
     public void lookAroundTest() {
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
         Location room1 = new Location("Room 1");
         Container container = new Container("Box",1);
         container.addComponent(key);
         room1.addItem(container);
         Container container1 = new Container("Baul",10);
         Container container2 = new Container("Box2",1);
-        Item stick = new Item("Stick");
+        Actionable stick = new Actionable("Stick");
         container2.addComponent(stick);
         container1.addComponent(container2);
         room1.addItem(container1);

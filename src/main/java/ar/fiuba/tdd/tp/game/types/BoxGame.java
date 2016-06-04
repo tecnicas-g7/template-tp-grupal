@@ -4,8 +4,8 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
-import ar.fiuba.tdd.tp.game.items.Item;
 
 /**
  Created by fran on 27/04/16.
@@ -22,7 +22,7 @@ public class BoxGame implements GameFactory {
 
         Location room1 = new Location("Room1");
         room1.addItem(box);
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
 
 
         box.addComponent(key);

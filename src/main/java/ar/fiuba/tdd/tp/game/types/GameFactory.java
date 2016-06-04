@@ -3,10 +3,8 @@ package ar.fiuba.tdd.tp.game.types;
 import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
-import ar.fiuba.tdd.tp.game.actions.EnterAction;
 import ar.fiuba.tdd.tp.game.actions.ListInventoryAction;
 import ar.fiuba.tdd.tp.game.actions.LookAction;
-import ar.fiuba.tdd.tp.game.items.Item;
 
 public interface GameFactory {
 

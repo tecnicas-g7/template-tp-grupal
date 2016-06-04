@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
-import ar.fiuba.tdd.tp.game.items.Item;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 /*
@@ -16,7 +16,7 @@ Created by fran on 24/04/16.
 public class EnterRoom implements GameFactory {
 
     public Game getGame() {
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
 
 
         Location room1 = new Location("Room1");

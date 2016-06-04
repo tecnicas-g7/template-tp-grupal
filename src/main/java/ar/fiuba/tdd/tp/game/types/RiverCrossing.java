@@ -4,8 +4,8 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.ItemTypeCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomWithItemsCondition;
-import ar.fiuba.tdd.tp.game.items.Item;
 
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.type.CarnivorousType;
 import ar.fiuba.tdd.tp.game.items.type.HerbivorousType;
 import ar.fiuba.tdd.tp.game.items.type.PlantType;
@@ -52,21 +52,21 @@ public class RiverCrossing implements GameFactory {
         return game;
     }
 
-    private static List<Item> createComponents(Player player) {
+    private static List<Actionable> createComponents(Player player) {
 
-        Item sheep = new Item("sheep");
+        Actionable sheep = new Actionable("sheep");
         sheep.setType(new HerbivorousType());
         sheep = addActions(sheep,player);
 
-        Item wolf = new Item("wolf");
+        Actionable wolf = new Actionable("wolf");
         wolf.setType(new CarnivorousType());
         wolf = addActions(wolf,player);
 
-        Item cabbage = new Item("cabbage");
+        Actionable cabbage = new Actionable("cabbage");
         cabbage.setType(new PlantType());
         cabbage = addActions(cabbage,player);
 
-        List<Item> items = new ArrayList<>();
+        List<Actionable> items = new ArrayList<>();
         items.add(sheep);
         items.add(wolf);
         items.add(cabbage);
@@ -74,7 +74,7 @@ public class RiverCrossing implements GameFactory {
         return items;
     }
 
-    private static Item addActions(Item item, Player player) {
+    private static Actionable addActions(Actionable item, Player player) {
         MoveItemAction take = new MoveItemAction(null,player,"take");
         MoveItemAction leave = new MoveItemAction(player,null,"leave");
         item.addAction(take);

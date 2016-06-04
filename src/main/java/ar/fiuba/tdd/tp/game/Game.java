@@ -5,7 +5,6 @@ import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.actions.EnterAction;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
-import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.utils.Messages;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
@@ -46,13 +45,13 @@ public class Game {
         return null;
     }
 
-    public void makeLocationsAdjacent(Location room1, Location room2, Item key, String actionName) {
+    public void makeLocationsAdjacent(Location room1, Location room2, Actionable key, String actionName) {
         EnterAction enterAction = new EnterAction(actionName);
         room1.addDoor(room2,key,room2.getName(),enterAction);
         room2.addDoor(room1,key,room1.getName(),enterAction);
     }
 
-    public void makeLocationsAdjacent(Location room1, Location room2, Item key) {
+    public void makeLocationsAdjacent(Location room1, Location room2, Actionable key) {
         EnterAction enterAction = new EnterAction("enter");
         room1.addDoor(room2,key,enterAction);
         room2.addDoor(room1,key,enterAction);

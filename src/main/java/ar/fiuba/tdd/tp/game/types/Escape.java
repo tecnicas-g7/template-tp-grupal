@@ -11,8 +11,6 @@ import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
-import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.items.Linker;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 import java.util.ArrayList;
@@ -91,15 +89,15 @@ public class Escape implements GameFactory {
 
     private void setPlayerInitialInventory(Player player) throws MaxInventoryException {
         player.setMaxInventory(4);
-        Item lapicera = new Item("lapicera");
-        Item foto = new Item("Foto");
+        Actionable lapicera = new Actionable("lapicera");
+        Actionable foto = new Actionable("Foto");
         player.addItem(foto);
         player.addItem(lapicera);
     }
 
     private Location createSotano(Location afuera, Actionable martillo) {
         Location sotano = new Location("Sotano");
-        sotano.addDoor(afuera, (Item) martillo, "Ventana", new EnterAction("break"));
+        sotano.addDoor(afuera, martillo, "Ventana", new EnterAction("break"));
         return sotano;
     }
 
@@ -115,7 +113,7 @@ public class Escape implements GameFactory {
         estante.openContainer(player);
         biblioteca.addItem(estante);
         addBooks(estante);
-        Item libroViejo = new Item("LibroViejo");
+        Actionable libroViejo = new Actionable("LibroViejo");
         estante.addComponent(libroViejo);
         List<Actionable> list = new ArrayList<>();
         list.add(libroViejo);
@@ -131,19 +129,19 @@ public class Escape implements GameFactory {
             int bookNumber = i + 1;
             String bookName = "book";
             bookName = bookName.concat(String.valueOf(bookNumber));
-            Item libro = new Item(bookName);
+            Actionable libro = new Actionable(bookName);
             estante.addComponent(libro);
         }
     }
 
     private Location createSalonUno(Player player, Location pasillo, Location acceso, Location biblioteca, Location salonTres) {
         Location salonUno = new Location("Salon1");
-        salonUno.addItem(new Item("mesa"));
-        salonUno.addItem(new Item("vaso1"));
-        salonUno.addItem(new Item("vaso2"));
-        salonUno.addItem(new Item("silla1"));
-        salonUno.addItem(new Item("silla2"));
-        salonUno.addItem(new Item("cuadroTren"));
+        salonUno.addItem(new Actionable("mesa"));
+        salonUno.addItem(new Actionable("vaso1"));
+        salonUno.addItem(new Actionable("vaso2"));
+        salonUno.addItem(new Actionable("silla1"));
+        salonUno.addItem(new Actionable("silla2"));
+        salonUno.addItem(new Actionable("cuadroTren"));
         createUsableItems(player, salonUno, acceso, biblioteca, salonTres);
 
 
@@ -152,11 +150,11 @@ public class Escape implements GameFactory {
 
     private Location createSalonDos(Player player, Location pasillo) {
         Location salon2 = new Location("Salon2");
-        Item martillo = new Item("Martillo");
+        Actionable martillo = new Actionable("Martillo");
         addPickDrop(martillo,player);
         salon2.addItem(martillo);
-        salon2.addItem(new Item("Destornillador1"));
-        salon2.addItem(new Item("Destornillador2"));
+        salon2.addItem(new Actionable("Destornillador1"));
+        salon2.addItem(new Actionable("Destornillador2"));
         return salon2;
     }
 
@@ -169,7 +167,7 @@ public class Escape implements GameFactory {
 
     private void createUsableItems(Player player, Location salonUno, Location acceso, Location biblioteca, Location salonTres) {
         Container credencial = new Container("Credencial",1);
-        Item key = new Item("Llave");
+        Actionable key = new Actionable("Llave");
         addPickDrop(key,player);
         salonTres.addItem(key);
         Container cajaFuerte = new Container("CajaFuerte",1);
@@ -186,14 +184,14 @@ public class Escape implements GameFactory {
         open.addCondition(new InventoryCondition(list, true));
         cajaFuerte.addAction(open);
         addPickDrop(credencial, player);
-        Item licor = new Item("licor");
+        Actionable licor = new Actionable("licor");
         salonUno.addItem(licor);
 
         createLicorCredentialConditions(player, acceso, credencial, player.getItem("Foto"), licor, biblioteca);
     }
 
     private void createLicorCredentialConditions(Player player, Location acceso,
-                                                 Container credencial, Actionable foto, Item licor, Location biblioteca) {
+                                                 Container credencial, Actionable foto, Actionable licor, Location biblioteca) {
         foto.addAction(new MoveItemAction(player, null, "put"));
         addPickDrop(licor, player);
         addPickDrop(foto, player);

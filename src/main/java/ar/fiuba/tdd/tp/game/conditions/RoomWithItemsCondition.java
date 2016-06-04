@@ -4,8 +4,8 @@ package ar.fiuba.tdd.tp.game.conditions;
 
 import ar.fiuba.tdd.tp.game.Location;
 import ar.fiuba.tdd.tp.game.Player;
+import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.ContainerComponent;
-import ar.fiuba.tdd.tp.game.items.Item;
 
 import java.util.List;
 
@@ -16,17 +16,17 @@ import java.util.List;
 public class RoomWithItemsCondition implements Condition {
 
 
-    private List<Item> items;
+    private List<Actionable> items;
     private Location room;
 
-    public RoomWithItemsCondition(List<Item> items, Location room) {
+    public RoomWithItemsCondition(List<Actionable> items, Location room) {
         this.items = items;
         this.room = room;
     }
 
     @Override
     public boolean isValid(Player player) {
-        for (ContainerComponent item : items) {
+        for (Actionable item : items) {
             if (!room.getItems().values().stream()
                     .filter(itemInRoom -> itemInRoom.getName().equals(item.getName())).findAny().isPresent() ) {
                 return false;

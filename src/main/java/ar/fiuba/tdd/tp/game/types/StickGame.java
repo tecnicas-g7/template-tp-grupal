@@ -8,7 +8,6 @@ import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
-import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class StickGame implements GameFactory {
     public Game getGame() {
         Location room = new Location("room");
 
-        Item stick = new Item("stick");
+        Actionable stick = new Actionable("stick");
 
         room.addItem(stick);
 

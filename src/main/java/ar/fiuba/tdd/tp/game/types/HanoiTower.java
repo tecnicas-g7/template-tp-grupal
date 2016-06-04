@@ -5,7 +5,6 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.ContainerCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
-import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.StackContainerComponent;
 
 import java.util.ArrayList;
@@ -26,9 +25,9 @@ public class HanoiTower implements GameFactory {
         addActionsToStacks(stack1,stack2,stack3);
 
         //Creo piezas
-        Item pieza1 = new Item("1");
-        Item pieza2 = new Item("2");
-        Item pieza3 = new Item("3");
+        Actionable pieza1 = new Actionable("1");
+        Actionable pieza2 = new Actionable("2");
+        Actionable pieza3 = new Actionable("3");
 
         //agrego piezas a un stack (de mayor a menor)
         stack1.addComponent(pieza3);

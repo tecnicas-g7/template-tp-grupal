@@ -7,9 +7,6 @@ import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.Container;
-import ar.fiuba.tdd.tp.game.items.Item;
-import ar.fiuba.tdd.tp.game.items.Linker;
-import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.*;
 
@@ -33,7 +30,7 @@ public class TreasureGame implements GameFactory {
         createComponentsSecondRoom(room2, room3, room4, player);
         createComponentsThirdRoom(room3, room4, room5, player);
 
-        Item treasure = new Item("treasure");
+        Actionable treasure = new Actionable("treasure");
         createComponentsFifthRoom(room5, treasure, player);
 
         player.setMaxInventory(2);
@@ -47,7 +44,7 @@ public class TreasureGame implements GameFactory {
         return game;
     }
 
-    private void addConditions(Game game, Location room, Item treasure) {
+    private void addConditions(Game game, Location room, Actionable treasure) {
         List<Actionable> items = new ArrayList<>();
         items.add(treasure);
         game.addCondition(new InventoryCondition(items, true));
@@ -66,7 +63,7 @@ public class TreasureGame implements GameFactory {
     }
 
     private static void createComponentsFirstRoom(Location room1, Location room2, Player player) {
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
         addPickDrop(key, player);
         Container box = new Container("box",1);
         addOpenClose(box);
@@ -89,11 +86,11 @@ public class TreasureGame implements GameFactory {
         Container trunk = new Container("trunk", 10);
         addOpenClose(trunk);
         Container box = createBox();
-        Item key = new Item("key2");
+        Actionable key = new Actionable("key2");
         addPickDrop(key, player);
         box.addComponent(key);
         //box.yesPoison();
-        Item antidote = createAntidote(player);
+        Actionable antidote = createAntidote(player);
         trunk.addComponent(antidote);
         trunk.addComponent(box);
         room3.addItem(trunk);
@@ -115,8 +112,8 @@ public class TreasureGame implements GameFactory {
         return box;
     }
 
-    private static Item createAntidote(Player player) {
-        Item antidote = new Item("antidote");
+    private static Actionable createAntidote(Player player) {
+        Actionable antidote = new Actionable("antidote");
         PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.alive, "drink");
         MoveItemAction secondAction = new MoveItemAction(player,new Container("void",666),"drop");
         ComplexAction action = new ComplexAction("drink");
@@ -127,12 +124,12 @@ public class TreasureGame implements GameFactory {
         return antidote;
     }
 
-    private static void createComponentsFifthRoom(Location room5, Item treasure, Player player) {
+    private static void createComponentsFifthRoom(Location room5, Actionable treasure, Player player) {
         addPickDrop(treasure, player);
         room5.addItem(treasure);
     }
 
-    private static void addPickDrop(Item item, Player player) {
+    private static void addPickDrop(Actionable item, Player player) {
         item.addAction(new MoveItemAction(null,player,"pick"));
         item.addAction(new MoveItemAction(player,null,"drop"));
     }

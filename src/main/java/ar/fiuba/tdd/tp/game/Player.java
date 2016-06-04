@@ -5,7 +5,6 @@ import ar.fiuba.tdd.tp.exceptions.MaxInventoryException;
 import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.actions.Action;
 import ar.fiuba.tdd.tp.game.items.Actionable;
-import ar.fiuba.tdd.tp.game.items.Item;
 import ar.fiuba.tdd.tp.game.items.Linker;
 import ar.fiuba.tdd.tp.game.utils.Messages;
 
@@ -106,7 +105,7 @@ public class Player implements HasItems {
         }
         String output = "You have ";
         output = output.concat(inventoryNames);
-        return output.toString();
+        return output;
     }
 
     public int getInventorySize() {
@@ -141,7 +140,7 @@ public class Player implements HasItems {
             this.room = door.getDestination();
             return door.getName() + " " + Messages.getMessage("entered");
         } else {
-            Item key = door.getKey();
+            Actionable key = door.getKey();
             if (inventory.containsValue(key)) {
                 door.unlock(key);
                 this.room = door.getDestination();

@@ -8,7 +8,7 @@ import ar.fiuba.tdd.tp.game.utils.Messages;
 
 import java.util.HashMap;
 
-public abstract class Actionable {
+public class Actionable {
 
     protected String name;
     private Type type;
