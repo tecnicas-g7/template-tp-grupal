@@ -6,6 +6,8 @@ import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
+import ar.fiuba.tdd.tp.game.states.State;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 /*
@@ -42,7 +44,7 @@ public class EnterRoom implements GameFactory {
             @Override
             public void run() {
                 try {
-                    game.getPlayer().changeStatus(Player.Status.dead);
+                    game.getPlayer().changeStatus(new StatePlayer("dead"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

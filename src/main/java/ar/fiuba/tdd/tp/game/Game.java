@@ -140,9 +140,7 @@ public class Game {
     }
 
     public boolean gameOver() {
-        if (Player.Status.dead.equals(this.getPlayer().getStatus())) {
-            return true;
-        } else  if (loseConditions.size() > 0) {
+        if (loseConditions.size() > 0) {
             for (Condition condition : this.loseConditions) {
                 if (condition.isValid(this.player)) {
                     return true;

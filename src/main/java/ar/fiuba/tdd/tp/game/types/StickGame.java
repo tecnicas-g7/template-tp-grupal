@@ -8,6 +8,7 @@ import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class StickGame implements GameFactory {
             @Override
             public void run() {
                 try {
-                    game.getPlayer().changeStatus(Player.Status.dead);
+                    game.getPlayer().changeStatus(new StatePlayer("dead"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
