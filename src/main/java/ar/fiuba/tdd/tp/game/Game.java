@@ -146,7 +146,6 @@ public class Game {
                     return true;
                 }
             }
-            System.out.print(Messages.getMessage("GameOver"));
             return false;
         }
         return false;

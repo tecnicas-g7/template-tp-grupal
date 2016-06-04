@@ -6,13 +6,8 @@ import ar.fiuba.tdd.tp.game.types.Escape;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public class EscapeTests {
-    @Test
-    public void escapeStairs() {
-        Game escape = (new Escape().getGame());
-        Controller controller = new Controller(escape);
-
+    private void escapeCommand(Controller controller) {
         controller.interpretCommand("goto BibliotecaAcceso");
         controller.interpretCommand("goto Pasillo");
         controller.interpretCommand("goto Salon3");
@@ -30,15 +25,9 @@ public class EscapeTests {
         controller.interpretCommand("move LibroViejo");
         controller.interpretCommand("goto Sotano");
         controller.interpretCommand("use Escalera");
-        Assert.assertTrue(controller.gameOver());
-
     }
 
-    @Test
-    public void escapeBaranda() {
-        Game escape = (new Escape().getGame());
-        Controller controller = new Controller(escape);
-
+    private void escapeBarandaCommand(Controller controller) {
         controller.interpretCommand("goto BibliotecaAcceso");
         controller.interpretCommand("goto Pasillo");
         controller.interpretCommand("goto Salon3");
@@ -56,15 +45,9 @@ public class EscapeTests {
         controller.interpretCommand("move LibroViejo");
         controller.interpretCommand("goto Sotano");
         controller.interpretCommand("use Baranda");
-        Assert.assertTrue(controller.gameOver());
-
     }
 
-    @Test
-    public void escapeYouWin() {
-        Game escape = (new Escape().getGame());
-        Controller controller = new Controller(escape);
-
+    private void escapeWin1(Controller controller) {
         controller.interpretCommand("goto BibliotecaAcceso");
         controller.interpretCommand("goto Pasillo");
         controller.interpretCommand("goto Salon3");
@@ -75,6 +58,9 @@ public class EscapeTests {
         controller.interpretCommand("open CajaFuerte");
         controller.interpretCommand("pick Credencial");
         controller.interpretCommand("put Foto Credencial");
+    }
+
+    private void escapeWin2(Controller controller) {
         controller.interpretCommand("goto Pasillo");
         controller.interpretCommand("goto Salon2");
         controller.interpretCommand("pick Martillo");
@@ -87,6 +73,30 @@ public class EscapeTests {
         controller.interpretCommand("use Baranda");
         controller.interpretCommand("break Ventana");
         controller.interpretCommand("goto Afuera");
+    }
+
+    @Test
+    public void escapeStairs() {
+        Game escape = (new Escape().getGame());
+        Controller controller = new Controller(escape);
+        escapeCommand(controller);
+        Assert.assertTrue(controller.gameOver());
+    }
+
+    @Test
+    public void escapeBaranda() {
+        Game escape = (new Escape().getGame());
+        Controller controller = new Controller(escape);
+        escapeBarandaCommand(controller);
+        Assert.assertTrue(controller.gameOver());
+    }
+
+    @Test
+    public void escapeYouWin() {
+        Game escape = (new Escape().getGame());
+        Controller controller = new Controller(escape);
+        escapeWin1(controller);
+        escapeWin2(controller);
         Assert.assertTrue(controller.verify());
 
     }

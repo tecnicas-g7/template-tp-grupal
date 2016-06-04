@@ -5,8 +5,10 @@ import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.Player;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
+import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.*;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
 import ar.fiuba.tdd.tp.game.types.*;
 
 import org.junit.Assert;
@@ -118,5 +120,29 @@ public class MainTests {
         player.openContainer("Baul");
         System.out.println(room1.look());
         assertTrue(true);
+    }
+
+    @Test
+    public void verifyStatus() {
+        Location room1 = new Location("Room1");
+        Player player  = new Player(room1);
+        player.addAction(new LookAction("look"));
+
+        Container box = new Container("box",1);
+        PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("dead"),"open");
+        ComplexAction action = new ComplexAction("open");
+        action.addAction(firstAction);
+        box.addAction(action);
+        room1.addItem(box);
+
+        Game game = new Game(player);
+        game.addRoom(room1);
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+
+        //Juego, muere y debe perder
+        Controller controller = new Controller(game);
+        String command = "open box";
+        System.out.println(controller.interpretCommand(command));
+        assertTrue(game.verifyVictory());
     }
 }

@@ -12,12 +12,10 @@ Created by Javier on 26/04/2016.
 public class PlayerStatusAction extends Action {
 
     private State status;
-    //private String name;
 
     public PlayerStatusAction(State status, String name) {
         super(name);
         this.status = status;
-        //this.name = name;
     }
 
     @Override

@@ -50,8 +50,8 @@ public class TreasureGame implements GameFactory {
         items.add(treasure);
         game.addCondition(new InventoryCondition(items, true));
 
-        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("poisoned")));
-        game.addLoseCondition(new RoomCondition(room, true));
+//        game.addLoseCondition(new RoomCondition(room, true));
+//        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("poisoned")));
 
     }
 
