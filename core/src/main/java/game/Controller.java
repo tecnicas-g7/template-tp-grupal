@@ -76,5 +76,13 @@ public class Controller {
         }
         return GameState.Lost;
     }
+
+    public Player getPlayer() {
+        return game.getFreePlayer();
+    }
+
+    public void disconnect(String playerName) {
+
+    }
 }
 

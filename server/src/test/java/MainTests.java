@@ -12,8 +12,8 @@ import game.items.Linker;
 import model.Game;
 import org.junit.Assert;
 import org.junit.Test;
-import server.Driver;
-import server.GameDriver;
+import server.driver.Driver;
+import server.driver.GameDriver;
 import server.GamePaths;
 
 

@@ -129,5 +129,9 @@ public class Game {
         }
         return false;
     }
+
+    public Player getFreePlayer() {
+        return player;
+    }
 }
 

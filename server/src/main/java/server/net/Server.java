@@ -1,7 +1,7 @@
-package server;
+package server.net;
 
-import model.Game;
-import model.GameBuilder;
+import server.BuilderLoader;
+import server.GamePaths;
 
 import java.io.*;
 import java.net.Socket;

@@ -29,6 +29,7 @@ public class Player implements HasItems {
     private Location room;
 
     private Status status;
+    private String name;
 
     public String openContainer(String name) {
         Actionable component = room.getItem(name);
@@ -55,16 +56,31 @@ public class Player implements HasItems {
         return actions.get(actionName).execute(tokens, this, null);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public enum Status {
         alive, poisoned
     }
 
-    public Player(Location room) {
+    private void initialize() {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
-        this.room = room;
         this.status = Status.alive;
         this.actions = new HashMap<>();
+    }
+
+    public Player(Location room) {
+        initialize();
+        this.room = room;
+        this.name = "Player1";
+    }
+
+    public Player(Location room, String name) {
+        initialize();
+        this.room = room;
+        this.name = name;
     }
 
     public void setMaxInventory(int maxInventory) {
