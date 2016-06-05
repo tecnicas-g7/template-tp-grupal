@@ -36,33 +36,51 @@ public class ClientSender implements Runnable {
             sendMessage(out,message);
         } catch (IOException e) {
             clients.remove(name);
+            System.out.println("Fuck!");
         }
     }
 
     public void interpretCommand(String name, String message) throws IOException {
         Socket socket = clients.get(name);
+        controller.setActivePlayer(name);
         String output = controller.interpretCommand(message);
         if (controller.verify()) {
-            sendIndividualMessage(name,"W");
+            sendIndividualMessage(name, "W");
             socket.close();
-            broadcast(name,message);
+            broadcastAction(name,message);
+            return;
         }
         if (controller.gameOver()) {
             sendIndividualMessage(name, "L");
             socket.close();
-            broadcast(name,message);
+            broadcastAction(name,message);
+            return;
         }
         sendIndividualMessage(name, output);
-        broadcast(name, message);
+        broadcastAction(name, message);
 
     }
 
-    private void broadcast(String name, String message) {
-        clients.forEach((playerName,socket) -> {
+    private void broadcastAction(String name, String message) {
+        for (String playerName : clients.keySet()) {
             if (!playerName.equals(name)) {
                 sendIndividualMessage(playerName, name + " execute: " + message);
             }
-        } );
+        }
+        /*clients.forEach((playerName, socket) -> {
+            System.out.println("?!?!?!?!");
+            if (!playerName.equals(name)) {
+                sendIndividualMessage(playerName, name + " execute: " + message);
+            }
+        });*/
+    }
+
+    public void broadcast(String name, String message) {
+        clients.forEach((playerName, socket) -> {
+            if (!playerName.equals(name)) {
+                sendIndividualMessage(playerName, message);
+            }
+        });
     }
 
     private void sendMessage(DataOutputStream out, String message) throws IOException {
@@ -70,4 +88,13 @@ public class ClientSender implements Runnable {
     }
 
 
+    public void terminate() {
+        for (Socket socket : clients.values()) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

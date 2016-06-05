@@ -15,6 +15,8 @@ public class Controller {
 
     private Game game;
 
+
+
     public enum GameState {
         Lost, Win, InProgress
     }
@@ -81,8 +83,12 @@ public class Controller {
         return game.getFreePlayer();
     }
 
-    public void disconnect(String playerName) {
+    public boolean hasPlayersPlaying() {
+        return game.hasPlayersPlaying();
+    }
 
+    public void setActivePlayer(String activePlayer) {
+        game.setActivePlayer(activePlayer);
     }
 }
 

@@ -59,12 +59,18 @@ public class Client {
             sender.close();
             socket.close();
             running = false;
+        } else {
+            if (serverMessage != null && serverMessage.equals("L")) {
+                System.out.println("Perdiste :(");
+                sender.close();
+                socket.close();
+                running = false;
+            }
         }
-        if (serverMessage != null && serverMessage.equals("L")) {
-            System.out.println("Perdiste :(");
-            sender.close();
-            socket.close();
+        if (serverMessage == null) {
             running = false;
+            System.out.println("Error with connection...");
+            return;
         }
         System.out.println(serverMessage);
     }

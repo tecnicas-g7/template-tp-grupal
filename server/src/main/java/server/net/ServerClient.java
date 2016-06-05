@@ -32,16 +32,27 @@ class ServerClient implements Runnable{
 
     public void run() {
         this.clientSender = new ClientSender(controller);
-        int i = 0;
         while (running) {
             Socket socket = acceptSocket();
-            System.out.println("Hello?");
             if (socket != null) {
-                Player player = controller.getPlayer();
-                ++i;
-                //new Thread(new ClientListener(socket, clientSender, controller, player)).start();
-                new Thread(new ClientListener(socket, clientSender, controller, "Player" + i)).start();
-                clientSender.addSocket(socket,"Player" + i);
+                checkForFreePlayers(socket);
+            }
+        }
+    }
+
+    private void checkForFreePlayers(Socket socket) {
+        Player player = controller.getPlayer();
+        if (player != null) {
+            new Thread(new ClientListener(socket, clientSender, player)).start();
+            //new Thread(new ClientListener(socket, clientSender, controller, "Player" + i)).start();
+            clientSender.addSocket(socket, player.getName());
+            //clientSender.addSocket(socket,"Player" + i);
+        } else {
+            sendMessage(socket,"No free players, closing conection...");
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -51,12 +62,22 @@ class ServerClient implements Runnable{
         try {
             socket = serverSocket.accept();
         } catch (IOException e) {
-            System.out.println("Accept failed.");
+            terminate();
         }
         return socket;
     }
 
     public void terminate() {
         running = false;
+        clientSender.terminate();
+    }
+
+    public void sendMessage(Socket socket, String message) {
+        try {
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            out.writeBytes(message + '\n');
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

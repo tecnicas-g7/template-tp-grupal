@@ -43,6 +43,7 @@ public class Server {
         games.put("RIVERCROSSING", GamePaths.getGamePath("gameRiverCrossing"));
         games.put("STICKGAME", GamePaths.getGamePath("gameStick"));
         games.put("TREASUREGAME", GamePaths.getGamePath("gameTreasureBox"));
+        games.put("TWOPLAYERS", GamePaths.getGamePath("gameTwoPlayers"));
 
         gameServers = new ArrayList<>();
         loadGame();

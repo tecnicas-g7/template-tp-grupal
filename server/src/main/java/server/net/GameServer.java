@@ -4,14 +4,10 @@ import game.Controller;
 
 import exceptions.GameNotFoundExcpetion;
 import model.GameBuilder;
-import server.net.ClientListener;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.HashMap;
+
 
 /**
   Created by fran on 22/04/16.
@@ -38,18 +34,31 @@ public class GameServer implements Runnable{
     }
 
     public void run() {
-        int i = 0;
         while (running) {
             startGame();
             this.serverClient = new ServerClient(serverSocket,controller);
             new Thread(this.serverClient).start();
 
-            //TODO: Terminar juego si todos se desconectan. Y empezar otra vez (volver a empezar el while de arriba).
-            while (true) {
-
+            boolean waiting = true;
+            while (running && waiting) {
+                if (controller.hasPlayersPlaying()) {
+                    waiting = false;
+                }
             }
-            //TODO: Ciclar para tiempo.
+            cycle();
+            serverClient.terminate();
+        }
+    }
 
+    private void cycle() {
+        //TODO: Ciclo para pasar tiempo de juego
+        boolean gameRunning = true;
+        while (running && gameRunning) {
+            if (!controller.hasPlayersPlaying()) {
+                gameRunning = false;
+            }
+            //Meter ciclo....
+            
         }
     }
 

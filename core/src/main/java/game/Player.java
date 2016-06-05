@@ -31,6 +31,8 @@ public class Player implements HasItems {
     private Status status;
     private String name;
 
+    private boolean playing;
+
     public String openContainer(String name) {
         Actionable component = room.getItem(name);
         return component.openContainer(this);
@@ -69,6 +71,7 @@ public class Player implements HasItems {
         this.maxInventory = DEFAULT_MAX_INVENTORY;
         this.status = Status.alive;
         this.actions = new HashMap<>();
+        this.playing = false;
     }
 
     public Player(Location room) {
@@ -173,6 +176,21 @@ public class Player implements HasItems {
 
     public void setRoom(Location room) {
         this.room = room;
+    }
+
+    public boolean isPlaying() {
+        return this.playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
+        //Si no juega mas, se desconecta y tiro items al piso.
+        if (!playing) {
+            for (Actionable actionable : inventory.values()) {
+                room.addItem(actionable);
+                removeItem(actionable.getName());
+            }
+        }
     }
 
 }
