@@ -18,11 +18,7 @@ public class StatePlayer implements State {
     }
 
     public boolean equals(State state) {
-        if (idState.equals(state.getID())) {
-            return true;
-        } else {
-            return false;
-        }
+        return idState.equals(state.getID());
     }
 
 }

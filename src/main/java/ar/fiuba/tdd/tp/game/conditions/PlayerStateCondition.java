@@ -16,9 +16,6 @@ public class PlayerStateCondition implements Condition {
 
     @Override
     public boolean isValid(Player player) {
-        if (player.getStatus().equals(status)) {
-            return true;
-        }
-        return  false;
+        return player.getStatus().equals(status);
     }
 }

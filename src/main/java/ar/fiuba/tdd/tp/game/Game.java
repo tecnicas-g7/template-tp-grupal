@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.exceptions.WrongItemActionException;
 import ar.fiuba.tdd.tp.game.actions.EnterAction;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
 import ar.fiuba.tdd.tp.game.utils.Messages;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
@@ -146,7 +147,6 @@ public class Game {
                     return true;
                 }
             }
-            return false;
         }
         return false;
     }

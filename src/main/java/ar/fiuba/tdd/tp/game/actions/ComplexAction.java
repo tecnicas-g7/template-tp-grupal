@@ -32,12 +32,12 @@ public class ComplexAction extends Action {
         StringBuilder resultExecute = new StringBuilder();
         actions.forEach((action) -> {
                 String result = action.execute(tokens,player,item);
-                if ( result.length()>0){
-                resultExecute.append(result);
-                resultExecute.append(",");
+                if (result.length() > 0) {
+                    resultExecute.append(result);
+                    resultExecute.append(",");
                 }
             });
 
-        return resultExecute.substring(0,resultExecute.length()-1).toString();
+        return resultExecute.substring(0,resultExecute.length() - 1).toString();
     }
 }

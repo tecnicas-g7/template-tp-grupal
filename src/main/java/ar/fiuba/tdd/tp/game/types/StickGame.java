@@ -7,6 +7,7 @@ import ar.fiuba.tdd.tp.game.actions.LookAction;
 import ar.fiuba.tdd.tp.game.actions.MoveItemAction;
 import ar.fiuba.tdd.tp.game.conditions.Condition;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
+import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.states.StatePlayer;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
@@ -40,7 +41,8 @@ public class StickGame implements GameFactory {
 
         Condition condition = new InventoryCondition(items, true);
         game.addCondition(condition);
-        game.addTask(createScheduledTask(game),50000,150000);
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+        game.addTask(createScheduledTask(game),15000,150000);
 
         return game;
     }
