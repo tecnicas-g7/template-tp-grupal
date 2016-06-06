@@ -9,6 +9,7 @@ import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.states.State;
 import ar.fiuba.tdd.tp.game.states.StatePlayer;
+import ar.fiuba.tdd.tp.tasks.DeadLine;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 /*
@@ -33,25 +34,12 @@ public class EnterRoom implements GameFactory {
         game.makeLocationsAdjacent(room1, room2, key);
         game.addRoom(room1);
         game.addRoom(room2);
-        game.addTask(createScheduledTask(game),15000,150000);
+        game.addTask(new DeadLine(game),15000,150000);
         game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
 
         game.addCondition(new RoomCondition(room2,true));
 
         return game;
-    }
-
-    private ScheduledTask createScheduledTask(Game game) {
-        return new ScheduledTask() {
-            @Override
-            public void run() {
-                try {
-                    game.getPlayer().changeStatus(new StatePlayer("dead"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
     }
 
     @SuppressWarnings("CPD-END")

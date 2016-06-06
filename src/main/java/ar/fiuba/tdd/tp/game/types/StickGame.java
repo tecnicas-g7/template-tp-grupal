@@ -10,6 +10,7 @@ import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
 import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.states.StatePlayer;
+import ar.fiuba.tdd.tp.tasks.DeadLine;
 import ar.fiuba.tdd.tp.tasks.ScheduledTask;
 
 import java.util.ArrayList;
@@ -42,22 +43,9 @@ public class StickGame implements GameFactory {
         Condition condition = new InventoryCondition(items, true);
         game.addCondition(condition);
         game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
-        game.addTask(createScheduledTask(game),15000,150000);
+        game.addTask(new DeadLine(game),15000,150000);
 
         return game;
-    }
-
-    private ScheduledTask createScheduledTask(Game game) {
-        return new ScheduledTask() {
-            @Override
-            public void run() {
-                try {
-                    game.getPlayer().changeStatus(new StatePlayer("dead"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
     }
 
     public String getHelp() {

@@ -3,9 +3,12 @@ package ar.fiuba.tdd.tp.game.types;
 import ar.fiuba.tdd.tp.game.*;
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.InventoryCondition;
+import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
 import ar.fiuba.tdd.tp.game.conditions.RoomCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
 import ar.fiuba.tdd.tp.game.utils.Messages;
+import ar.fiuba.tdd.tp.tasks.DeadLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,8 @@ public class CursedItem implements GameFactory {
         game.addRoom(room3);
 
         game.addCondition(new RoomCondition(room3, true));
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+        game.addTask(new DeadLine(game),60000,150000);
 
         return game;
     }

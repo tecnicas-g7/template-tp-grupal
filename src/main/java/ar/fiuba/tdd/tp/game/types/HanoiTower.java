@@ -4,8 +4,11 @@ import ar.fiuba.tdd.tp.game.*;
 
 import ar.fiuba.tdd.tp.game.actions.*;
 import ar.fiuba.tdd.tp.game.conditions.ContainerCondition;
+import ar.fiuba.tdd.tp.game.conditions.PlayerStateCondition;
 import ar.fiuba.tdd.tp.game.items.Actionable;
 import ar.fiuba.tdd.tp.game.items.StackContainerComponent;
+import ar.fiuba.tdd.tp.game.states.StatePlayer;
+import ar.fiuba.tdd.tp.tasks.DeadLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,8 @@ public class HanoiTower implements GameFactory {
         Game game = new Game(player);
 
         addConditions(game, stack2, stack3);
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+        game.addTask(new DeadLine(game),120000,150000);
         
         return game;
     }
