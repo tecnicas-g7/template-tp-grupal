@@ -69,11 +69,11 @@ public class HanoiTower implements GameBuilder {
     }
 
     private void addActionsToStacks(StackContainerComponent stack1, StackContainerComponent stack2, StackContainerComponent stack3) {
-        stack1.addAction(new MoveItemAction(null, null, "move"));
+        stack1.addAction(new MoveItemAction(false, false, "move"));
         stack1.addAction(createCheckAction());
-        stack2.addAction(new MoveItemAction(null, null, "move"));
+        stack2.addAction(new MoveItemAction(false, false, "move"));
         stack2.addAction(createCheckAction());
-        stack3.addAction(new MoveItemAction(null, null, "move"));
+        stack3.addAction(new MoveItemAction(false, false, "move"));
         stack3.addAction(createCheckAction());
     }
 

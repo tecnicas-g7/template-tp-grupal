@@ -81,8 +81,8 @@ import java.util.List;
     }
 
     private static ActionableType addActions(ActionableType item, Player player) {
-        MoveItemAction take = new MoveItemAction(null,player,"take");
-        MoveItemAction leave = new MoveItemAction(player,null,"leave");
+        MoveItemAction take = new MoveItemAction(false,true,"take");
+        MoveItemAction leave = new MoveItemAction(true,false,"leave");
         item.addAction(take);
         item.addAction(leave);
         return item;

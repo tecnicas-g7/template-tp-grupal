@@ -13,26 +13,25 @@ import game.utils.Messages;
 
 public class MoveItemAction extends Action {
 
-    //private String name;
-    private HasItems origin;
-    private HasItems destination;
+    private boolean originPlayer;
+    private boolean destinationPlayer;
 
-    public MoveItemAction(HasItems origin, HasItems destination) {
+    public MoveItemAction(boolean originPlayer, boolean destinationPlayer) {
         super("move");
-        this.origin = origin;
-        this.destination = destination;
+        this.originPlayer = originPlayer;
+        this.destinationPlayer = destinationPlayer;
     }
 
-    public MoveItemAction(HasItems origin, HasItems destination, String name) {
+    public MoveItemAction(boolean originPlayer, boolean destinationPlayer, String name) {
         super(name);
-        this.origin = origin;
-        this.destination = destination;
+        this.originPlayer = originPlayer;
+        this.destinationPlayer = destinationPlayer;
     }
 
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
         if (checkConditions(player)) {
-            if (origin == null && destination == null) {
+            if (!originPlayer && !destinationPlayer) {
                 return moveFromTokenToToken(tokens, player, item);
             }
             return originToDestination(tokens, player, item);
@@ -42,24 +41,28 @@ public class MoveItemAction extends Action {
 
     private String originToDestination(String[] tokens, Player player, Actionable item) {
         //pick -> origen = room (dinamico...) , destino = player /// drop -> origen = player, destino = room (dinamico...)
-        HasItems newOrigin = origin;
-        HasItems newDestination = destination;
-        if (newOrigin == null) {
+        HasItems newOrigin;
+        if (!originPlayer) {
             newOrigin = player.getRoom();
+        } else {
+            newOrigin = player;
         }
         if (tokens.length == 2) {
-            return moveDefaultDestination(newOrigin, newDestination, player,item);
+            return moveDefaultDestination(newOrigin, player,item);
         } else {
             return moveSpecifiedDestination(tokens, newOrigin, player, item);
         }
 
     }
 
-    private String moveDefaultDestination(HasItems newOrigin, HasItems newDestination, Player player, Actionable item) {
-        if (newDestination == null) {
+    private String moveDefaultDestination(HasItems newOrigin, Player player, Actionable item) {
+        HasItems newDestination;
+        if (!destinationPlayer) {
             newDestination = player.getRoom();
+        } else {
+            newDestination = player;
         }
-        return move(player, item, newOrigin, newDestination);
+        return move(item, newOrigin, newDestination);
     }
 
     private String moveSpecifiedDestination(String[] tokens, HasItems newOrigin, Player player, Actionable item) {
@@ -70,10 +73,10 @@ public class MoveItemAction extends Action {
         } catch (ItemNotFoundException e) {
             destination = player.getRoom().getItem(name);
         }
-        return move(player,item,newOrigin,destination);
+        return move(item,newOrigin,destination);
     }
 
-    private String move(Player player, Actionable item, HasItems newOrigin, HasItems newDestination) {
+    private String move(Actionable item, HasItems newOrigin, HasItems newDestination) {
         try {
             newDestination.addItem(item);
             newOrigin.removeItem(item.getName());
@@ -83,7 +86,7 @@ public class MoveItemAction extends Action {
         }
     }
 
-    private String move( Player player, Actionable item, HasItems newOrigin, Actionable newDestination) {
+    private String move(Actionable item, HasItems newOrigin, Actionable newDestination) {
         newDestination.addComponent(item);
         newOrigin.removeItem(item.getName());
         return Messages.getMessage("objectMoved");

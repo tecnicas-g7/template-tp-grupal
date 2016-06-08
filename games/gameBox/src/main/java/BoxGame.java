@@ -36,7 +36,7 @@ public class BoxGame implements GameBuilder {
         makeLocationsAdjacent(room1, room2, key);
 
         Player player = createPlayer(room1);
-        key.addAction(new MoveItemAction(null,player,"pick"));
+        key.addAction(new MoveItemAction(false,true,"pick"));
         Game game = new Game(player);
 
 

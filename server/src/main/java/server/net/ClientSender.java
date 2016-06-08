@@ -36,7 +36,6 @@ public class ClientSender implements Runnable {
             sendMessage(out,message);
         } catch (IOException e) {
             clients.remove(name);
-            System.out.println("Fuck!");
         }
     }
 

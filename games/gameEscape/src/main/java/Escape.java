@@ -138,7 +138,7 @@ public class Escape implements GameBuilder {
         List<Actionable> list = new ArrayList<>();
         list.add(libroViejo);
         pasaje.addEnterCondition(new HasItemsWithItemsCondition(list, estante, false));
-        libroViejo.addAction(new MoveItemAction(null, player, "move"));
+        libroViejo.addAction(new MoveItemAction(false,true, "move"));
         biblioteca.addDoor(pasaje, null, "Sotano", new EnterAction("goto"));
         pasaje.addDoor(biblioteca,null,"Biblioteca",new EnterAction("goto"));
         return biblioteca;
@@ -214,12 +214,12 @@ public class Escape implements GameBuilder {
 
     private void createLicorCredentialConditions(Player player, Location acceso,
                                                  Container credencial, Actionable foto, Actionable licor, Location biblioteca) {
-        foto.addAction(new MoveItemAction(player, null, "put"));
+        foto.addAction(new MoveItemAction(true, false, "put"));
         addPickDrop(licor, player);
         addPickDrop(foto, player);
         List<Actionable> list = new ArrayList<>();
         list.add(foto);
-        MoveItemAction show = new MoveItemAction(player,null,"show");
+        MoveItemAction show = new MoveItemAction(true,false,"show");
         show.addCondition(new HasItemsWithItemsCondition(list, credencial, true));
         credencial.addAction(show);
         createAccesoBiblioteca(player, credencial, acceso, biblioteca);
@@ -236,8 +236,8 @@ public class Escape implements GameBuilder {
     }
 
     private void addPickDrop(Actionable actionable, Player player) {
-        actionable.addAction(new MoveItemAction(null,player,"pick"));
-        actionable.addAction(new MoveItemAction(player,null,"drop"));
+        actionable.addAction(new MoveItemAction(false,true,"pick"));
+        actionable.addAction(new MoveItemAction(true,false,"drop"));
     }
 
     private ScheduledTask createScheduledTask(Game game, Actionable item) {

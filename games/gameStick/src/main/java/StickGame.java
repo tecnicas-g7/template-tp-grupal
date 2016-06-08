@@ -32,7 +32,7 @@ public class StickGame implements GameBuilder {
         Player player = new Player(room);
         player.addAction(new LookAction("look"));
         player.addAction(new ListInventoryAction("inventory"));
-        stick.addAction(new MoveItemAction(null,player,"pick"));
+        stick.addAction(new MoveItemAction(false,true,"pick"));
         Game game = new Game(player);
 
         game.addRoom(room);

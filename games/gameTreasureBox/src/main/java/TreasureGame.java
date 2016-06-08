@@ -126,10 +126,8 @@ public class TreasureGame implements GameBuilder {
     private static Actionable createAntidote(Player player) {
         Actionable antidote = new Actionable("antidote");
         PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("alive"), "drink");
-        MoveItemAction secondAction = new MoveItemAction(player,new Container("void",666),"drop");
         ComplexAction action = new ComplexAction("drink");
         action.addAction(firstAction);
-        action.addAction(secondAction);
         antidote.addAction(action);
         addPickDrop(antidote,player);
         return antidote;
@@ -141,8 +139,8 @@ public class TreasureGame implements GameBuilder {
     }
 
     private static void addPickDrop(Actionable item, Player player) {
-        item.addAction(new MoveItemAction(null,player,"pick"));
-        item.addAction(new MoveItemAction(player,null,"drop"));
+        item.addAction(new MoveItemAction(false,true,"pick"));
+        item.addAction(new MoveItemAction(true,false,"drop"));
     }
 
     private static void addOpenClose(Container container) {

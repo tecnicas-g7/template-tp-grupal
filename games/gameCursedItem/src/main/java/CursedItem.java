@@ -42,7 +42,7 @@ public class CursedItem implements GameBuilder {
         room2.addDoor(room3,null,enterAction);
 
         Player player = createPlayer(room1);
-        cursedItem.addAction(new MoveItemAction(null,player,"pick"));
+        cursedItem.addAction(new MoveItemAction(false,true,"pick"));
         Game game = new Game(player);
 
         game.addRoom(room1);

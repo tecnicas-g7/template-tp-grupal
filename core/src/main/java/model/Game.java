@@ -64,7 +64,6 @@ public class Game {
     }
 
     public String executeActionOnItem(String[] tokens) throws WrongItemActionException {
-        System.out.println("Activo: " + activePlayer.getName());
         String objectName;
         try {
             objectName = tokens[1];
