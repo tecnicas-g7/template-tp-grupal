@@ -4,12 +4,13 @@ import game.actions.EnterAction;
 import game.actions.ListInventoryAction;
 import game.actions.LookAction;
 import game.actions.MoveItemAction;
-import game.conditions.ItemTypeCondition;
+import conditions.ItemTypeCondition;
 import game.conditions.RoomWithItemsCondition;
 import game.items.Actionable;
-import game.items.type.CarnivorousType;
-import game.items.type.HerbivorousType;
-import game.items.type.PlantType;
+import items.ActionableType;
+import items.type.CarnivorousType;
+import items.type.HerbivorousType;
+import items.type.PlantType;
 import model.Game;
 import model.GameBuilder;
 
@@ -59,15 +60,15 @@ import java.util.List;
 
     private static List<Actionable> createComponents(Player player) {
 
-        Actionable sheep = new Actionable("sheep");
+        ActionableType sheep = new ActionableType("sheep");
         sheep.setType(new HerbivorousType());
         sheep = addActions(sheep,player);
 
-        Actionable wolf = new Actionable("wolf");
+        ActionableType wolf = new ActionableType("wolf");
         wolf.setType(new CarnivorousType());
         wolf = addActions(wolf,player);
 
-        Actionable cabbage = new Actionable("cabbage");
+        ActionableType cabbage = new ActionableType("cabbage");
         cabbage.setType(new PlantType());
         cabbage = addActions(cabbage,player);
 
@@ -79,7 +80,7 @@ import java.util.List;
         return items;
     }
 
-    private static Actionable addActions(Actionable item, Player player) {
+    private static ActionableType addActions(ActionableType item, Player player) {
         MoveItemAction take = new MoveItemAction(null,player,"take");
         MoveItemAction leave = new MoveItemAction(player,null,"leave");
         item.addAction(take);

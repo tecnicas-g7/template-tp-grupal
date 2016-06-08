@@ -1,13 +1,12 @@
-package game.items.type;
+package items.type;
 
 /**
  Created by nico on 26/04/16.
  */
-public class PlantType extends Type{
+public class CarnivorousType extends Type {
 
-    public PlantType() {
+    public CarnivorousType() {
         super();
-        this.setName("Plants");
         this.getEnemyTypes().add(HerbivorousType.class);
     }
 

@@ -3,24 +3,22 @@ package game.actions;
 
 import game.Player;
 import game.items.Actionable;
+import game.utils.Messages;
 
 
+public class OpenCloseContainerAction extends Action {
 
-/*
-  Created by fran on 27/04/16.
- */
-public class OpenAction extends Action {
-
-    public OpenAction(String name) {
+    public OpenCloseContainerAction(String name) {
         super(name);
     }
 
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
         if (checkConditions(player)) {
-//            return item.openContainer(player);
+            return item.openOrCloseContainer(tokens[0]);
         }
-        return "Couldnt open container";
+
+        return Messages.getMessage("youCantDoThatMessage");
     }
 
 

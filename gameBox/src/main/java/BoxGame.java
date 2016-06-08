@@ -1,8 +1,6 @@
 import game.Location;
 import game.Player;
-import game.actions.CloseAction;
-import game.actions.MoveItemAction;
-import game.actions.OpenAction;
+import game.actions.*;
 import game.conditions.RoomCondition;
 import game.items.Container;
 import game.items.Actionable;
@@ -20,8 +18,11 @@ public class BoxGame implements GameBuilder {
     public Game build() {
 
         Container box = new Container("box",1);
-        box.addAction(new OpenAction("open"));
-        box.addAction(new CloseAction("close"));
+        //box.addAction(new OpenAction("open"));
+        //box.addAction(new CloseAction("close"));
+        box.addAction(new OpenCloseContainerAction("open"));
+        box.addAction(new OpenCloseContainerAction("close"));
+
 
         Location room1 = new Location("Room1");
         room1.addItem(box);

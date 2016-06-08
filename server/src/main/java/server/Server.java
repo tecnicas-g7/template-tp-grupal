@@ -1,7 +1,5 @@
 package server;
 
-import model.Game;
-import model.GameBuilder;
 
 import java.io.*;
 import java.net.Socket;

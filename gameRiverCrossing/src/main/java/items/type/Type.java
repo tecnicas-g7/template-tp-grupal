@@ -1,4 +1,4 @@
-package game.items.type;
+package items.type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +24,8 @@ public class Type {
         this.name = name;
     }
 
-    List<Class<? extends Type>> getEnemyTypes() {
+    public List<Class<? extends Type>> getEnemyTypes() {
         return enemyTypes;
-    }
-
-    public void setEnemyTypes(List<Class<? extends Type>> enemyTypes) {
-        this.enemyTypes = enemyTypes;
     }
 
     public Boolean isEnemy(Type type) {

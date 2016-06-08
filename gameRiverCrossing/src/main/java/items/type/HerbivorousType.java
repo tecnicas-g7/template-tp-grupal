@@ -1,9 +1,9 @@
-package game.items.type;
+package items.type;
 
 /**
  Created by nico on 26/04/16.
  */
-public class HerbivorousType extends Type{
+public class HerbivorousType extends Type {
 
     public HerbivorousType() {
         super();

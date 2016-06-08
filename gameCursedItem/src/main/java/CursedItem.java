@@ -1,12 +1,13 @@
 
 import game.Location;
 import game.Player;
+import game.actions.ClearInventoryAction;
 import game.actions.EnterAction;
 import game.actions.MoveItemAction;
-import game.actions.ThiefAction;
 import game.conditions.InventoryCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
+import game.utils.Messages;
 import model.Game;
 import model.GameBuilder;
 
@@ -56,7 +57,8 @@ public class CursedItem implements GameBuilder {
 
     private static void createItemsSecondRoom(Location room) {
         Actionable thief = new Actionable("thief");
-        thief.addAction(new ThiefAction("talk"));
+        String stealMessage = "Oh no! The " + thief.getName() + " " + Messages.getMessage("hasStolenYourItems");
+        thief.addAction(new ClearInventoryAction("talk", stealMessage));
 
         room.addItem(thief);
     }

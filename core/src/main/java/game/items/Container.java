@@ -6,7 +6,6 @@ import exceptions.ItemNotFoundException;
 import exceptions.MaxInventoryException;
 import game.HasItems;
 import game.Player;
-import game.items.type.Type;
 import game.utils.Messages;
 import game.utils.Util;
 
@@ -22,14 +21,15 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     private HashMap<String, Actionable> components;
     private int maxSize;
     private boolean open;
-    private Type type;
+    private String lastAction;
+
 
     public Container(String name, int maxSize) {
         super(name);
         this.maxSize = maxSize;
         this.components = new HashMap<>();
         this.open = false;
-        type = new Type();
+        this.lastAction = "";
     }
 
     public String look() {
@@ -47,7 +47,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
 
 
     //When the player opens the container, the components in it can be reached
-    public String openContainer(Player player) {
+    public String openContainer() {
         StringBuilder output = new StringBuilder();
         this.open = true;
         components.forEach((key, value) -> {
@@ -64,6 +64,18 @@ public class Container extends Actionable implements ContainerComponent, HasItem
         return this.name + " " + Messages.getMessage("hasBeenClosed");
     }
 
+    public String openOrCloseContainer(String action) {
+
+        if (lastAction.equals(action)) {
+            return Messages.getMessage("isAlready") + " " + action;
+        }
+        this.lastAction = action;
+        if (open) {
+            return closeContainer();
+        }
+        return openContainer();
+    }
+
     public void removeComponent(Actionable component) {
         Util.removeDescribable(components,component.getName());
     }
@@ -74,12 +86,12 @@ public class Container extends Actionable implements ContainerComponent, HasItem
         }
         throw new ItemNotFoundException();
     }
-
+/*
     @Override
     public Type getType() {
         return type;
     }
-
+*/
     public void addComponent(Actionable component) throws FullCapacityReachedException {
         if (components.size() < this.maxSize) {
             components.put(component.getName(), component);

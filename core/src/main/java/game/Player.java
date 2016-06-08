@@ -29,12 +29,12 @@ public class Player implements HasItems {
     private Location room;
 
     private State status;
-
+/*
     public String openContainer(String name) {
         Actionable component = room.getItem(name);
         return component.openContainer(this);
     }
-
+*/
     public void addAction(Action action) {
         this.actions.put(action.getName(), action);
     }

@@ -17,7 +17,6 @@ public class GamePaths {
     }
 
     public static String getGamePath(String gameName) {
-
         return getProjectPath() + gameName + buildLibs + gameName + jar;
     }
 

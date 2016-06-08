@@ -15,6 +15,8 @@ public class CloseAction extends Action {
 
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
-        return item.closeContainer();
+    //    return item.closeContainer();
+        return "";
     }
+
 }

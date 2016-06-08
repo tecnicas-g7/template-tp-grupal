@@ -16,10 +16,15 @@ public class Client {
         while (input != null && !input.equals("exit")) {
             String[] message = input.split(" ");
             if (message[0].equals("connect")) {
-                String[] address = message[1].split(":");
-                Socket socket = new Socket(address[0], Integer.parseInt(address[1]));
-
-                play(socket);
+                try {
+                    String[] address = message[1].split(":");
+                    Socket socket = new Socket(address[0], Integer.parseInt(address[1]));
+                    play(socket);
+                } catch (Exception e ) {
+                    System.out.println("Opción inválida... Intente nuevamente");
+                }
+            } else {
+                System.out.println("Utilice el comando connect para ingresar a un juego....");
             }
             input = inFromUser.readLine();
         }
@@ -33,6 +38,7 @@ public class Client {
         System.out.println(inFromServer.readLine());
         String inputClient = inFromUser.readLine();
         try {
+
             while (inputClient != null && !inputClient.equals("exit game")) {
                 outToServer.writeBytes(inputClient + '\n');
                 String serverMessage = inFromServer.readLine();
@@ -41,9 +47,16 @@ public class Client {
                     socket.close();
                     break;
                 }
+
                 System.out.println(serverMessage);
                 inputClient = inFromUser.readLine();
             }
+
+            if (inputClient.equals("exit game")) {
+               System.out.println(" Juego finalizado!, utilice el comando connect para volver a intentarlo ");
+            }
+
+
         } catch (Exception e) {
             System.out.println("Error with connection...");
         }

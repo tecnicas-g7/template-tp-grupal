@@ -3,7 +3,7 @@ import game.Location;
 import game.Player;
 import game.actions.EnterAction;
 import game.actions.MoveItemAction;
-import game.actions.OpenAction;
+import game.actions.OpenCloseContainerAction;
 import game.conditions.ComplexCondition;
 import game.conditions.HasItemsWithItemsCondition;
 import game.conditions.InventoryCondition;
@@ -117,7 +117,8 @@ public class Escape implements GameBuilder {
         Location biblioteca = new Location("Biblioteca");
         makeLocationsAdjacent(acceso, biblioteca, null);
         Container estante = new Container("Estante",10);
-        estante.openContainer(player);
+        //estante.openContainer(player);
+        estante.openContainer();
         biblioteca.addItem(estante);
         addBooks(estante);
         Actionable libroViejo = new Actionable("LibroViejo");
@@ -169,7 +170,8 @@ public class Escape implements GameBuilder {
 
     private Container createCuadroBarco(Location salonUno) {
         Container cuadroBarco = new Container("CuadroBarco",1);
-        cuadroBarco.addAction(new OpenAction("move"));
+        //cuadroBarco.addAction(new OpenAction("move"));
+        cuadroBarco.addAction(new OpenCloseContainerAction("move"));
         salonUno.addItem(cuadroBarco);
         return cuadroBarco;
     }
@@ -187,7 +189,8 @@ public class Escape implements GameBuilder {
         } catch (MaxInventoryException e) {
             e.printStackTrace();
         }
-        OpenAction open = new OpenAction("open");
+        //OpenAction open = new OpenAction("open");
+        OpenCloseContainerAction open = new OpenCloseContainerAction("open");
         List<Actionable> list = new ArrayList<>();
         list.add(key);
         open.addCondition(new InventoryCondition(list, true));

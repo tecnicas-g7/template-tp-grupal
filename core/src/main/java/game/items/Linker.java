@@ -1,7 +1,6 @@
 package game.items;
 
 import game.Location;
-import game.items.type.Type;
 import game.utils.Messages;
 
 public class Linker extends Actionable {
@@ -9,13 +8,13 @@ public class Linker extends Actionable {
     private boolean locked;
     private Location destination;
     private Actionable key;
-    private Type type;
+//    private Type type;
 
     public Linker(Location destination, String name) {
         super(name);
         this.locked = false;
         this.destination = destination;
-        type = new Type();
+//        type = new Type();
     }
 
     public Linker(Location destination, String name, Actionable key) {
@@ -49,8 +48,9 @@ public class Linker extends Actionable {
     public Actionable getKey() {
         return this.key;
     }
-
+/*
     public Type getType() {
         return type;
     }
+    */
 }

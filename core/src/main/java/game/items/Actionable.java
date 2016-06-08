@@ -3,7 +3,6 @@ package game.items;
 import exceptions.WrongItemActionException;
 import game.Player;
 import game.actions.Action;
-import game.items.type.Type;
 import game.utils.Messages;
 
 import java.util.HashMap;
@@ -11,8 +10,6 @@ import java.util.HashMap;
 public class Actionable {
 
     protected String name;
-    private Type type;
-
     protected HashMap<String,Action> actions;
 
     public Actionable(String name) {
@@ -47,23 +44,18 @@ public class Actionable {
         return output.toString();
     }
 
-    //@Override
-    public Type getType() {
-        return type;
+    public String openOrCloseContainer(String action) {
+        return name + " " + Messages.getMessage("IsNotContainer");
     }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public String closeContainer() {
+/*
+    private String closeContainer() {
         return Messages.getMessage("YouCannotClose") + " " + name;
     }
 
-    public String openContainer(Player player) {
+    private String openContainer(Player player) {
         return Messages.getMessage("YouCanNotOpen") + " " + name;
     }
-
+*/
     public Actionable getChild(String name) {
         return null;
     }
