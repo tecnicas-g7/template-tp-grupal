@@ -1,8 +1,9 @@
 import game.Controller;
 import org.junit.Test;
-import server.Driver;
-import server.GameDriver;
+
 import server.GamePaths;
+import server.driver.Driver;
+import server.driver.GameDriver;
 
 import static org.junit.Assert.assertTrue;
 

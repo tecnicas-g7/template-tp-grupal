@@ -5,8 +5,9 @@ package server;
  */
 public class GamePaths {
 
-    public static final String buildLibs = "/build/libs/";
+    public static final String buildLibs = "/build/libs/games/";
     public static final String jar = "-1.0.jar";
+    public static final String games = "games/";
 
     public static final String server = "/server";
 
@@ -18,7 +19,7 @@ public class GamePaths {
     }
 
     public static String getGamePath(String gameName) {
-        return getProjectPath() + gameName + buildLibs + gameName + jar;
+        return getProjectPath() + games + gameName + buildLibs + gameName + jar;
     }
 
 

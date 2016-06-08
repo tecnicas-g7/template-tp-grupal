@@ -1,4 +1,4 @@
-package server;
+package server.driver;
 
 import game.Controller;
 

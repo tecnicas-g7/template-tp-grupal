@@ -15,6 +15,8 @@ public class Controller {
 
     private Game game;
 
+
+
     public enum GameState {
         Lost, Win, InProgress
     }
@@ -75,6 +77,18 @@ public class Controller {
             return GameState.Win;
         }
         return GameState.Lost;
+    }
+
+    public Player getPlayer() {
+        return game.getFreePlayer();
+    }
+
+    public boolean hasPlayersPlaying() {
+        return game.hasPlayersPlaying();
+    }
+
+    public void setActivePlayer(String activePlayer) {
+        game.setActivePlayer(activePlayer);
     }
 }
 

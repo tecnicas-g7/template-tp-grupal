@@ -10,6 +10,7 @@ import game.items.Actionable;
 import game.tasks.ScheduledTask;
 import game.utils.Messages;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.*;
 
@@ -17,23 +18,28 @@ import java.util.*;
 public class Game {
 
     private List<Location> rooms;
-    private Player player;
     private List<Condition> conditions;
     private List<Condition> loseConditions;
 
-    public Game(Player player) {
+    private Player activePlayer;
+    private HashMap<String,Player> players;
+
+    public Game(Player activePlayer) {
         this.rooms = new ArrayList<>();
-        this.player = player;
+        this.activePlayer = activePlayer;
         this.conditions = new ArrayList<>();
         this.loseConditions = new ArrayList<>();
+
+        this.players = new HashMap<>();
+        this.players.put(this.activePlayer.getName(),this.activePlayer);
     }
 
     public void addRoom(Location room) {
         this.rooms.add(room);
     }
 
-    public Player getPlayer() {
-        return this.player;
+    public Player getActivePlayer() {
+        return this.activePlayer;
     }
 
     public Location findItemLocation(Actionable item) {
@@ -58,6 +64,7 @@ public class Game {
     }
 
     public String executeActionOnItem(String[] tokens) throws WrongItemActionException {
+        System.out.println("Activo: " + activePlayer.getName());
         String objectName;
         try {
             objectName = tokens[1];
@@ -68,7 +75,7 @@ public class Game {
         try {
             Actionable item = findItem(objectName);
             if (item != null) {
-                return item.executeAction(tokens,this.player);
+                return item.executeAction(tokens,this.activePlayer);
             }
         } catch (ItemNotFoundException ine) {
             return ine.getMessage();
@@ -78,22 +85,22 @@ public class Game {
 
     private Actionable findItem(String objectName) throws ItemNotFoundException {
         try {
-            return this.player.getItem(objectName);
+            return this.activePlayer.getItem(objectName);
         } catch (ItemNotFoundException e) {
-            return this.player.getRoom().getItem(objectName);
+            return this.activePlayer.getRoom().getItem(objectName);
         }
     }
 
     public String look() {
-        return this.player.getRoom().look();
+        return this.activePlayer.getRoom().look();
     }
 
     public String showInventory() {
-        return this.getPlayer().showInventory();
+        return this.getActivePlayer().showInventory();
     }
 
     private boolean validateEnterAndLeaveConditions(Location origin, Location destination) {
-        return origin.validLeaveConditions(player) && destination.validEnterConditions(player);
+        return origin.validLeaveConditions(activePlayer) && destination.validEnterConditions(activePlayer);
     }
 
     public void addCondition(Condition condition) {
@@ -106,7 +113,7 @@ public class Game {
 
     public boolean verifyVictory() {
         for (Condition condition : this.conditions) {
-            if (!condition.isValid(this.player)) {
+            if (!condition.isValid(this.activePlayer)) {
                 return false;
             }
         }
@@ -133,7 +140,7 @@ public class Game {
 
     public String executeAction(String[] tokens) {
         try {
-            return player.execute(tokens);
+            return activePlayer.execute(tokens);
         } catch (WrongItemActionException e) {
             return Messages.getMessage("ActionNotSupported");
         }
@@ -142,7 +149,7 @@ public class Game {
     public boolean gameOver() {
         if (loseConditions.size() > 0) {
             for (Condition condition : this.loseConditions) {
-                if (condition.isValid(this.player)) {
+                if (condition.isValid(this.activePlayer)) {
                     return true;
                 }
             }
@@ -152,9 +159,38 @@ public class Game {
         return false;
     }
 
+
     public void addTask(ScheduledTask task, int delay, int period) {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(task, delay, period);
+    }
+
+    public void addPlayer(Player player) {
+        players.put(player.getName(),player);
+    }
+
+    public void setActivePlayer(String player) {
+        this.activePlayer = players.get(player);
+    }
+
+    public Player getFreePlayer() {
+        for (Player player : players.values()) {
+            if (!player.isPlaying()) {
+                player.setPlaying(true);
+                return player;
+            }
+        }
+        return null;
+    }
+
+
+    public boolean hasPlayersPlaying() {
+        for (Player player : players.values()) {
+            if (player.isPlaying()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

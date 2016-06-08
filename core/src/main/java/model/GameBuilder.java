@@ -26,4 +26,11 @@ public interface GameBuilder {
         return player;
     }
 
+    default Player createPlayer(Location room1, String name) {
+        Player player = new Player(room1,name);
+        player.addAction(new LookAction("look"));
+        player.addAction(new ListInventoryAction("inventory"));
+        return player;
+    }
+
 }

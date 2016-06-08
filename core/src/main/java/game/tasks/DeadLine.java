@@ -16,7 +16,7 @@ public class DeadLine extends ScheduledTask {
     @Override
     public void run() {
         try {
-            game.getPlayer().changeStatus(new StatePlayer("dead"));
+            //game.getPlayer().changeStatus(new StatePlayer("dead"));
         } catch (Exception e) {
             e.printStackTrace();
         }

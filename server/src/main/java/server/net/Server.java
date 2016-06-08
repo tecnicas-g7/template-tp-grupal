@@ -1,5 +1,8 @@
-package server;
+package server.net;
 
+
+import server.BuilderLoader;
+import server.GamePaths;
 
 import java.io.*;
 import java.net.Socket;
@@ -41,6 +44,7 @@ public class Server {
         games.put("RIVERCROSSING", GamePaths.getGamePath("gameRiverCrossing"));
         games.put("STICKGAME", GamePaths.getGamePath("gameStick"));
         games.put("TREASUREGAME", GamePaths.getGamePath("gameTreasureBox"));
+        games.put("TWOPLAYERS", GamePaths.getGamePath("gameTwoPlayers"));
 
         gameServers = new ArrayList<>();
         loadGame();

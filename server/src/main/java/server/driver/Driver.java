@@ -1,7 +1,8 @@
-package server;
+package server.driver;
 
 import game.Controller;
 import exceptions.GameNotFoundExcpetion;
+import server.BuilderLoader;
 
 public class Driver implements GameDriver {
 

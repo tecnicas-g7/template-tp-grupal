@@ -29,12 +29,11 @@ public class Player implements HasItems {
     private Location room;
 
     private State status;
-/*
-    public String openContainer(String name) {
-        Actionable component = room.getItem(name);
-        return component.openContainer(this);
-    }
-*/
+
+    private String name;
+
+    private boolean playing;
+
     public void addAction(Action action) {
         this.actions.put(action.getName(), action);
     }
@@ -54,19 +53,30 @@ public class Player implements HasItems {
         }
         return actions.get(actionName).execute(tokens, this, null);
     }
-    /*
 
-        public enum Status {
-            alive, poisoned
-        }
-    */
-    public Player(Location room) {
+
+    public String getName() {
+        return name;
+    }
+
+    private void initialize() {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
-        this.room = room;
-
         this.status = new StatePlayer("ALIVE");
         this.actions = new HashMap<>();
+        this.playing = false;
+    }
+
+    public Player(Location room) {
+        initialize();
+        this.room = room;
+        this.name = "Player1";
+    }
+
+    public Player(Location room, String name) {
+        initialize();
+        this.room = room;
+        this.name = name;
     }
 
     public void setMaxInventory(int maxInventory) {
@@ -159,6 +169,21 @@ public class Player implements HasItems {
 
     public void setRoom(Location room) {
         this.room = room;
+    }
+
+    public boolean isPlaying() {
+        return this.playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
+        //Si no juega mas, se desconecta y tiro items al piso.
+        if (!playing) {
+            for (Actionable actionable : inventory.values()) {
+                room.addItem(actionable);
+                removeItem(actionable.getName());
+            }
+        }
     }
 
 }

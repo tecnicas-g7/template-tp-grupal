@@ -8,10 +8,13 @@ import java.nio.charset.StandardCharsets;
  */
 public class Client {
 
+    private static boolean running;
+
     public static void main(String[] argv) throws Exception {
         System.out.println("This is the Client");
         String input;
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        System.out.println("This is menu");
         input = inFromUser.readLine();
         while (input != null && !input.equals("exit")) {
             String[] message = input.split(" ");
@@ -26,41 +29,55 @@ public class Client {
             } else {
                 System.out.println("Utilice el comando connect para ingresar a un juego....");
             }
+            System.out.println("This is menu");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             input = inFromUser.readLine();
         }
     }
 
     private static void play(Socket socket) throws IOException {
-        DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+        Sender sender = new Sender(socket);
+        new Thread(sender).start();
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-        //getServerInput(inFromServer);
         System.out.println(inFromServer.readLine());
-        String inputClient = inFromUser.readLine();
-        try {
-
-            while (inputClient != null && !inputClient.equals("exit game")) {
-                outToServer.writeBytes(inputClient + '\n');
-                String serverMessage = inFromServer.readLine();
-                if (serverMessage != null && serverMessage.equals("W")) {
-                    System.out.println("Ganaste, chau.");
-                    socket.close();
-                    break;
-                }
-
-                System.out.println(serverMessage);
-                inputClient = inFromUser.readLine();
+        running  = true;
+        while (running) {
+            try {
+                listen(socket,inFromServer,sender);
+            } catch (Exception e) {
+                System.out.println("Error with connection...");
+                running = false;
             }
-
-            if (inputClient.equals("exit game")) {
-               System.out.println(" Juego finalizado!, utilice el comando connect para volver a intentarlo ");
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("Error with connection...");
         }
         socket.close();
+    }
+
+    private static void listen(Socket socket, BufferedReader inFromServer, Sender sender) throws IOException {
+        String serverMessage = inFromServer.readLine();
+        if (serverMessage != null && serverMessage.equals("W")) {
+            System.out.println("Ganaste :)");
+            sender.close();
+            socket.close();
+            running = false;
+        } else {
+            if (serverMessage != null && serverMessage.equals("L")) {
+                System.out.println("Perdiste :(");
+                sender.close();
+                socket.close();
+                running = false;
+            }
+        }
+        if (serverMessage == null) {
+            running = false;
+            System.out.println("Error with connection...");
+            return;
+        }
+        System.out.println(serverMessage);
     }
 }
 
