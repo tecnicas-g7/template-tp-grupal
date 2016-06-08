@@ -1,16 +1,19 @@
-
 import game.Location;
 import game.Player;
 import game.actions.ClearInventoryAction;
 import game.actions.EnterAction;
 import game.actions.MoveItemAction;
 import game.conditions.InventoryCondition;
+import game.conditions.PlayerStateCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
+import game.states.State;
+import game.states.StatePlayer;
+import game.tasks.DeadLine;
+import game.tasks.ScheduledTask;
 import game.utils.Messages;
 import model.Game;
 import model.GameBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class CursedItem implements GameBuilder {
         Location room2 = new Location("Room2");
 
         Actionable cursedItem = new Actionable("cursed_item");
+
 
         room1.addItem(cursedItem);
         createItemsSecondRoom(room2);
@@ -46,6 +50,8 @@ public class CursedItem implements GameBuilder {
         game.addRoom(room3);
 
         game.addCondition(new RoomCondition(room3, true));
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+        game.addTask(new DeadLine(game),60000,150000);
 
         return game;
     }
@@ -57,6 +63,7 @@ public class CursedItem implements GameBuilder {
 
     private static void createItemsSecondRoom(Location room) {
         Actionable thief = new Actionable("thief");
+
         String stealMessage = "Oh no! The " + thief.getName() + " " + Messages.getMessage("hasStolenYourItems");
         thief.addAction(new ClearInventoryAction("talk", stealMessage));
 
@@ -76,5 +83,4 @@ public class CursedItem implements GameBuilder {
     public String getHelp() {
         return "The player needs to find the cursed artifact and get rid of it somehow to win";
     }
-
 }

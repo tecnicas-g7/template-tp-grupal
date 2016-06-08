@@ -1,17 +1,18 @@
-
 import game.Location;
 import game.Player;
 import game.actions.Action;
 import game.actions.MoveItemAction;
 import game.conditions.ContainerCondition;
+import game.conditions.PlayerStateCondition;
 import game.items.Actionable;
 import game.items.StackContainerComponent;
+import game.states.StatePlayer;
+import game.tasks.DeadLine;
 import model.Game;
 import model.GameBuilder;
-
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by nicol on 18/5/2016.
@@ -47,6 +48,9 @@ public class HanoiTower implements GameBuilder {
         Game game = new Game(player);
 
         addConditions(game, stack2, stack3);
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+        game.addTask(new DeadLine(game),120000,150000);
+
 
         return game;
     }

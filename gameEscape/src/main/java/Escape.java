@@ -1,8 +1,11 @@
+
+
 import exceptions.MaxInventoryException;
 import game.Location;
 import game.Player;
 import game.actions.EnterAction;
 import game.actions.MoveItemAction;
+
 import game.actions.OpenCloseContainerAction;
 import game.conditions.ComplexCondition;
 import game.conditions.HasItemsWithItemsCondition;
@@ -10,8 +13,10 @@ import game.conditions.InventoryCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
 import game.items.Container;
+import game.tasks.ScheduledTask;
 import model.Game;
 import model.GameBuilder;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +39,9 @@ public class Escape implements GameBuilder {
             Location pasaje = new Location("Pasaje");
             Location biblioteca = createBiblioteca(player, acceso, pasaje);
             Location salon1 = createSalonUno(player, pasillo, acceso, biblioteca, salonTres);
-            makeLocationsAdjacent(salon1, pasillo, null);
             Location salon2 = createSalonDos(player,pasillo);
 
-            makeLocationsAdjacent(acceso, pasillo, null);
+
 
             Location afuera = new Location("Afuera");
 
@@ -53,6 +57,7 @@ public class Escape implements GameBuilder {
             return game;
         } catch (MaxInventoryException e) {
             //kkk
+
         }
         return null;
     }
@@ -90,6 +95,14 @@ public class Escape implements GameBuilder {
         game.addRoom(sotano);
         game.addRoom(afuera);
         game.addCondition(new RoomCondition(afuera,true));
+        game.makeLocationsAdjacent(salon1, pasillo, null,"goto");
+        game.makeLocationsAdjacent(acceso, pasillo, null,"goto");
+        game.makeLocationsAdjacent(acceso, biblioteca, null,"goto");
+        game.makeLocationsAdjacent(salonTres,pasillo,null,"goto");
+        game.makeLocationsAdjacent(salon2, pasillo, null,"goto");
+        RoomCondition roomCondition = new RoomCondition(afuera,true);
+        game.addLoseCondition(roomCondition);
+        game.addTask(createScheduledTask(game, acceso.getItem("Bibliotecario")),300000,300000);
         return game;
     }
 
@@ -115,7 +128,6 @@ public class Escape implements GameBuilder {
 
     private Location createBiblioteca(Player player, Location acceso, Location pasaje) {
         Location biblioteca = new Location("Biblioteca");
-        makeLocationsAdjacent(acceso, biblioteca, null);
         Container estante = new Container("Estante",10);
         //estante.openContainer(player);
         estante.openContainer();
@@ -144,7 +156,6 @@ public class Escape implements GameBuilder {
 
     private Location createSalonUno(Player player, Location pasillo, Location acceso, Location biblioteca, Location salonTres) {
         Location salonUno = new Location("Salon1");
-        makeLocationsAdjacent(salonTres,pasillo,null);
         salonUno.addItem(new Actionable("mesa"));
         salonUno.addItem(new Actionable("vaso1"));
         salonUno.addItem(new Actionable("vaso2"));
@@ -159,7 +170,6 @@ public class Escape implements GameBuilder {
 
     private Location createSalonDos(Player player, Location pasillo) {
         Location salon2 = new Location("Salon2");
-        makeLocationsAdjacent(salon2, pasillo, null);
         Actionable martillo = new Actionable("Martillo");
         addPickDrop(martillo,player);
         salon2.addItem(martillo);
@@ -230,14 +240,24 @@ public class Escape implements GameBuilder {
         actionable.addAction(new MoveItemAction(player,null,"drop"));
     }
 
-    @Override
-    public void makeLocationsAdjacent(Location room1, Location room2, Actionable key) {
-        EnterAction enterAction = new EnterAction("goto");
-        room1.addDoor(room2,key,room2.getName(),enterAction);
-        room2.addDoor(room1,key,room1.getName(),enterAction);
+    private ScheduledTask createScheduledTask(Game game, Actionable item) {
+        return new ScheduledTask() {
+            @Override
+            public void run() {
+                try {
+                    Location location = game.findItemLocation(item);
+                    location.removeItem(item.getName());
+                    Location newLocation = location.getRandomAdjacentLocation();
+                    newLocation.addItem(item);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
     }
 
     @SuppressWarnings("CPD-END")
+
     @Override
     public String getHelp() {
         return null;

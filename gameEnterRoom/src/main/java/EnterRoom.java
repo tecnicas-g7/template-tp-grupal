@@ -1,9 +1,13 @@
-import game.Location;
-import game.Player;
-
 import game.actions.MoveItemAction;
+import game.conditions.PlayerStateCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
+import game.Location;
+import game.Player;
+import game.states.State;
+import game.states.StatePlayer;
+import game.tasks.DeadLine;
+import game.tasks.ScheduledTask;
 import model.Game;
 import model.GameBuilder;
 
@@ -21,15 +25,16 @@ public class EnterRoom implements GameBuilder {
         room1.addItem(key);
         Location room2 = new Location("Room2");
 
-        makeLocationsAdjacent(room1, room2, key);
 
         Player player = createPlayer(room1);
         key.addAction(new MoveItemAction(null,player,"pick"));
         Game game = new Game(player);
+        game.makeLocationsAdjacent(room1, room2, key);
 
         game.addRoom(room1);
         game.addRoom(room2);
-
+        game.addTask(new DeadLine(game),15000,150000);
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
         game.addCondition(new RoomCondition(room2,true));
 
         return game;

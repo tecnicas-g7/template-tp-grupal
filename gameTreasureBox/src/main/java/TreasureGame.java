@@ -1,4 +1,3 @@
-
 import game.Location;
 import game.Player;
 import game.actions.*;
@@ -10,16 +9,6 @@ import game.items.Container;
 import game.states.*;
 import model.Game;
 import model.GameBuilder;
-
-
-
-
-
-
-
-
-
-
 import java.util.*;
 
 /**
@@ -65,6 +54,7 @@ public class TreasureGame implements GameBuilder {
         List<Actionable> items = new ArrayList<>();
         items.add(treasure);
         game.addCondition(new InventoryCondition(items, true));
+
 
         game.addLoseCondition(new PlayerStateCondition(new StatePlayer("poisoned")));
 
