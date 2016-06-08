@@ -7,7 +7,8 @@ import game.actions.Action;
 import game.items.Actionable;
 import game.items.Linker;
 import game.utils.Messages;
-import game.states.*;
+import game.states.State;
+import game.states.StatePlayer;
 
 
 import java.util.HashMap;
