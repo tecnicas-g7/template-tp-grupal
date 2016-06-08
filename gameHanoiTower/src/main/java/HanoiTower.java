@@ -5,7 +5,6 @@ import game.actions.Action;
 import game.actions.MoveItemAction;
 import game.conditions.ContainerCondition;
 import game.items.Actionable;
-import game.items.Item;
 import game.items.StackContainerComponent;
 import model.Game;
 import model.GameBuilder;
@@ -28,9 +27,9 @@ public class HanoiTower implements GameBuilder {
         addActionsToStacks(stack1,stack2,stack3);
 
         //Creo piezas
-        Item pieza1 = new Item("1");
-        Item pieza2 = new Item("2");
-        Item pieza3 = new Item("3");
+        Actionable pieza1 = new Actionable("1");
+        Actionable pieza2 = new Actionable("2");
+        Actionable pieza3 = new Actionable("3");
 
         //agrego piezas a un stack (de mayor a menor)
         stack1.addComponent(pieza3);

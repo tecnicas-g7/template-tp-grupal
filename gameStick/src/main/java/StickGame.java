@@ -6,7 +6,6 @@ import game.actions.MoveItemAction;
 import game.conditions.Condition;
 import game.conditions.InventoryCondition;
 import game.items.Actionable;
-import game.items.Item;
 import model.Game;
 import model.GameBuilder;
 
@@ -22,7 +21,7 @@ public class StickGame implements GameBuilder {
     public Game build() {
         Location room = new Location("room");
 
-        Item stick = new Item("stick");
+        Actionable stick = new Actionable("stick");
 
         room.addItem(stick);
 

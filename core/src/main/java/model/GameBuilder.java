@@ -5,7 +5,7 @@ import game.Player;
 import game.actions.EnterAction;
 import game.actions.ListInventoryAction;
 import game.actions.LookAction;
-import game.items.Item;
+import game.items.Actionable;
 
 public interface GameBuilder {
 
@@ -13,7 +13,7 @@ public interface GameBuilder {
     String getName();
     String getHelp();
 
-    default void makeLocationsAdjacent(Location room1, Location room2, Item key) {
+    default void makeLocationsAdjacent(Location room1, Location room2, Actionable key) {
         EnterAction enterAction = new EnterAction("enter");
         room1.addDoor(room2,key,enterAction);
         room2.addDoor(room1,key,enterAction);

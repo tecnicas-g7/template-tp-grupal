@@ -5,7 +5,6 @@ import exceptions.ItemNotFoundException;
 import game.actions.Action;
 import game.conditions.Condition;
 import game.items.Actionable;
-import game.items.Item;
 import game.items.Linker;
 import game.utils.Messages;
 import game.utils.Util;
@@ -79,14 +78,14 @@ public class Location implements HasItems {
         return output.toString();
     }
 
-    public void addDoor(Location destination, Item key, Action action) {
+    public void addDoor(Location destination, Actionable key, Action action) {
         int doorNumber = this.doors.size() + 1;
         String doorName = "door";
         doorName = doorName.concat(String.valueOf(doorNumber));
         addDoor(destination, key, doorName, action);
     }
 
-    public void addDoor(Location destination, Item key, String name, Action action) {
+    public void addDoor(Location destination, Actionable key, String name, Action action) {
         Linker door;
         if (key == null) {
             door = new Linker(destination, name);

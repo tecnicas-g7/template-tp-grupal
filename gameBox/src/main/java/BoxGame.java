@@ -5,7 +5,7 @@ import game.actions.MoveItemAction;
 import game.actions.OpenAction;
 import game.conditions.RoomCondition;
 import game.items.Container;
-import game.items.Item;
+import game.items.Actionable;
 import model.Game;
 import model.GameBuilder;
 
@@ -25,7 +25,7 @@ public class BoxGame implements GameBuilder {
 
         Location room1 = new Location("Room1");
         room1.addItem(box);
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
 
 
         box.addComponent(key);

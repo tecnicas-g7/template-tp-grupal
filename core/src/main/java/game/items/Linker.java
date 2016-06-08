@@ -8,7 +8,7 @@ public class Linker extends Actionable {
 
     private boolean locked;
     private Location destination;
-    private Item key;
+    private Actionable key;
     private Type type;
 
     public Linker(Location destination, String name) {
@@ -18,7 +18,7 @@ public class Linker extends Actionable {
         type = new Type();
     }
 
-    public Linker(Location destination, String name, Item key) {
+    public Linker(Location destination, String name, Actionable key) {
         this(destination, name);
         this.locked = true;
         this.key = key;
@@ -28,14 +28,14 @@ public class Linker extends Actionable {
         return this.locked;
     }
 
-    public void lock(Item key) {
+    public void lock(Actionable key) {
         if (key == null || key != this.key) {
             throw new IllegalArgumentException(Messages.getMessage("cantLock") + " " + this.name);
         }
         this.locked = true;
     }
 
-    public void unlock(Item key) {
+    public void unlock(Actionable key) {
         if (key == null || key != this.key) {
             throw new IllegalArgumentException(Messages.getMessage("cantUnlock") + " " + this.name);
         }
@@ -46,7 +46,7 @@ public class Linker extends Actionable {
         return destination;
     }
 
-    public Item getKey() {
+    public Actionable getKey() {
         return this.key;
     }
 

@@ -7,7 +7,6 @@ import game.actions.ThiefAction;
 import game.conditions.InventoryCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
-import game.items.Item;
 import model.Game;
 import model.GameBuilder;
 
@@ -24,8 +23,7 @@ public class CursedItem implements GameBuilder {
         Location room1 = new Location("Room1");
         Location room2 = new Location("Room2");
 
-        Item cursedItem = new Item("cursed_item");
-
+        Actionable cursedItem = new Actionable("cursed_item");
 
         room1.addItem(cursedItem);
         createItemsSecondRoom(room2);
@@ -57,7 +55,7 @@ public class CursedItem implements GameBuilder {
     }
 
     private static void createItemsSecondRoom(Location room) {
-        Item thief = new Item("thief");
+        Actionable thief = new Actionable("thief");
         thief.addAction(new ThiefAction("talk"));
 
         room.addItem(thief);

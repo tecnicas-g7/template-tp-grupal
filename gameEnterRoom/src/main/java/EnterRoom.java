@@ -3,7 +3,7 @@ import game.Player;
 
 import game.actions.MoveItemAction;
 import game.conditions.RoomCondition;
-import game.items.Item;
+import game.items.Actionable;
 import model.Game;
 import model.GameBuilder;
 
@@ -14,7 +14,7 @@ import model.GameBuilder;
 public class EnterRoom implements GameBuilder {
 
     public Game build() {
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
 
 
         Location room1 = new Location("Room1");

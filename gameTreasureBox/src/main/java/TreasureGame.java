@@ -1,3 +1,4 @@
+
 import game.Location;
 import game.Player;
 import game.actions.*;
@@ -6,9 +7,17 @@ import game.conditions.PlayerStateCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
 import game.items.Container;
-import game.items.Item;
+import game.states.*;
 import model.Game;
 import model.GameBuilder;
+
+
+
+
+
+
+
+
 
 
 import java.util.*;
@@ -16,6 +25,7 @@ import java.util.*;
 /**
  * Created by nicol on 18/5/2016.
  */
+
 @SuppressWarnings("CPD-START")
 public class TreasureGame implements GameBuilder {
 
@@ -32,7 +42,7 @@ public class TreasureGame implements GameBuilder {
         createComponentsSecondRoom(room2, room3, room4, player);
         createComponentsThirdRoom(room3, room4, room5, player);
 
-        Item treasure = new Item("treasure");
+        Actionable treasure = new Actionable("treasure");
         createComponentsFifthRoom(room5, treasure, player);
 
         player.setMaxInventory(2);
@@ -51,12 +61,13 @@ public class TreasureGame implements GameBuilder {
         return "treasureGame";
     }
 
-    private void addConditions(Game game, Location room, Item treasure) {
+    private void addConditions(Game game, Location room, Actionable treasure) {
         List<Actionable> items = new ArrayList<>();
         items.add(treasure);
         game.addCondition(new InventoryCondition(items, true));
 
-        game.addLoseCondition(new PlayerStateCondition(Player.Status.poisoned));
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("poisoned")));
+
         game.addLoseCondition(new RoomCondition(room, true));
 
     }
@@ -70,7 +81,7 @@ public class TreasureGame implements GameBuilder {
     }
 
     private static void createComponentsFirstRoom(Location room1, Location room2, Player player) {
-        Item key = new Item("key");
+        Actionable key = new Actionable("key");
         addPickDrop(key, player);
         Container box = new Container("box",1);
         addOpenClose(box);
@@ -93,11 +104,11 @@ public class TreasureGame implements GameBuilder {
         Container trunk = new Container("trunk", 10);
         addOpenClose(trunk);
         Container box = createBox();
-        Item key = new Item("key2");
+        Actionable key = new Actionable("key2");
         addPickDrop(key, player);
         box.addComponent(key);
         //box.yesPoison();
-        Item antidote = createAntidote(player);
+        Actionable antidote = createAntidote(player);
         trunk.addComponent(antidote);
         trunk.addComponent(box);
         room3.addItem(trunk);
@@ -110,7 +121,7 @@ public class TreasureGame implements GameBuilder {
     private static Container createBox() {
         Container box = new Container("box",1);
         box.addAction(new CloseAction("close"));
-        PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.poisoned, "oops");
+        PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("poisoned"), "oops");
         OpenAction secondAction = new OpenAction("open");
         ComplexAction action = new ComplexAction("open");
         action.addAction(firstAction);
@@ -119,9 +130,9 @@ public class TreasureGame implements GameBuilder {
         return box;
     }
 
-    private static Item createAntidote(Player player) {
-        Item antidote = new Item("antidote");
-        PlayerStatusAction firstAction = new PlayerStatusAction(Player.Status.alive, "drink");
+    private static Actionable createAntidote(Player player) {
+        Actionable antidote = new Actionable("antidote");
+        PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("alive"), "drink");
         MoveItemAction secondAction = new MoveItemAction(player,new Container("void",666),"drop");
         ComplexAction action = new ComplexAction("drink");
         action.addAction(firstAction);
@@ -131,12 +142,12 @@ public class TreasureGame implements GameBuilder {
         return antidote;
     }
 
-    private static void createComponentsFifthRoom(Location room5, Item treasure, Player player) {
+    private static void createComponentsFifthRoom(Location room5, Actionable treasure, Player player) {
         addPickDrop(treasure, player);
         room5.addItem(treasure);
     }
 
-    private static void addPickDrop(Item item, Player player) {
+    private static void addPickDrop(Actionable item, Player player) {
         item.addAction(new MoveItemAction(null,player,"pick"));
         item.addAction(new MoveItemAction(player,null,"drop"));
     }

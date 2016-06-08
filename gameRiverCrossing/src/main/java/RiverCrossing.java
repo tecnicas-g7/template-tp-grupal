@@ -6,7 +6,7 @@ import game.actions.LookAction;
 import game.actions.MoveItemAction;
 import game.conditions.ItemTypeCondition;
 import game.conditions.RoomWithItemsCondition;
-import game.items.Item;
+import game.items.Actionable;
 import game.items.type.CarnivorousType;
 import game.items.type.HerbivorousType;
 import game.items.type.PlantType;
@@ -57,21 +57,21 @@ import java.util.List;
         return "riverCrossing";
     }
 
-    private static List<Item> createComponents(Player player) {
+    private static List<Actionable> createComponents(Player player) {
 
-        Item sheep = new Item("sheep");
+        Actionable sheep = new Actionable("sheep");
         sheep.setType(new HerbivorousType());
         sheep = addActions(sheep,player);
 
-        Item wolf = new Item("wolf");
+        Actionable wolf = new Actionable("wolf");
         wolf.setType(new CarnivorousType());
         wolf = addActions(wolf,player);
 
-        Item cabbage = new Item("cabbage");
+        Actionable cabbage = new Actionable("cabbage");
         cabbage.setType(new PlantType());
         cabbage = addActions(cabbage,player);
 
-        List<Item> items = new ArrayList<>();
+        List<Actionable> items = new ArrayList<>();
         items.add(sheep);
         items.add(wolf);
         items.add(cabbage);
@@ -79,7 +79,7 @@ import java.util.List;
         return items;
     }
 
-    private static Item addActions(Item item, Player player) {
+    private static Actionable addActions(Actionable item, Player player) {
         MoveItemAction take = new MoveItemAction(null,player,"take");
         MoveItemAction leave = new MoveItemAction(player,null,"leave");
         item.addAction(take);
