@@ -1,4 +1,4 @@
-/*import game.Controller;
+import game.Controller;
 import org.junit.Test;
 import server.Driver;
 import server.GameDriver;
@@ -32,4 +32,4 @@ public class BoxGameTests {
 
         assert(Controller.GameState.Win == driver.getGameState());
     }
-}*/
+}

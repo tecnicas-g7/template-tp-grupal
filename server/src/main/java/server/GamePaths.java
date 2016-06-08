@@ -8,11 +8,12 @@ public class GamePaths {
     public static final String buildLibs = "/build/libs/";
     public static final String jar = "-1.0.jar";
 
-    public static final String server = "/server/build/libs";
+    public static final String server = "/server";
 
     public static String getProjectPath() {
         String currentPath = System.getProperty("user.dir");
         String projectPath = currentPath.replaceAll(server,"") + "/";
+        projectPath = projectPath.replaceAll(buildLibs,"") + "/";
         return projectPath;
     }
 
