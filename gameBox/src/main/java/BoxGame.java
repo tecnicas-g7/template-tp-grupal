@@ -1,12 +1,14 @@
 import game.Location;
 import game.Player;
 import game.actions.*;
+import game.conditions.PlayerStateCondition;
 import game.conditions.RoomCondition;
 import game.items.Container;
 import game.items.Actionable;
+import game.tasks.*;
+import game.states.*;
 import model.Game;
 import model.GameBuilder;
-
 
 /**
  * Created by nicol on 18/5/2016.
@@ -37,10 +39,14 @@ public class BoxGame implements GameBuilder {
         key.addAction(new MoveItemAction(null,player,"pick"));
         Game game = new Game(player);
 
+
         game.addCondition(new RoomCondition(room2,true));
 
         game.addRoom(room1);
         game.addRoom(room2);
+        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+        game.addTask(new DeadLine(game),45000,150000);
+
 
         return game;
     }

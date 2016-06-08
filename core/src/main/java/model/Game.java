@@ -2,15 +2,16 @@ package model;
 
 import exceptions.ItemNotFoundException;
 import exceptions.WrongItemActionException;
+import game.actions.EnterAction;
 import game.Location;
 import game.Player;
 import game.conditions.Condition;
 import game.items.Actionable;
+import game.tasks.ScheduledTask;
 import game.utils.Messages;
-
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 
 public class Game {
@@ -33,6 +34,27 @@ public class Game {
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    public Location findItemLocation(Actionable item) {
+        for (Location location : rooms) {
+            if (location.getItem(item.getName()) != null) {
+                return location;
+            }
+        }
+        return null;
+    }
+
+    public void makeLocationsAdjacent(Location room1, Location room2, Actionable key, String actionName) {
+        EnterAction enterAction = new EnterAction(actionName);
+        room1.addDoor(room2,key,room2.getName(),enterAction);
+        room2.addDoor(room1,key,room1.getName(),enterAction);
+    }
+
+    public void makeLocationsAdjacent(Location room1, Location room2, Actionable key) {
+        EnterAction enterAction = new EnterAction("enter");
+        room1.addDoor(room2,key,enterAction);
+        room2.addDoor(room1,key,enterAction);
     }
 
     public String executeActionOnItem(String[] tokens) throws WrongItemActionException {
@@ -128,6 +150,11 @@ public class Game {
             return false;
         }
         return false;
+    }
+
+    public void addTask(ScheduledTask task, int delay, int period) {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(task, delay, period);
     }
 }
 
