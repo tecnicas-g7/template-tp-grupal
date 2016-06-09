@@ -90,7 +90,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
 
     public Actionable getChild(String name) {
         if (status.equals("open")) {
-            return Util.getDescribable(components, name);
+            return getDescribable(components, name);
         }
         throw new ItemNotFoundException();
     }

@@ -1,4 +1,4 @@
-import game.Controller;
+/*import game.Controller;
 import org.junit.Test;
 
 import server.GamePaths;
@@ -7,8 +7,8 @@ import server.driver.GameDriver;
 
 import static org.junit.Assert.assertTrue;
 
-
-public class BoxGameTests {
+*/
+/*public class BoxGameTests {
 
     private GameDriver driver;
 
@@ -33,4 +33,4 @@ public class BoxGameTests {
 
         assert(Controller.GameState.Win == driver.getGameState());
     }
-}
+}*/

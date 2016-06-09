@@ -1,6 +1,5 @@
 package game.items;
 
-import exceptions.ItemNotFoundException;
 import exceptions.WrongItemActionException;
 import game.Player;
 import game.actions.Action;

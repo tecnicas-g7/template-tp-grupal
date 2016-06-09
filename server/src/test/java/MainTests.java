@@ -1,4 +1,4 @@
-import game.Controller;
+/*import game.Controller;
 import game.Location;
 import game.Player;
 import game.actions.EnterAction;
@@ -6,8 +6,6 @@ import game.actions.MoveItemAction;
 import game.conditions.InventoryCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
-import game.items.Container;
-import game.items.Linker;
 import model.Game;
 import org.junit.Test;
 import server.driver.Driver;
@@ -214,6 +212,7 @@ public class MainTests {
         assertFalse(player.checkVictory(player2));
     }
 */
+/*
     @Test
     public void cantTakeMoreItems() {
         Game dropGame = getGameCondition();
@@ -256,7 +255,7 @@ public class MainTests {
         player.openContainer("Baul");
         System.out.println(room1.look());
         assertTrue(true);
-    }*/
+    }*//*
 
 
     private void simpleCross( String animal, String moveTo) {
@@ -391,3 +390,4 @@ public class MainTests {
 
     }
 }
+*/
