@@ -3,6 +3,8 @@ package game.items;
 import exceptions.WrongItemActionException;
 import game.Player;
 import game.actions.Action;
+import game.states.State;
+import game.states.Status;
 import game.utils.Messages;
 
 import java.util.HashMap;
@@ -11,6 +13,7 @@ public class Actionable {
 
     protected String name;
     protected HashMap<String,Action> actions;
+    protected State status;
 
     public Actionable(String name) {
         if (name == null || name.isEmpty()) {
@@ -18,6 +21,7 @@ public class Actionable {
         }
         this.actions = new HashMap<>();
         this.name = name;
+        status = new Status("inanimate");
     }
 
     public String getName() {
@@ -82,5 +86,9 @@ public class Actionable {
 
     public boolean isValidMovement(Actionable item) {
         return true;
+    }
+
+    public void setNewStatus(State state) {
+        this.status = state;
     }
 }

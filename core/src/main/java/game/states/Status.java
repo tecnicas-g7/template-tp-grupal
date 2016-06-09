@@ -2,10 +2,10 @@ package game.states;
 
 import game.utils.Messages;
 
-public class StatePlayer implements State {
+public class Status implements State {
     private String idState;
 
-    public StatePlayer(String definition ) {
+    public Status(String definition ) {
         this.idState = definition;
     }
 
@@ -19,6 +19,14 @@ public class StatePlayer implements State {
 
     public boolean equals(State state) {
         return idState.equals(state.getID());
+    }
+
+    public boolean equals(String state) {
+        return idState.equals(state);
+    }
+
+    public void modifyStatus(String newStatus) {
+        idState = newStatus;
     }
 
 }

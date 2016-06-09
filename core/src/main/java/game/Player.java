@@ -8,7 +8,7 @@ import game.items.Actionable;
 import game.items.Linker;
 import game.utils.Messages;
 import game.states.State;
-import game.states.StatePlayer;
+import game.states.Status;
 
 
 import java.util.HashMap;
@@ -62,7 +62,7 @@ public class Player implements HasItems {
     private void initialize() {
         this.inventory = new HashMap<>();
         this.maxInventory = DEFAULT_MAX_INVENTORY;
-        this.status = new StatePlayer("ALIVE");
+        this.status = new Status("ALIVE");
         this.actions = new HashMap<>();
         this.playing = false;
     }

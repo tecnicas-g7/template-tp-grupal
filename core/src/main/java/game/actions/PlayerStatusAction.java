@@ -1,15 +1,5 @@
 package game.actions;
 
-
-
-
-
-
-
-/*
-Created by Javier on 26/04/2016.
-*/
-
 import game.Player;
 import game.items.Actionable;
 import game.states.State;

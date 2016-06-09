@@ -56,7 +56,7 @@ public class TreasureGame implements GameBuilder {
         game.addCondition(new InventoryCondition(items, true));
 
 
-        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("poisoned")));
+        game.addLoseCondition(new PlayerStateCondition(new Status("poisoned")));
 
         game.addLoseCondition(new RoomCondition(room, true));
 
@@ -112,7 +112,7 @@ public class TreasureGame implements GameBuilder {
         Container box = new Container("box",1);
         //box.addAction(new CloseAction("close"));
         box.addAction(new OpenCloseContainerAction("close"));
-        PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("poisoned"), "oops");
+        PlayerStatusAction firstAction = new PlayerStatusAction(new Status("poisoned"), "oops");
         //OpenAction secondAction = new OpenAction("open");
         OpenCloseContainerAction secondAction = new OpenCloseContainerAction("open");
         //OpenAction secondAction = new OpenAction("open");
@@ -125,7 +125,7 @@ public class TreasureGame implements GameBuilder {
 
     private static Actionable createAntidote(Player player) {
         Actionable antidote = new Actionable("antidote");
-        PlayerStatusAction firstAction = new PlayerStatusAction(new StatePlayer("alive"), "drink");
+        PlayerStatusAction firstAction = new PlayerStatusAction(new Status("alive"), "drink");
         ComplexAction action = new ComplexAction("drink");
         action.addAction(firstAction);
         antidote.addAction(action);

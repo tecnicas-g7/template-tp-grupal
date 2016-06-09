@@ -14,7 +14,7 @@ public class GamePaths {
     public static String getProjectPath() {
         String currentPath = System.getProperty("user.dir");
         String projectPath = currentPath.replaceAll(server,"") + "/";
-        projectPath = projectPath.replaceAll(buildLibs,"") + "/";
+        projectPath = projectPath.replaceAll(buildLibs,"");
         return projectPath;
     }
 

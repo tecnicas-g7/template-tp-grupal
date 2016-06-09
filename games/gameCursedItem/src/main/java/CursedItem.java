@@ -7,10 +7,8 @@ import game.conditions.InventoryCondition;
 import game.conditions.PlayerStateCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
-import game.states.State;
-import game.states.StatePlayer;
+import game.states.Status;
 import game.tasks.DeadLine;
-import game.tasks.ScheduledTask;
 import game.utils.Messages;
 import model.Game;
 import model.GameBuilder;
@@ -50,7 +48,7 @@ public class CursedItem implements GameBuilder {
         game.addRoom(room3);
 
         game.addCondition(new RoomCondition(room3, true));
-        game.addLoseCondition(new PlayerStateCondition(new StatePlayer("dead")));
+        game.addLoseCondition(new PlayerStateCondition(new Status("dead")));
         game.addTask(new DeadLine(game),60000,150000);
 
         return game;

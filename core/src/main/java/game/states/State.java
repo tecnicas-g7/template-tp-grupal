@@ -7,4 +7,7 @@ public interface State {
     String getDescription();
 
     boolean equals(State state);
+
+    void modifyStatus(String newStatus);
+
 }

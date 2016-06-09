@@ -6,6 +6,7 @@ import exceptions.ItemNotFoundException;
 import exceptions.MaxInventoryException;
 import game.HasItems;
 import game.Player;
+import game.states.Status;
 import game.utils.Messages;
 import game.utils.Util;
 
@@ -20,7 +21,6 @@ public class Container extends Actionable implements ContainerComponent, HasItem
 
     private HashMap<String, Actionable> components;
     private int maxSize;
-    private boolean open;
     private String lastAction;
 
 
@@ -28,14 +28,14 @@ public class Container extends Actionable implements ContainerComponent, HasItem
         super(name);
         this.maxSize = maxSize;
         this.components = new HashMap<>();
-        this.open = false;
+        this.status = new Status("closed");
         this.lastAction = "";
     }
 
     public String look() {
         StringBuilder output = new StringBuilder();
         output.append(name);
-        if (this.open) {
+        if (status.equals("open")) {
             components.forEach((key, value) -> {
                     output.append(" ");
                     output.append(value.look().concat(" "));
@@ -49,7 +49,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     //When the player opens the container, the components in it can be reached
     public String openContainer() {
         StringBuilder output = new StringBuilder();
-        this.open = true;
+        status.modifyStatus("open");
         components.forEach((key, value) -> {
                 output.append(key);
                 output.append(" ");
@@ -60,7 +60,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     }
 
     public String closeContainer() {
-        this.open = false;
+        status.modifyStatus("closed");
         return this.name + " " + Messages.getMessage("hasBeenClosed");
     }
 
@@ -70,7 +70,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
             return Messages.getMessage("isAlready") + " " + action;
         }
         this.lastAction = action;
-        if (open) {
+        if (status.equals("open")) {
             return closeContainer();
         }
         return openContainer();
@@ -81,7 +81,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     }
 
     public Actionable getChild(String name) {
-        if (open) {
+        if (status.equals("open")) {
             return Util.getDescribable(components, name);
         }
         throw new ItemNotFoundException();
