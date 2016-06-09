@@ -40,6 +40,7 @@ public class Location implements HasItems {
 
     public void addItem(Actionable item) {
         this.items.put(item.getName(), item);
+        item.setContainer(this);
     }
 
     @Override
