@@ -4,7 +4,6 @@ package game.conditions;
 
 import game.Player;
 import game.items.Actionable;
-import game.utils.Util;
 
 import java.util.List;
 
@@ -24,7 +23,16 @@ public class InventoryCondition implements Condition {
 
     @Override
     public boolean isValid(Player player) {
-        boolean valid = Util.itemsInInventory(inventory, player.getInventory());
+        valid = hasItemsInInventory(player);
         return this.valid && valid || !this.valid && !valid;
+    }
+
+    private boolean hasItemsInInventory(Player player) {
+        for (Actionable item : inventory) {
+            if (!player.getInventory().containsValue(item)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
