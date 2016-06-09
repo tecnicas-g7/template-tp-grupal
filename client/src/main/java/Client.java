@@ -16,6 +16,7 @@ public class Client {
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         System.out.println("This is menu");
         input = inFromUser.readLine();
+        running = false;
         while (input != null && !input.equals("exit")) {
             String[] message = input.split(" ");
             if (message[0].equals("connect")) {
@@ -24,7 +25,9 @@ public class Client {
                     Socket socket = new Socket(address[0], Integer.parseInt(address[1]));
                     play(socket);
                 } catch (Exception e ) {
-                    System.out.println("Opción inválida... Intente nuevamente");
+                    if (!running) {
+                        System.out.println("Opción inválida... Intente nuevamente");
+                    }
                 }
             } else {
                 System.out.println("Utilice el comando connect para ingresar a un juego....");
@@ -50,7 +53,9 @@ public class Client {
             try {
                 listen(socket,inFromServer,sender);
             } catch (Exception e) {
-                System.out.println("Error with connection...");
+                if (!running) {
+                    System.out.println("Error with connection...");
+                }
                 running = false;
             }
         }
