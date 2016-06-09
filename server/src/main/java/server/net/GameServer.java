@@ -61,14 +61,28 @@ public class GameServer implements Runnable{
                 gameRunning = false;
             }
             List<String> messages = controller.getMessages();
-            if (messages.size() > 0) {
-                System.out.println("Hello");
-            }
             for (String message : messages) {
                 clientSender.broadcast(null,message);
             }
-            
+            try {
+                sendWinnersLosers();
+            } catch (Exception e) {
+                //
+            }
+
         }
+    }
+
+    private void sendWinnersLosers() throws IOException,InterruptedException {
+        List<String> winners = controller.checkWinners();
+        for (String winner : winners) {
+            clientSender.sendWinMessage(winner);
+        }
+        List<String> losers = controller.checkLosers();
+        for (String loser : losers) {
+            clientSender.sendLoseMessage(loser);
+        }
+        Thread.sleep(25);
     }
 
     private void startGame() {

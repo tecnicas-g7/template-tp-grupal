@@ -279,7 +279,7 @@ public class Escape2 implements GameBuilder {
                     Status status = new Status("angry");
                     item.setNewStatus(status);
                     game.addLoseCondition(new RoomItemStatusCondition(item,status.getID()));
-                    game.addMessage("El bibliotecario se despertó y esta enojado!");
+                    game.addMessage("El bibliotecario se desperto y esta enojado!");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

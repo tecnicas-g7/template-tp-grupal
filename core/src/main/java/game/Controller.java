@@ -24,6 +24,7 @@ public class Controller {
         return game.findItem(item).getStatus();
     }
 
+
     public enum GameState {
         Lost, Win, InProgress
     }
@@ -100,6 +101,14 @@ public class Controller {
 
     public List<String> getMessages() {
         return game.getMessages();
+    }
+
+    public List<String> checkWinners() {
+        return game.checkWinners();
+    }
+
+    public List<String> checkLosers() {
+        return game.checkLosers();
     }
 }
 

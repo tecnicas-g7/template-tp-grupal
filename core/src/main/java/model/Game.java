@@ -116,11 +116,15 @@ public class Game {
     }
 
     public void addCondition(Condition condition) {
-        this.addCondition(condition, this.getActivePlayer());
+        for (Player player : players.values()) {
+            this.addCondition(condition, player);
+        }
     }
 
     public void addLoseCondition(Condition condition) {
-        this.addLoseCondition(condition, this.getActivePlayer());
+        for (Player player : players.values()) {
+            this.addLoseCondition(condition, this.getActivePlayer());
+        }
     }
 
     public void addCondition(Condition condition, Player player) {
@@ -133,26 +137,36 @@ public class Game {
 
 
     public boolean verifyVictory() {
+        return verifyVictory(activePlayer);
+    }
 
-
-        for (Condition condition : this.conditions.get(this.getActivePlayer().getName())) {
-            if (!condition.isValid(this.activePlayer)) {
+    public boolean verifyVictory(Player player) {
+        for (Condition condition : this.conditions.get(player.getName())) {
+            if (!condition.isValid(player)) {
                 return false;
             }
         }
-
         return true;
-/*
-            for (Condition condition : this.conditions.get(this.getActivePlayer().getName())) {
-                if (!condition.isValid(this.activePlayer)) {
-                    return false;
-                }
+    }
+
+    public List<String> checkWinners() {
+        List<String> winners = new ArrayList<>();
+        for (Player player : players.values()) {
+            if (verifyVictory(player)) {
+                winners.add(player.getName());
             }
+        }
+        return winners;
+    }
 
-
-        System.out.print(Messages.getMessage("endMessage"));
-        return  true;
-*/
+    public List<String> checkLosers() {
+        List<String> losers = new ArrayList<>();
+        for (Player player : players.values()) {
+            if (gameOver(player)) {
+                losers.add(player.getName());
+            }
+        }
+        return losers;
     }
 
 
@@ -181,27 +195,17 @@ public class Game {
         }
     }
 
-    public boolean gameOver() {
-        if (loseConditions.size() > 0) {
-//            for (String player : this.loseConditions.keySet()) {
-            for (Condition condition : this.loseConditions.get(this.getActivePlayer().getName())) {
-                if (condition.isValid(this.activePlayer)) {
-                    return true;
-                }
+    public boolean gameOver(Player player) {
+        for (Condition condition : this.loseConditions.get(player.getName())) {
+            if (condition.isValid(player)) {
+                return true;
             }
-//            }
-
-
-/*            for (Condition condition : this.loseConditions) {
-                if (condition.isValid(this.activePlayer)) {
-                    return true;
-                }
-            }
-*/
-            System.out.print(Messages.getMessage("GameOver"));
-            return false;
         }
         return false;
+    }
+
+    public boolean gameOver() {
+        return gameOver(this.activePlayer);
     }
 
 

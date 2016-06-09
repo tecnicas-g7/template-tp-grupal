@@ -39,20 +39,30 @@ public class ClientSender implements Runnable {
         }
     }
 
+    public void sendLoseMessage(String name) throws IOException {
+        Socket socket = clients.get(name);
+        sendIndividualMessage(name, "L");
+        socket.close();
+        broadcast(name,name + " has lost.");
+    }
+
+    public void sendWinMessage(String name) throws IOException {
+        Socket socket = clients.get(name);
+        sendIndividualMessage(name, "W");
+        socket.close();
+        broadcast(name,name + " has won.");
+    }
+
     public void interpretCommand(String name, String message) throws IOException {
         Socket socket = clients.get(name);
         controller.setActivePlayer(name);
         String output = controller.interpretCommand(message);
         if (controller.verify()) {
-            sendIndividualMessage(name, "W");
-            socket.close();
-            broadcastAction(name,message);
+            sendLoseMessage(name);
             return;
         }
         if (controller.gameOver()) {
-            sendIndividualMessage(name, "L");
-            socket.close();
-            broadcastAction(name,message);
+            sendWinMessage(name);
             return;
         }
         sendIndividualMessage(name, output);
