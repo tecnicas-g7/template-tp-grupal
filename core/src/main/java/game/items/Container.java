@@ -32,7 +32,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     public String look() {
         StringBuilder output = new StringBuilder();
         output.append(name);
-        if (status.equals("open")) {
+        if (status.equalState("open")) {
             components.forEach((key, value) -> {
                     output.append(" ");
                     output.append(value.look().concat(" "));
@@ -67,7 +67,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
             return Messages.getMessage("isAlready") + " " + action;
         }
         this.lastAction = action;
-        if (status.equals("open")) {
+        if (status.equalState("open")) {
             return closeContainer();
         }
         return openContainer();
@@ -89,7 +89,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     }
 
     public Actionable getChild(String name) {
-        if (status.equals("open")) {
+        if (status.equalState("open")) {
             return getDescribable(components, name);
         }
         throw new ItemNotFoundException();

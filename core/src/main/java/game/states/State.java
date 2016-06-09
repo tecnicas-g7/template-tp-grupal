@@ -10,4 +10,5 @@ public interface State {
 
     void modifyStatus(String newStatus);
 
+    boolean equalState(String open);
 }

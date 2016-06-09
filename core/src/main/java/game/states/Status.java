@@ -21,8 +21,8 @@ public class Status implements State {
         return idState.equals(state.getID());
     }
 
-    public boolean equals(String state) {
-        return idState.equals(state);
+    public boolean equalState(String state) {
+        return idState.equalsIgnoreCase(state);
     }
 
     public void modifyStatus(String newStatus) {
