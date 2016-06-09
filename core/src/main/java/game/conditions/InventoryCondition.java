@@ -23,7 +23,7 @@ public class InventoryCondition implements Condition {
 
     @Override
     public boolean isValid(Player player) {
-        valid = hasItemsInInventory(player);
+        boolean valid = hasItemsInInventory(player);
         return this.valid && valid || !this.valid && !valid;
     }
 
