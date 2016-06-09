@@ -114,6 +114,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     @Override
     public void addItem(Actionable item) throws MaxInventoryException {
         addComponent(item);
+        item.setContainer(this);
     }
 
     @Override

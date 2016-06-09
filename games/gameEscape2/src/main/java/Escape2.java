@@ -3,10 +3,7 @@ import game.Location;
 import game.Player;
 import game.actions.*;
 
-import game.conditions.ComplexCondition;
-import game.conditions.HasItemsWithItemsCondition;
-import game.conditions.InventoryCondition;
-import game.conditions.RoomCondition;
+import game.conditions.*;
 import game.items.Actionable;
 import game.items.Container;
 import game.states.Status;
@@ -279,10 +276,10 @@ public class Escape2 implements GameBuilder {
             @Override
             public void run() {
                 try {
-                    item.setNewStatus(new Status("angry"));
+                    Status status = new Status("angry");
+                    item.setNewStatus(status);
+                    game.addLoseCondition(new RoomItemStatusCondition(item,status.getID()));
                     game.addMessage("El bibliotecario se despertó y esta enojado!");
-                    //TODO volver el 10000 a 240000 esto es solo para testear
-                    //game.addTask(createScheduledTask(game, item),0,10000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

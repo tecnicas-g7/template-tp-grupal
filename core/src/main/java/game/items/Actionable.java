@@ -1,6 +1,8 @@
 package game.items;
 
 import exceptions.WrongItemActionException;
+import game.HasItems;
+import game.Location;
 import game.Player;
 import game.actions.Action;
 import game.states.State;
@@ -16,6 +18,7 @@ public class Actionable {
     protected String name;
     protected HashMap<String,Action> actions;
     protected State status;
+    protected HasItems container;
 
     public Actionable(String name) {
         if (name == null || name.isEmpty()) {
@@ -96,5 +99,13 @@ public class Actionable {
 
     public State getStatus() {
         return status;
+    }
+
+    public void setContainer(HasItems container) {
+        this.container = container;
+    }
+
+    public HasItems getContainer() {
+        return this.container;
     }
 }

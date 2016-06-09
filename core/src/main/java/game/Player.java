@@ -91,6 +91,7 @@ public class Player implements HasItems {
         if (inventory.size() == maxInventory) {
             throw new MaxInventoryException();
         }
+        item.setContainer(this);
         this.inventory.put(item.getName(), item);
     }
 
