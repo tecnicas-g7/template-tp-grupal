@@ -111,10 +111,10 @@ public class TreasureGame implements GameBuilder {
     private static Container createBox() {
         Container box = new Container("box",1);
         //box.addAction(new CloseAction("close"));
-        box.addAction(new OpenCloseContainerAction("close"));
+        box.addAction(new OpenCloseContainerAction("close",Container.closedStatus));
         PlayerStatusAction firstAction = new PlayerStatusAction(new Status("poisoned"), "oops");
         //OpenAction secondAction = new OpenAction("open");
-        OpenCloseContainerAction secondAction = new OpenCloseContainerAction("open");
+        OpenCloseContainerAction secondAction = new OpenCloseContainerAction("open",Container.openStatus);
         //OpenAction secondAction = new OpenAction("open");
         ComplexAction action = new ComplexAction("open");
         action.addAction(firstAction);
@@ -146,8 +146,8 @@ public class TreasureGame implements GameBuilder {
     private static void addOpenClose(Container container) {
         //container.addAction(new OpenAction("open"));
         //container.addAction(new CloseAction("close"));
-        container.addAction(new OpenCloseContainerAction("open"));
-        container.addAction(new OpenCloseContainerAction("close"));
+        container.addAction(new OpenCloseContainerAction("open",Container.openStatus));
+        container.addAction(new OpenCloseContainerAction("close",Container.closedStatus));
     }
 
     @SuppressWarnings("CPD-END")

@@ -16,6 +16,9 @@ Created by javier on 4/25/16.
 
 public class Container extends Actionable implements ContainerComponent, HasItems {
 
+    public static final String openStatus = "open";
+    public static final String closedStatus = "closed";
+
     private HashMap<String, Actionable> components;
     private int maxSize;
     private String lastAction;
@@ -25,14 +28,14 @@ public class Container extends Actionable implements ContainerComponent, HasItem
         super(name);
         this.maxSize = maxSize;
         this.components = new HashMap<>();
-        this.status = new Status("closed");
+        this.status = new Status(closedStatus);
         this.lastAction = "";
     }
 
     public String look() {
         StringBuilder output = new StringBuilder();
         output.append(name);
-        if (status.equalState("open")) {
+        if (status.equalState(openStatus)) {
             components.forEach((key, value) -> {
                     output.append(" ");
                     output.append(value.look().concat(" "));
@@ -46,7 +49,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     //When the player opens the container, the components in it can be reached
     public String openContainer() {
         StringBuilder output = new StringBuilder();
-        status.modifyStatus("open");
+        status.modifyStatus(openStatus);
         components.forEach((key, value) -> {
                 output.append(key);
                 output.append(" ");
@@ -57,7 +60,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     }
 
     public String closeContainer() {
-        status.modifyStatus("closed");
+        status.modifyStatus(closedStatus);
         return this.name + " " + Messages.getMessage("hasBeenClosed");
     }
 
@@ -67,7 +70,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
             return Messages.getMessage("isAlready") + " " + action;
         }
         this.lastAction = action;
-        if (status.equalState("open")) {
+        if (status.equalState(openStatus)) {
             return closeContainer();
         }
         return openContainer();
@@ -89,7 +92,7 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     }
 
     public Actionable getChild(String name) {
-        if (status.equalState("open")) {
+        if (status.equalState(openStatus)) {
             return getDescribable(components, name);
         }
         throw new ItemNotFoundException();

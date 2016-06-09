@@ -22,8 +22,8 @@ public class BoxGame implements GameBuilder {
         Container box = new Container("box",1);
         //box.addAction(new OpenAction("open"));
         //box.addAction(new CloseAction("close"));
-        box.addAction(new OpenCloseContainerAction("open"));
-        box.addAction(new OpenCloseContainerAction("close"));
+        box.addAction(new OpenCloseContainerAction("open",Container.openStatus));
+        box.addAction(new OpenCloseContainerAction("close",Container.closedStatus));
 
 
         Location room1 = new Location("Room1");

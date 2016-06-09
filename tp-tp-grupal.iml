@@ -23,6 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/games/gameEscape/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/client/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/games/gameTwoPlayers/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/games/gameEscape2/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>

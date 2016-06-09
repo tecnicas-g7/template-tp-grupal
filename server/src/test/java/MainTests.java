@@ -1,4 +1,4 @@
-/*import game.Controller;
+import game.Controller;
 import game.Location;
 import game.Player;
 import game.actions.EnterAction;
@@ -255,7 +255,7 @@ public class MainTests {
         player.openContainer("Baul");
         System.out.println(room1.look());
         assertTrue(true);
-    }*//*
+    }*/
 
 
     private void simpleCross( String animal, String moveTo) {
@@ -390,4 +390,3 @@ public class MainTests {
 
     }
 }
-*/

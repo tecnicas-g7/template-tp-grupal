@@ -181,7 +181,7 @@ public class Escape implements GameBuilder {
     private Container createCuadroBarco(Location salonUno) {
         Container cuadroBarco = new Container("CuadroBarco",1);
         //cuadroBarco.addAction(new OpenAction("move"));
-        cuadroBarco.addAction(new OpenCloseContainerAction("move"));
+        cuadroBarco.addAction(new OpenCloseContainerAction("move",Container.openStatus));
         salonUno.addItem(cuadroBarco);
         return cuadroBarco;
     }
@@ -200,7 +200,7 @@ public class Escape implements GameBuilder {
             e.printStackTrace();
         }
         //OpenAction open = new OpenAction("open");
-        OpenCloseContainerAction open = new OpenCloseContainerAction("open");
+        OpenCloseContainerAction open = new OpenCloseContainerAction("open",Container.openStatus);
         List<Actionable> list = new ArrayList<>();
         list.add(key);
         open.addCondition(new InventoryCondition(list, true));
