@@ -18,8 +18,11 @@ import java.util.*;
 public class Game {
 
     private List<Location> rooms;
-    private List<Condition> conditions;
-    private List<Condition> loseConditions;
+    //private List<Condition> conditions;
+    //private List<Condition> loseConditions;
+
+    private Map<String,List<Condition>> conditions;
+    private Map<String,List<Condition>> loseConditions;
 
     private Player activePlayer;
     private HashMap<String,Player> players;
@@ -27,8 +30,14 @@ public class Game {
     public Game(Player activePlayer) {
         this.rooms = new ArrayList<>();
         this.activePlayer = activePlayer;
-        this.conditions = new ArrayList<>();
-        this.loseConditions = new ArrayList<>();
+//        this.conditions = new ArrayList<>();
+//        this.loseConditions = new ArrayList<>();
+
+        this.conditions = new HashMap<>();
+        this.loseConditions = new HashMap<>();
+
+        this.conditions.put(this.activePlayer.getName(), new ArrayList<>());
+        this.loseConditions.put(this.activePlayer.getName(), new ArrayList<>());
 
         this.players = new HashMap<>();
         this.players.put(this.activePlayer.getName(),this.activePlayer);
@@ -103,22 +112,45 @@ public class Game {
     }
 
     public void addCondition(Condition condition) {
-        this.conditions.add(condition);
+        this.addCondition(condition, this.getActivePlayer());
     }
 
     public void addLoseCondition(Condition condition) {
-        this.loseConditions.add(condition);
+        this.addLoseCondition(condition, this.getActivePlayer());
     }
 
+    public void addCondition(Condition condition, Player player) {
+        this.conditions.get(player.getName()).add(condition);
+    }
+
+    public void addLoseCondition(Condition condition, Player player) {
+        this.loseConditions.get(player.getName()).add(condition);
+    }
+
+
     public boolean verifyVictory() {
-        for (Condition condition : this.conditions) {
+
+
+        for (Condition condition : this.conditions.get(this.getActivePlayer().getName())) {
             if (!condition.isValid(this.activePlayer)) {
                 return false;
             }
         }
+
+        return true;
+/*
+            for (Condition condition : this.conditions.get(this.getActivePlayer().getName())) {
+                if (!condition.isValid(this.activePlayer)) {
+                    return false;
+                }
+            }
+
+
         System.out.print(Messages.getMessage("endMessage"));
         return  true;
+*/
     }
+
 
     public String itemHelp(String[] tokens) {
         if (tokens.length <= 1) {
@@ -147,11 +179,21 @@ public class Game {
 
     public boolean gameOver() {
         if (loseConditions.size() > 0) {
-            for (Condition condition : this.loseConditions) {
+//            for (String player : this.loseConditions.keySet()) {
+            for (Condition condition : this.loseConditions.get(this.getActivePlayer().getName())) {
                 if (condition.isValid(this.activePlayer)) {
                     return true;
                 }
             }
+//            }
+
+
+/*            for (Condition condition : this.loseConditions) {
+                if (condition.isValid(this.activePlayer)) {
+                    return true;
+                }
+            }
+*/
             System.out.print(Messages.getMessage("GameOver"));
             return false;
         }
@@ -169,6 +211,8 @@ public class Game {
 
     public void addPlayer(Player player) {
         players.put(player.getName(),player);
+        this.conditions.put(player.getName(), new ArrayList<>());
+        this.loseConditions.put(player.getName(), new ArrayList<>());
     }
 
     public void setActivePlayer(String player) {
@@ -195,4 +239,3 @@ public class Game {
         return false;
     }
 }
-
