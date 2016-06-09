@@ -6,10 +6,9 @@ import model.Game;
  Created by javier on 6/6/16.
  */
 public class DeadLine extends ScheduledTask {
-    Game game;
 
     public  DeadLine(Game game) {
-        this.game = game;
+        super(game);
     }
 
     @Override

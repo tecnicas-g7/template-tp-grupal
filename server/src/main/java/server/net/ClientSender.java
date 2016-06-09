@@ -75,11 +75,16 @@ public class ClientSender implements Runnable {
     }
 
     public void broadcast(String name, String message) {
-        clients.forEach((playerName, socket) -> {
+        for (String playerName : clients.keySet()) {
             if (!playerName.equals(name)) {
                 sendIndividualMessage(playerName, message);
             }
-        });
+        }
+        /*clients.forEach((playerName, socket) -> {
+          if (!playerName.equals(name)) {
+                sendIndividualMessage(playerName, message);
+            }
+        });*/
     }
 
     private void sendMessage(DataOutputStream out, String message) throws IOException {

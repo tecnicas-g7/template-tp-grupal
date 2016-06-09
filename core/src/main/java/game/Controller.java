@@ -8,6 +8,8 @@ import game.states.Status;
 import game.utils.Messages;
 import model.Game;
 
+import java.util.List;
+
 /**
   Created by fran on 24/04/16.
  */
@@ -94,6 +96,10 @@ public class Controller {
 
     public void setActivePlayer(String activePlayer) {
         game.setActivePlayer(activePlayer);
+    }
+
+    public List<String> getMessages() {
+        return game.getMessages();
     }
 }
 

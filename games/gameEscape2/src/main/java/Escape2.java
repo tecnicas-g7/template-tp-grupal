@@ -28,19 +28,29 @@ public class Escape2 implements GameBuilder {
             Location acceso = new Location("BibliotecaAcceso");
             Location salonTres = new Location("Salon3");
             Location pasaje = new Location("Pasaje");
-            Location biblioteca = createBiblioteca(player, acceso, pasaje);
-            Location salon1 = createSalonUno(player, pasillo, acceso, biblioteca, salonTres);
-            Location salon2 = createSalonDos(player,pasillo);
-
-
-
+            //Location biblioteca = createBiblioteca(player, acceso, pasaje);
+            //Location salon1 = createSalonUno(player, pasillo, acceso, biblioteca, salonTres);
+            //Location salon2 = createSalonDos(player,pasillo);
+            Location biblioteca = new Location("Biblioteca");
+            Location salon1 = new Location("Salon1");
+            Location salon2 = new Location("Salon2");
             Location afuera = new Location("Afuera");
+            Location sotano = new Location("Sotano");
+            createGame(player, pasillo,salon1,salon2,salonTres, acceso, biblioteca, sotano, afuera);
 
-            Location sotano = createSotano(afuera,salon2.getItem("Martillo"));
+            createBiblioteca(biblioteca, player, acceso, pasaje);
+            createSalonUno(salon1, player, pasillo, acceso, biblioteca, salonTres);
+            createSalonDos(salon2, player, pasillo);
 
+
+
+
+            //Location sotano = createSotano(afuera,salon2.getItem("Martillo"));
+
+            createSotano(sotano, afuera, salon2.getItem("Martillo"));
             pasaje.addDoor(sotano, null, "puerta", new EnterAction("enter"));
 
-            createGame(player, pasillo,salon1,salon2,salonTres,acceso,biblioteca,sotano,afuera);
+
             RoomCondition roomCondition = new RoomCondition(afuera,true);
             game.addLoseCondition(roomCondition);
             addPathsPasaje(pasaje,sotano,salon2.getItem("Martillo"));
@@ -103,10 +113,10 @@ public class Escape2 implements GameBuilder {
         player.addItem(lapicera);
     }
 
-    private Location createSotano(Location afuera, Actionable martillo) {
-        Location sotano = new Location("Sotano");
+    private void createSotano(Location sotano, Location afuera, Actionable martillo) {
+        //Location sotano = new Location("Sotano");
         sotano.addDoor(afuera, martillo, "Ventana", new EnterAction("break"));
-        return sotano;
+        //return sotano;
     }
 
     private Location createPasaje(Location biblioteca) {
@@ -115,8 +125,8 @@ public class Escape2 implements GameBuilder {
         return pasaje;
     }
 
-    private Location createBiblioteca(Player player, Location acceso, Location pasaje) {
-        Location biblioteca = new Location("Biblioteca");
+    private void createBiblioteca(Location biblioteca, Player player, Location acceso, Location pasaje) {
+        //Location biblioteca = new Location("Biblioteca");
         Container estante = new Container("Estante",10);
         //estante.openContainer(player);
         estante.openContainer();
@@ -130,7 +140,7 @@ public class Escape2 implements GameBuilder {
         libroViejo.addAction(new MoveItemAction(false,true, "move"));
         biblioteca.addDoor(pasaje, null, "Sotano", new EnterAction("goto"));
         pasaje.addDoor(biblioteca,null,"Biblioteca",new EnterAction("goto"));
-        return biblioteca;
+        //return biblioteca;
     }
 
     private void addBooks(Container estante) {
@@ -143,8 +153,8 @@ public class Escape2 implements GameBuilder {
         }
     }
 
-    private Location createSalonUno(Player player, Location pasillo, Location acceso, Location biblioteca, Location salonTres) {
-        Location salonUno = new Location("Salon1");
+    private void createSalonUno(Location salonUno, Player player, Location pasillo, Location acceso, Location biblioteca, Location salonTres) {
+        //Location salonUno = new Location("Salon1");
         salonUno.addItem(new Actionable("mesa"));
         salonUno.addItem(new Actionable("vaso1"));
         salonUno.addItem(new Actionable("vaso2"));
@@ -154,17 +164,17 @@ public class Escape2 implements GameBuilder {
         createUsableItems(player, salonUno, acceso, biblioteca, salonTres);
 
 
-        return salonUno;
+        //return salonUno;
     }
 
-    private Location createSalonDos(Player player, Location pasillo) {
-        Location salon2 = new Location("Salon2");
+    private void createSalonDos(Location salon2, Player player, Location pasillo) {
+        //Location salon2 = new Location("Salon2");
         Actionable martillo = new Actionable("Martillo");
         addPickDrop(martillo,player);
         salon2.addItem(martillo);
         salon2.addItem(new Actionable("Destornillador1"));
         salon2.addItem(new Actionable("Destornillador2"));
-        return salon2;
+        //return salon2;
     }
 
     private Container createCuadroBarco(Location salonUno) {
@@ -225,7 +235,7 @@ public class Escape2 implements GameBuilder {
         ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"),bibliotecario);
 
         //TODO volver el 2000 a 120000 esto es solo para testear
-        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(bibliotecario),2000,0);
+        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(game,bibliotecario),2000,0);
         AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,bibliotecario),3000,10000);
         ComplexAction action = new ComplexAction("give");
         action.addAction(moveItemAction);
@@ -245,7 +255,7 @@ public class Escape2 implements GameBuilder {
     }
 
     private ScheduledTask createScheduledTask(Game game, Actionable item) {
-        return new ScheduledTask() {
+        return new ScheduledTask(game) {
             @Override
             public void run() {
                 try {
@@ -253,6 +263,7 @@ public class Escape2 implements GameBuilder {
                     location.removeItem(item.getName());
                     Location newLocation = location.getRandomAdjacentLocation();
                     newLocation.addItem(item);
+                    game.addMessage("El bibliotecario se movió a " + newLocation.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -260,14 +271,15 @@ public class Escape2 implements GameBuilder {
         };
     }
 
-    private ScheduledTask createWakeUpTask(Actionable item) {
-        return new ScheduledTask() {
+    private ScheduledTask createWakeUpTask(Game game, Actionable item) {
+        return new ScheduledTask(game) {
             @Override
             public void run() {
                 try {
                     Status status = new Status("angry");
                     item.setNewStatus(status);
                     game.addLoseCondition(new RoomItemStatusCondition(item,status.getID()));
+                    game.addMessage("El bibliotecario se despertó y esta enojado!");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

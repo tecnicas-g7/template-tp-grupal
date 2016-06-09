@@ -7,6 +7,7 @@ import model.GameBuilder;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.List;
 
 
 /**
@@ -16,6 +17,7 @@ public class GameServer implements Runnable{
 
     private ServerSocket serverSocket;
     private ServerClient serverClient;
+    private ClientSender clientSender;
     private boolean running;
 
     Controller controller;
@@ -36,7 +38,8 @@ public class GameServer implements Runnable{
     public void run() {
         while (running) {
             startGame();
-            this.serverClient = new ServerClient(serverSocket,controller);
+            this.clientSender = new ClientSender(controller);
+            this.serverClient = new ServerClient(serverSocket,controller,clientSender);
             new Thread(this.serverClient).start();
 
             boolean waiting = true;
@@ -57,7 +60,13 @@ public class GameServer implements Runnable{
             if (!controller.hasPlayersPlaying()) {
                 gameRunning = false;
             }
-            //Meter ciclo....
+            List<String> messages = controller.getMessages();
+            if (messages.size() > 0) {
+                System.out.println("Hello");
+            }
+            for (String message : messages) {
+                clientSender.broadcast(null,message);
+            }
             
         }
     }
