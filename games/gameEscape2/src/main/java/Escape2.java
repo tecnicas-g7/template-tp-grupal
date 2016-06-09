@@ -224,13 +224,17 @@ public class Escape2 implements GameBuilder {
         acceso.addItem(bibliotecario);
         List<Actionable> listCredencial = new ArrayList<>();
         listCredencial.add(credencial);
-        MoveItemAction moveItemAction = new MoveItemAction(true, false, "give");
-        ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"));
-        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(bibliotecario),0,120000,bibliotecario);
+        MoveItemAction moveItemAction = new MoveItemAction(true, false, "move");
+        ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"),bibliotecario);
+
+        //TODO volver el 2000 a 120000 esto es solo para testear
+        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(bibliotecario),2000,0,game);
+        AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,bibliotecario),3000,10000,game);
         ComplexAction action = new ComplexAction("give");
         action.addAction(moveItemAction);
         action.addAction(itemStatusAction);
         action.addAction(taskAction);
+        action.addAction(taskAction2);
         licor.addAction(action);
         biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listCredencial, bibliotecario, true));
     }
@@ -262,7 +266,8 @@ public class Escape2 implements GameBuilder {
             public void run() {
                 try {
                     item.setNewStatus(new Status("angry"));
-                    game.addTask(createScheduledTask(game, item),0,240000);
+                    //TODO volver el 10000 a 240000 esto es solo para testear
+                    //game.addTask(createScheduledTask(game, item),0,10000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

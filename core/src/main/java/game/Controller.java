@@ -2,6 +2,9 @@ package game;
 
 import exceptions.GameNotFoundExcpetion;
 import exceptions.WrongItemActionException;
+import game.items.Actionable;
+import game.states.State;
+import game.states.Status;
 import game.utils.Messages;
 import model.Game;
 
@@ -15,7 +18,9 @@ public class Controller {
 
     private Game game;
 
-
+    public State getItemStatus(String item) {
+        return game.findItem(item).getStatus();
+    }
 
     public enum GameState {
         Lost, Win, InProgress

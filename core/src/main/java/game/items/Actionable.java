@@ -93,4 +93,8 @@ public class Actionable {
     public void setNewStatus(State state) {
         this.status = state;
     }
+
+    public State getStatus() {
+        return status;
+    }
 }

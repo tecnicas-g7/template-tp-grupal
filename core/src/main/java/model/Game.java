@@ -82,7 +82,7 @@ public class Game {
         return null;
     }
 
-    private Actionable findItem(String objectName) throws ItemNotFoundException {
+    public Actionable findItem(String objectName) throws ItemNotFoundException {
         try {
             return this.activePlayer.getItem(objectName);
         } catch (ItemNotFoundException e) {
@@ -161,6 +161,9 @@ public class Game {
 
     public void addTask(ScheduledTask task, int delay, int period) {
         Timer timer = new Timer();
+        if (period == 0) {
+            timer.schedule(task,delay);
+        }
         timer.scheduleAtFixedRate(task, delay, period);
     }
 

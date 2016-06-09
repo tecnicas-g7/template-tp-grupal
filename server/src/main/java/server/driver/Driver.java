@@ -2,6 +2,9 @@ package server.driver;
 
 import game.Controller;
 import exceptions.GameNotFoundExcpetion;
+import game.items.Actionable;
+import game.states.State;
+import game.states.Status;
 import server.BuilderLoader;
 
 public class Driver implements GameDriver {
@@ -23,6 +26,10 @@ public class Driver implements GameDriver {
 
     public Controller.GameState getGameState() {
         return controller.getGameState();
+    }
+
+    public State getItemStatus(String item) {
+        return controller.getItemStatus(item);
     }
 
 }
