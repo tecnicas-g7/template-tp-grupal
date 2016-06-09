@@ -222,17 +222,20 @@ public class Escape implements GameBuilder {
         MoveItemAction show = new MoveItemAction(true,false,"show");
         show.addCondition(new HasItemsWithItemsCondition(list, credencial, true));
         credencial.addAction(show);
-        createAccesoBiblioteca(player, credencial, acceso, biblioteca);
+        createAccesoBiblioteca(foto, credencial, acceso, biblioteca);
 
     }
 
-    private void createAccesoBiblioteca(Player player, Container credencial, Location acceso, Location biblioteca) {
+    private void createAccesoBiblioteca(Actionable foto, Container credencial, Location acceso, Location biblioteca) {
         //TODO FALTA LO DEL bibliotecario con licor y q se acuerde de no dejar pasar
         Container bibliotecario = new Container("Bibliotecario",1);
         acceso.addItem(bibliotecario);
         List<Actionable> listCredencial = new ArrayList<>();
         listCredencial.add(credencial);
         biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listCredencial, bibliotecario, true));
+        List<Actionable> listCredencialConFoto = new ArrayList<>();
+        listCredencialConFoto.add(foto);
+        biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listCredencialConFoto, credencial, true));
     }
 
     private void addPickDrop(Actionable actionable, Player player) {
