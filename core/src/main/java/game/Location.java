@@ -7,8 +7,6 @@ import game.conditions.Condition;
 import game.items.Actionable;
 import game.items.Linker;
 import game.utils.Messages;
-import game.utils.Util;
-
 import java.util.*;
 
 /*
@@ -35,8 +33,8 @@ public class Location implements HasItems {
     }
 
     public Actionable getItem(String name) throws ItemNotFoundException {
-        Actionable actionable = Util.getLinker(doors,name);
-        actionable = (actionable != null) ? actionable : Util.getDescribable(items,name);
+        Actionable actionable = getLinker(doors,name);
+        actionable = (actionable != null) ? actionable : getDescribable(items,name);
         return actionable;
     }
 
@@ -55,7 +53,7 @@ public class Location implements HasItems {
     }
 
     public void removeItem(String name) {
-        Util.removeDescribable(items,name);
+        removeDescribable(items,name);
     }
 
     public Iterator<Map.Entry<String, Linker>> getDoorsIterator() {
@@ -125,11 +123,11 @@ public class Location implements HasItems {
     }
 
     public boolean validEnterConditions(Player player) {
-        return Util.checkConditions(this.enterConditions, player);
+        return checkConditions(this.enterConditions, player);
     }
 
     public boolean validLeaveConditions(Player player) {
-        return Util.checkConditions(this.leaveConditions, player);
+        return checkConditions(this.leaveConditions, player);
     }
 
     public Location getRandomAdjacentLocation() {
@@ -138,4 +136,51 @@ public class Location implements HasItems {
         Linker randomLinker = valuesList.get(randomIndex);
         return randomLinker.getDestination();
     }
+
+    public static Actionable getLinker(HashMap<String, Linker> doors, String name) {
+        return doors.get(name);
+    }
+
+    public void removeDescribable(HashMap<String, Actionable> items, String name) {
+        if (items.get(name) != null) {
+            items.remove(name);
+        } else {
+            Iterator<Map.Entry<String, Actionable>> iterator = items.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Actionable container = iterator.next().getValue();
+                Actionable item = container.getChild(name);
+                if (item != null) {
+                    container.removeComponent(item);
+                    return;
+                }
+            }
+        }
+    }
+
+    public  Actionable getDescribable(HashMap<String, Actionable> items, String name)
+            throws ItemNotFoundException {
+        Actionable item = items.get(name);
+        if (item != null) {
+            return item;
+        }
+        Iterator<Map.Entry<String, Actionable>> iterator = items.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Actionable container = iterator.next().getValue();
+            item = container.getChild(name);
+            if (item != null) {
+                return item;
+            }
+        }
+        throw new ItemNotFoundException();
+    }
+
+    public boolean checkConditions(List<Condition> conditions, Player player) {
+        for (Condition condition : conditions) {
+            if (!condition.isValid(player)) {
+                return false;
+            }
+        }
+        return  true;
+    }
+
 }

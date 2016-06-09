@@ -5,11 +5,7 @@ import exceptions.FullCapacityReachedException;
 import exceptions.ItemNotFoundException;
 import exceptions.MaxInventoryException;
 import game.HasItems;
-import game.Player;
 import game.utils.Messages;
-import game.utils.Util;
-
-
 import java.util.HashMap;
 
 /*
@@ -77,12 +73,24 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     }
 
     public void removeComponent(Actionable component) {
-        Util.removeDescribable(components,component.getName());
+        //Util.removeDescribable(components,component.getName());
+            if (components.get(component.getName()) != null) {
+                components.remove(component.getName());
+            } else {
+                for (Actionable container: components.values()) {
+                    Actionable item = container.getChild(component.getName());
+                    if (item != null) {
+                        container.removeComponent(item);
+                        return;
+                    }
+                }
+            }
     }
 
     public Actionable getChild(String name) {
         if (open) {
-            return Util.getDescribable(components, name);
+            //return Util.getDescribable(components, name);
+            return getDescribable(components, name);
         }
         throw new ItemNotFoundException();
     }
@@ -123,5 +131,20 @@ public class Container extends Actionable implements ContainerComponent, HasItem
     @Override
     public void removeItem(String name) {
         removeComponent(getItem(name));
+    }
+
+    private Actionable getDescribable(HashMap<String, Actionable> items, String name)
+            throws ItemNotFoundException {
+        Actionable item = items.get(name);
+        if (item != null) {
+            return item;
+        }
+        for (Actionable container : items.values() ) {
+            item = container.getChild(name);
+            if (item != null) {
+                return item;
+            }
+        }
+        throw new ItemNotFoundException();
     }
 }

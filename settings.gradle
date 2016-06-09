@@ -11,3 +11,4 @@ include 'games/gameStick'
 include 'games/gameEscape'
 include 'games/gameTwoPlayers'
 include 'games/gameTreasureBox'
+

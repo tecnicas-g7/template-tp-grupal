@@ -3,8 +3,8 @@ package game.conditions;
 import game.HasItems;
 import game.Player;
 import game.items.Actionable;
-import game.utils.Util;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,7 +19,7 @@ public class HasItemsWithItemsCondition implements Condition {
 
     @Override
     public boolean isValid(Player player) {
-        boolean valid = Util.itemsInInventory(inventory, hasItems.getInventory());
+        boolean valid = this.itemsInInventory(inventory, hasItems.getInventory());
         return this.valid && valid || !this.valid && !valid;
     }
 
@@ -27,6 +27,15 @@ public class HasItemsWithItemsCondition implements Condition {
         this.inventory = items;
         this.hasItems = hasItems;
         this.valid = valid;
+    }
+
+    private boolean itemsInInventory(List<Actionable> list, HashMap<String,Actionable> inventory) {
+        for (Actionable item : list) {
+            if (!inventory.containsValue(item)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

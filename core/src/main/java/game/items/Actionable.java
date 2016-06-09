@@ -1,11 +1,14 @@
 package game.items;
 
+import exceptions.ItemNotFoundException;
 import exceptions.WrongItemActionException;
 import game.Player;
 import game.actions.Action;
 import game.utils.Messages;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Actionable {
 
@@ -83,4 +86,6 @@ public class Actionable {
     public boolean isValidMovement(Actionable item) {
         return true;
     }
+
+
 }
