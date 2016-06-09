@@ -228,8 +228,8 @@ public class Escape2 implements GameBuilder {
         ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"),bibliotecario);
 
         //TODO volver el 2000 a 120000 esto es solo para testear
-        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(bibliotecario),2000,0,game);
-        AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,bibliotecario),3000,10000,game);
+        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(bibliotecario),2000,0);
+        AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,bibliotecario),3000,10000);
         ComplexAction action = new ComplexAction("give");
         action.addAction(moveItemAction);
         action.addAction(itemStatusAction);

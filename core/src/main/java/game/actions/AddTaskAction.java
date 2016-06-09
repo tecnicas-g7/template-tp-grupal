@@ -14,14 +14,12 @@ public class AddTaskAction extends Action {
     private ScheduledTask task;
     private int period;
     private int delay;
-    private Game game;
 
-    public AddTaskAction(String name, ScheduledTask task,int delay, int period, Game game) {
+    public AddTaskAction(String name, ScheduledTask task,int delay, int period) {
         super(name);
         this.task = task;
         this.delay = delay;
         this.period = period;
-        this.game = game;
     }
 
     @Override
