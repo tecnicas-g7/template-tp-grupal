@@ -244,7 +244,7 @@ public class Escape implements GameBuilder {
     }
 
     private ScheduledTask createScheduledTask(Game game, Actionable item) {
-        return new ScheduledTask() {
+        return new ScheduledTask(game) {
             @Override
             public void run() {
                 try {

@@ -37,7 +37,7 @@ public class Server {
         games.put("TREASUREGAME", new TreasureGame());
 */
         games = new HashMap<>();
-        games.put("HANOITOWER", GamePaths.getGamePath("gameHanoiTower"));
+        //games.put("HANOITOWER", GamePaths.getGamePath("gameHanoiTower"));
         games.put("BOXGAME", GamePaths.getGamePath("gameBox"));
         games.put("CURSEDITEM",GamePaths.getGamePath("gameCursedItem"));
         games.put("ENTERROOM", GamePaths.getGamePath("gameEnterRoom"));
@@ -45,6 +45,7 @@ public class Server {
         games.put("STICKGAME", GamePaths.getGamePath("gameStick"));
         games.put("TREASUREGAME", GamePaths.getGamePath("gameTreasureBox"));
         games.put("TWOPLAYERS", GamePaths.getGamePath("gameTwoPlayers"));
+        games.put("ESCAPETWO", GamePaths.getGamePath("gameEscape2"));
 
         gameServers = new ArrayList<>();
         loadGame();

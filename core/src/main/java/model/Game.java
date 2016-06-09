@@ -27,6 +27,8 @@ public class Game {
     private Player activePlayer;
     private HashMap<String,Player> players;
 
+    public ArrayList<String> messages;
+
     public Game(Player activePlayer) {
         this.rooms = new ArrayList<>();
         this.activePlayer = activePlayer;
@@ -41,6 +43,8 @@ public class Game {
 
         this.players = new HashMap<>();
         this.players.put(this.activePlayer.getName(),this.activePlayer);
+
+        this.messages = new ArrayList<>();
     }
 
     public void addRoom(Location room) {
@@ -204,7 +208,7 @@ public class Game {
     public void addTask(ScheduledTask task, int delay, int period) {
         Timer timer = new Timer();
         if (period == 0) {
-            timer.schedule(task,delay);
+            timer.schedule(task, delay);
         }
         timer.scheduleAtFixedRate(task, delay, period);
     }
@@ -237,5 +241,19 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public void addMessage(String message) {
+        this.messages.add(message);
+    }
+
+    public ArrayList<String> getMessages() {
+        ArrayList<String> returnMessages = new ArrayList<>(messages);
+        if (messages.size() > 0) {
+            System.out.println("Hello");
+        }
+        messages.clear();
+
+        return returnMessages;
     }
 }

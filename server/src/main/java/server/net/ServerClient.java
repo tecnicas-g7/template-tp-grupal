@@ -24,14 +24,14 @@ class ServerClient implements Runnable{
 
     Controller controller;
 
-    public ServerClient(ServerSocket serverSocket, Controller controller) {
+    public ServerClient(ServerSocket serverSocket, Controller controller, ClientSender clientSender) {
         this.serverSocket = serverSocket;
         this.controller = controller;
         running = true;
+        this.clientSender = clientSender;
     }
 
     public void run() {
-        this.clientSender = new ClientSender(controller);
         while (running) {
             Socket socket = acceptSocket();
             if (socket != null) {
