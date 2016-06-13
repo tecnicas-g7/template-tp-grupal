@@ -5,7 +5,11 @@ import exceptions.GameNotFoundExcpetion;
 import game.items.Actionable;
 import game.states.State;
 import game.states.Status;
+import model.Game;
+import model.GameBuilder;
 import server.BuilderLoader;
+
+import java.io.IOException;
 
 public class Driver implements GameDriver {
 
@@ -13,11 +17,16 @@ public class Driver implements GameDriver {
 
     @Override
     public void initGame(String jarPath){
+
+        GameBuilder gameBuilder = null;
         try {
-            controller = new Controller(BuilderLoader.load(jarPath).build());
-        } catch (Exception e){
-            throw new GameNotFoundExcpetion();
+            gameBuilder = BuilderLoader.load(jarPath);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        Game game = gameBuilder.build();
+            controller = new Controller(game);
+
     }
 
     public String sendCommand(String cmd) {

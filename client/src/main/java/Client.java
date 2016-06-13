@@ -53,8 +53,9 @@ public class Client {
             try {
                 listen(socket,inFromServer,sender);
             } catch (Exception e) {
-                if (!running) {
-                    System.out.println("Error with connection...");
+                if (running) {
+                    System.out.println("Errorrrrrrrrrrrrrrrrrrrr with connection...");
+                    e.printStackTrace();
                 }
                 running = false;
             }
@@ -65,21 +66,23 @@ public class Client {
     private static void listen(Socket socket, BufferedReader inFromServer, Sender sender) throws IOException {
         String serverMessage = inFromServer.readLine();
         if (serverMessage != null && serverMessage.equals("W")) {
+            running = false;
             System.out.println("Ganaste :)");
             sender.close();
             socket.close();
-            running = false;
+            return;
         } else {
             if (serverMessage != null && serverMessage.equals("L")) {
+                running = false;
                 System.out.println("Perdiste :(");
                 sender.close();
                 socket.close();
-                running = false;
+                return;
             }
         }
         if (serverMessage == null) {
             running = false;
-            System.out.println("Error with connection...");
+            System.out.println("Erfgdfgdfgror with connection...");
             return;
         }
         System.out.println(serverMessage);

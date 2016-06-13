@@ -51,10 +51,6 @@ public class Game {
         this.rooms.add(room);
     }
 
-    public Player getActivePlayer() {
-        return this.activePlayer;
-    }
-
     public Location findItemLocation(Actionable item) {
         for (Location location : rooms) {
             if (location.getItem(item.getName()) != null) {
@@ -103,18 +99,6 @@ public class Game {
         }
     }
 
-    public String look() {
-        return this.activePlayer.getRoom().look();
-    }
-
-    public String showInventory() {
-        return this.getActivePlayer().showInventory();
-    }
-
-    private boolean validateEnterAndLeaveConditions(Location origin, Location destination) {
-        return origin.validLeaveConditions(activePlayer) && destination.validEnterConditions(activePlayer);
-    }
-
     public void addCondition(Condition condition) {
         for (Player player : players.values()) {
             this.addCondition(condition, player);
@@ -123,7 +107,7 @@ public class Game {
 
     public void addLoseCondition(Condition condition) {
         for (Player player : players.values()) {
-            this.addLoseCondition(condition, this.getActivePlayer());
+            this.addLoseCondition(condition, player);
         }
     }
 
@@ -259,5 +243,9 @@ public class Game {
         messages.clear();
 
         return returnMessages;
+    }
+
+    public Player getPlayer(String player) {
+        return players.get(player);
     }
 }

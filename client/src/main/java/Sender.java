@@ -32,7 +32,8 @@ public class Sender implements Runnable {
                 }
             } catch (Exception e) {
                 if (running) {
-                    System.out.println("Error with connection...");
+                    System.out.println("Error??????????? with connection...");
+                    e.printStackTrace();
                 }
             }
         } catch (IOException e) {

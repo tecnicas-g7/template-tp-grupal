@@ -23,8 +23,20 @@ public class Escape2 implements GameBuilder {
     public Game build() {
         try {
             Location pasillo = new Location("Pasillo");
-            Player player = createPlayer(pasillo);
-            setPlayerInitialInventory(player);
+            Player player = createPlayer(pasillo, "Player 1");
+            setPlayerInitialInventory(player,1);
+            game = new Game(player);
+            Player player2 = createPlayer(pasillo, "Player 2");
+            setPlayerInitialInventory(player2, 2);
+            Player player3 = createPlayer(pasillo, "Player 3");
+            setPlayerInitialInventory(player3, 3);
+            Player player4 = createPlayer(pasillo, "Player 4");
+            setPlayerInitialInventory(player4, 4);
+
+            game.addPlayer(player2);
+            game.addPlayer(player3);
+            game.addPlayer(player4);
+
             Location acceso = new Location("BibliotecaAcceso");
             Location salonTres = new Location("Salon3");
             Location pasaje = new Location("Pasaje");
@@ -36,7 +48,8 @@ public class Escape2 implements GameBuilder {
             Location salon2 = new Location("Salon2");
             Location afuera = new Location("Afuera");
             Location sotano = new Location("Sotano");
-            createGame(player, pasillo,salon1,salon2,salonTres, acceso, biblioteca, sotano, afuera);
+            createGame(player, pasillo, salon1, salon2, salonTres, acceso, biblioteca, sotano, afuera);
+
 
             createBiblioteca(biblioteca, player, acceso, pasaje);
             createSalonUno(salon1, player, pasillo, acceso, biblioteca, salonTres);
@@ -51,9 +64,7 @@ public class Escape2 implements GameBuilder {
             pasaje.addDoor(sotano, null, "puerta", new EnterAction("enter"));
 
 
-            RoomCondition roomCondition = new RoomCondition(afuera,true);
-            game.addLoseCondition(roomCondition);
-            addPathsPasaje(pasaje,sotano,salon2.getItem("Martillo"));
+            addPathsPasaje(pasaje, sotano, salon2.getItem("Martillo"));
 
             return game;
         } catch (MaxInventoryException e) {
@@ -70,7 +81,7 @@ public class Escape2 implements GameBuilder {
 
     private void addPathsPasaje(Location pasaje, Location sotano, Actionable martillo) {
         Location escaleras = new Location("Escalera");
-        pasaje.addDoor(escaleras,null,"Escalera",new EnterAction("use"));
+        pasaje.addDoor(escaleras, null,"Escalera",new EnterAction("use"));
         pasaje.addDoor(sotano, null, "Baranda", new EnterAction("use"));
         game.addLoseCondition(new RoomCondition(escaleras, true));
 
@@ -86,7 +97,6 @@ public class Escape2 implements GameBuilder {
 
     private void createGame(Player player,Location pasillo, Location salon1,
                             Location salon2, Location salonTres, Location acceso, Location biblioteca, Location sotano, Location afuera) {
-        game = new Game(player);
         game.addRoom(pasillo);
         game.addRoom(salon1);
         game.addRoom(salon2);
@@ -95,20 +105,20 @@ public class Escape2 implements GameBuilder {
         game.addRoom(biblioteca);
         game.addRoom(sotano);
         game.addRoom(afuera);
-        game.addCondition(new RoomCondition(afuera,true));
-        game.makeLocationsAdjacent(salon1, pasillo, null,"goto");
-        game.makeLocationsAdjacent(acceso, pasillo, null,"goto");
+        game.addCondition(new RoomCondition(afuera, true));
+        game.makeLocationsAdjacent(salon1, pasillo, null, "goto");
+        game.makeLocationsAdjacent(acceso, pasillo, null, "goto");
         game.makeLocationsAdjacent(acceso, biblioteca, null,"goto");
-        game.makeLocationsAdjacent(salonTres,pasillo,null,"goto");
-        game.makeLocationsAdjacent(salon2, pasillo, null,"goto");
-        RoomCondition roomCondition = new RoomCondition(afuera,true);
-        game.addLoseCondition(roomCondition);
+        game.makeLocationsAdjacent(salonTres, pasillo, null, "goto");
+        game.makeLocationsAdjacent(salon2, pasillo, null, "goto");
     }
 
-    private void setPlayerInitialInventory(Player player) throws MaxInventoryException {
+    private void setPlayerInitialInventory(Player player, int nroFoto) throws MaxInventoryException {
         player.setMaxInventory(4);
-        Actionable lapicera = new Actionable("lapicera");
-        Actionable foto = new Actionable("Foto");
+        Actionable lapicera = new Actionable("Lapicera" + nroFoto);
+        Actionable foto = new Actionable("Foto" + nroFoto);
+        addPickDrop(foto, player);
+        foto.addAction(new MoveItemAction(true, false, "put"));
         player.addItem(foto);
         player.addItem(lapicera);
     }
@@ -161,7 +171,7 @@ public class Escape2 implements GameBuilder {
         salonUno.addItem(new Actionable("silla1"));
         salonUno.addItem(new Actionable("silla2"));
         salonUno.addItem(new Actionable("cuadroTren"));
-        createUsableItems(player, salonUno, acceso, biblioteca, salonTres);
+        createUsableItems(player, salonUno, acceso, biblioteca, salonTres, pasillo);
 
 
         //return salonUno;
@@ -170,7 +180,7 @@ public class Escape2 implements GameBuilder {
     private void createSalonDos(Location salon2, Player player, Location pasillo) {
         //Location salon2 = new Location("Salon2");
         Actionable martillo = new Actionable("Martillo");
-        addPickDrop(martillo,player);
+        addPickDrop(martillo, player);
         salon2.addItem(martillo);
         salon2.addItem(new Actionable("Destornillador1"));
         salon2.addItem(new Actionable("Destornillador2"));
@@ -180,12 +190,12 @@ public class Escape2 implements GameBuilder {
     private Container createCuadroBarco(Location salonUno) {
         Container cuadroBarco = new Container("CuadroBarco",1);
         //cuadroBarco.addAction(new OpenAction("move"));
-        cuadroBarco.addAction(new OpenCloseContainerAction("move",Container.openStatus));
+        cuadroBarco.addAction(new OpenCloseContainerAction("move", Container.openStatus));
         salonUno.addItem(cuadroBarco);
         return cuadroBarco;
     }
 
-    private void createUsableItems(Player player, Location salonUno, Location acceso, Location biblioteca, Location salonTres) {
+    private void createUsableItems(Player player, Location salonUno, Location acceso, Location biblioteca, Location salonTres, Location pasillo) {
         Container credencial = new Container("Credencial",1);
         Actionable key = new Actionable("Llave");
         addPickDrop(key,player);
@@ -205,32 +215,29 @@ public class Escape2 implements GameBuilder {
         open.addCondition(new InventoryCondition(list, true));
         cajaFuerte.addAction(open);
         addPickDrop(credencial, player);
-        Actionable licor = new Actionable( "licor");
+        Actionable licor = new Actionable("licor");
         salonUno.addItem( licor);
 
-        createLicorCredentialConditions(player, acceso, credencial, player.getItem("Foto"), licor, biblioteca);
+        createLicorCredentialConditions(player, acceso, credencial, licor, biblioteca, pasillo);
     }
 
     private void createLicorCredentialConditions(Player player, Location acceso,
-                                                 Container credencial, Actionable foto, Actionable licor, Location biblioteca) {
-        foto.addAction(new MoveItemAction(true, false, "put"));
+                                                 Container credencial, Actionable licor, Location biblioteca, Location pasillo) {
+
         addPickDrop(licor, player);
-        addPickDrop(foto, player);
-        List<Actionable> list = new ArrayList<>();
-        list.add(foto);
+        //List<Actionable> list = new ArrayList<>();
+        //list.add(foto);
         MoveItemAction show = new MoveItemAction(true,false,"show");
-        show.addCondition(new HasItemsWithItemsCondition(list, credencial, true));
+        //show.addCondition(new HasItemsWithItemsCondition(list, credencial, true));
         credencial.addAction(show);
-        createAccesoBiblioteca(licor, foto, credencial, acceso, biblioteca);
+        createAccesoBiblioteca(licor, credencial, acceso, biblioteca, pasillo);
 
     }
 
-    private void createAccesoBiblioteca(Actionable licor, Actionable foto, Container credencial, Location acceso, Location biblioteca) {
+    private void createAccesoBiblioteca(Actionable licor, Container credencial, Location acceso, Location biblioteca, Location pasillo) {
         //TODO FALTA LO DEL bibliotecario que se acuerde de no dejar pasar
-        Container bibliotecario = new Container("Bibliotecario",1);
+        Container bibliotecario = new Container("Bibliotecario",5);
         acceso.addItem(bibliotecario);
-        List<Actionable> listCredencial = new ArrayList<>();
-        listCredencial.add(credencial);
         MoveItemAction moveItemAction = new MoveItemAction(true, false, "move");
         ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"),bibliotecario);
 
@@ -243,10 +250,29 @@ public class Escape2 implements GameBuilder {
         action.addAction(taskAction);
         action.addAction(taskAction2);
         licor.addAction(action);
-        biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listCredencial, bibliotecario, true));
+        createBibliotecaEnterConditions(credencial, bibliotecario, biblioteca, pasillo);
+    }
+
+    private void createBibliotecaEnterConditions(Container credencial, Container bibliotecario, Location biblioteca, Location pasillo) {
+        createPlayerWithConditionsBiblioteca(credencial, bibliotecario, biblioteca, pasillo, 1);
+        createPlayerWithConditionsBiblioteca(credencial, bibliotecario, biblioteca, pasillo, 2);
+        createPlayerWithConditionsBiblioteca(credencial, bibliotecario, biblioteca, pasillo, 3);
+        createPlayerWithConditionsBiblioteca(credencial, bibliotecario, biblioteca, pasillo, 4);
+    }
+
+    private void createPlayerWithConditionsBiblioteca(Container credencial, Container bibliotecario, Location biblioteca, Location pasillo, int nroPlayer) {
+        List<Actionable> listCredencial = new ArrayList<>();
+        listCredencial.add(credencial);
+
+        ComplexCondition complexCondition = new ComplexCondition();
+        Player player = game.getPlayer("Player " + nroPlayer);
+        Actionable foto = player.getItem("Foto" + nroPlayer);
+        complexCondition.addCondition(new HasItemsWithItemsCondition(listCredencial, bibliotecario, true));
         List<Actionable> listCredencialConFoto = new ArrayList<>();
         listCredencialConFoto.add(foto);
-        biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listCredencialConFoto, credencial, true));
+        complexCondition.addCondition(new HasItemsWithItemsCondition(listCredencialConFoto, credencial, true));
+        complexCondition.addCondition(new isPlayerCondition(player));
+        biblioteca.addEnterCondition(complexCondition);
     }
 
     private void addPickDrop(Actionable actionable, Player player) {
@@ -263,7 +289,7 @@ public class Escape2 implements GameBuilder {
                     location.removeItem(item.getName());
                     Location newLocation = location.getRandomAdjacentLocation();
                     newLocation.addItem(item);
-                    game.addMessage("El bibliotecario se movió a " + newLocation.getName());
+                    game.addMessage("El bibliotecario se movio a " + newLocation.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -30,9 +30,13 @@ public class ComplexAction extends Action {
 
     @Override
     public String execute(String[] tokens, Player player, Actionable item) {
-        actions.forEach((action) -> {
-                action.execute(tokens,player,item);
-            });
-        return null;
+        StringBuilder result = new StringBuilder();
+        for (Action action : actions) {
+            String actionResult = action.execute(tokens,player,item);
+            if (actionResult != null) {
+                result.append(actionResult + '\n');
+            }
+        }
+        return result.toString();
     }
 }

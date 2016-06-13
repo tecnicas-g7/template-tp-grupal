@@ -13,11 +13,8 @@ public class Escape2Tests {
 
     public void initGame(String jarPath) {
         driver = new Driver();
-        try {
-            driver.initGame(jarPath);
-        } catch (Exception e) {
-            //
-        }
+        System.out.println("Path: " + jarPath);
+        driver.initGame(jarPath);
     }
 
     @Test

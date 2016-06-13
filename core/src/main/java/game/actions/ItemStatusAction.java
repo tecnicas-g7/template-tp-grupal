@@ -18,6 +18,6 @@ public class ItemStatusAction extends Action {
     @Override
     public String execute(String[] tokens, Player player, Actionable actionable) {
         item.setNewStatus(status);
-        return " ";
+        return item.getName() + " has changed status to " + status.getID();
     }
 }

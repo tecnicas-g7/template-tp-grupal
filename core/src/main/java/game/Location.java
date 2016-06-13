@@ -177,11 +177,15 @@ public class Location implements HasItems {
 
     public boolean checkConditions(List<Condition> conditions, Player player) {
         for (Condition condition : conditions) {
-            if (!condition.isValid(player)) {
-                return false;
+            if (condition.isValid(player)) {
+                return true;
             }
         }
-        return  true;
+        if (conditions.size() == 0) {
+            return  true;
+        } else {
+            return false;
+        }
     }
 
 }

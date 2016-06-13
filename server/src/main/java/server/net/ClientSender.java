@@ -54,20 +54,10 @@ public class ClientSender implements Runnable {
     }
 
     public void interpretCommand(String name, String message) throws IOException {
-        Socket socket = clients.get(name);
         controller.setActivePlayer(name);
         String output = controller.interpretCommand(message);
-        if (controller.verify()) {
-            sendLoseMessage(name);
-            return;
-        }
-        if (controller.gameOver()) {
-            sendWinMessage(name);
-            return;
-        }
         sendIndividualMessage(name, output);
         broadcastAction(name, message);
-
     }
 
     private void broadcastAction(String name, String message) {
@@ -76,12 +66,6 @@ public class ClientSender implements Runnable {
                 sendIndividualMessage(playerName, name + " execute: " + message);
             }
         }
-        /*clients.forEach((playerName, socket) -> {
-            System.out.println("?!?!?!?!");
-            if (!playerName.equals(name)) {
-                sendIndividualMessage(playerName, name + " execute: " + message);
-            }
-        });*/
     }
 
     public void broadcast(String name, String message) {
@@ -90,17 +74,11 @@ public class ClientSender implements Runnable {
                 sendIndividualMessage(playerName, message);
             }
         }
-        /*clients.forEach((playerName, socket) -> {
-          if (!playerName.equals(name)) {
-                sendIndividualMessage(playerName, message);
-            }
-        });*/
     }
 
-    private void sendMessage(DataOutputStream out, String message) throws IOException {
+    private synchronized void sendMessage(DataOutputStream out, String message) throws IOException {
         out.writeBytes(message + '\n');
     }
-
 
     public void terminate() {
         for (Socket socket : clients.values()) {

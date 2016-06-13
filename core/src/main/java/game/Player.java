@@ -182,8 +182,10 @@ public class Player implements HasItems {
         if (!playing) {
             for (Actionable actionable : inventory.values()) {
                 room.addItem(actionable);
-                removeItem(actionable.getName());
+                //removeItem(actionable.getName());
+
             }
+            inventory.clear();
         }
     }
 
