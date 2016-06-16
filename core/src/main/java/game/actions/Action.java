@@ -31,7 +31,9 @@ public abstract class Action {
 
 //    abstract void setString(String name);
 
-    public abstract String execute(String[] tokens, Player player, Actionable item);
+    public String execute(String[] tokens, Player player, Actionable item) {
+        return null;
+    }
 
     public void addCondition(Condition condition) {
         conditions.add(condition);

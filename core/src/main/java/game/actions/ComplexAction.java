@@ -1,6 +1,7 @@
 package game.actions;
 
 
+import exceptions.InterruptActionException;
 import game.Player;
 import game.items.Actionable;
 
@@ -32,7 +33,12 @@ public class ComplexAction extends Action {
     public String execute(String[] tokens, Player player, Actionable item) {
         StringBuilder result = new StringBuilder();
         for (Action action : actions) {
-            String actionResult = action.execute(tokens,player,item);
+            String actionResult = "";
+            try {
+                actionResult = action.execute(tokens,player,item);
+            } catch (InterruptActionException e) {
+                return result.toString();
+            }
             if (actionResult != null) {
                 result.append(actionResult + '\n');
             }

@@ -238,9 +238,11 @@ public class Escape2 implements GameBuilder {
 
         Container bibliotecario = new Container("Bibliotecario",5);
         acceso.addItem(bibliotecario);
+        List<Actionable> listLicor = new ArrayList<>();
+        listLicor.add(licor);
         MoveItemAction moveItemAction = new MoveItemAction(true, false, "move");
         ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"),bibliotecario);
-
+        itemStatusAction.addCondition(new HasItemsWithItemsCondition(listLicor,bibliotecario,true));
         AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(game,120000,0,bibliotecario));
         AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,120000 + 240000,240000,bibliotecario));
         ComplexAction action = new ComplexAction("give");
@@ -249,8 +251,7 @@ public class Escape2 implements GameBuilder {
         action.addAction(taskAction);
         action.addAction(taskAction2);
         licor.addAction(action);
-        List<Actionable> listLicor = new ArrayList<>();
-        listLicor.add(licor);
+
         biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listLicor,bibliotecario,true));
         createBibliotecaEnterConditions(credencial, bibliotecario, biblioteca, pasillo);
     }
@@ -312,7 +313,7 @@ public class Escape2 implements GameBuilder {
                     game.addMessage("El bibliotecario se desperto y esta enojado!");
                     updateNextExecution();
                 } catch (Exception e) {
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         };
