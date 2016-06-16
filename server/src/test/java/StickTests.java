@@ -1,4 +1,5 @@
 import game.Controller;
+import game.Player;
 import org.junit.Test;
 import server.GamePaths;
 import server.driver.Driver;
@@ -24,7 +25,7 @@ public class StickTests {
         initGame(GamePaths.getGamePath("gameStick"));
         driver.sendCommand("pick stick");
 
-        assert (Controller.GameState.Win == driver.getGameState());
+        assert (Player.GameState.Win == driver.getGameState());
     }
 
 }

@@ -1,6 +1,7 @@
 package server.driver;
 
-import game.Controller;
+
+import game.Player;
 import game.states.State;
 
 public interface GameDriver {
@@ -9,9 +10,9 @@ public interface GameDriver {
     String sendCommand(String cmd);
     String sendCommand(String cmd, String player);
 
-    Controller.GameState getGameState();
+    Player.GameState getGameState();
 
-    Controller.GameState getGameState(String player);
+    Player.GameState getGameState(String player);
 
     State getItemStatus(String bibliotecario);
 

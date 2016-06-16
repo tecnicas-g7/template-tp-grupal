@@ -1,4 +1,5 @@
 import game.Controller;
+import game.Player;
 import org.junit.Test;
 import server.GamePaths;
 import server.driver.Driver;
@@ -49,7 +50,7 @@ public class EscapeTests {
         initGame(GamePaths.getGamePath("gameEscape"));
         bibliotecaToSotano();
         driver.sendCommand("use Escalera");
-        assert(Controller.GameState.Lost == driver.getGameState());
+        assert(Player.GameState.Lost == driver.getGameState());
 
     }
 
@@ -59,7 +60,7 @@ public class EscapeTests {
         initGame(GamePaths.getGamePath("gameEscape"));
         bibliotecaToSotano();
         driver.sendCommand("use Baranda");
-        assert(Controller.GameState.Lost == driver.getGameState());
+        assert(Player.GameState.Lost == driver.getGameState());
 
     }
 
@@ -80,7 +81,7 @@ public class EscapeTests {
         driver.sendCommand("use Baranda");
         driver.sendCommand("break Ventana");
         driver.sendCommand("goto Afuera");
-        assert(Controller.GameState.Win == driver.getGameState());
+        assert(Player.GameState.Win == driver.getGameState());
 
     }
 

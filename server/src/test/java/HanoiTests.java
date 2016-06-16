@@ -1,4 +1,5 @@
 import game.Controller;
+import game.Player;
 import org.junit.Test;
 import server.GamePaths;
 import server.driver.Driver;
@@ -37,7 +38,7 @@ public class HanoiTests {
         String command7 = "move stack1 stack3";
         driver.sendCommand(command7);
 
-        assert(Controller.GameState.Win == driver.getGameState());
+        assert(Player.GameState.Win == driver.getGameState());
 
     }
 }

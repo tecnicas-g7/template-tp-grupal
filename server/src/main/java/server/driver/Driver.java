@@ -1,15 +1,11 @@
 package server.driver;
 
 import game.Controller;
-import exceptions.GameNotFoundExcpetion;
-import game.items.Actionable;
+import game.Player;
 import game.states.State;
-import game.states.Status;
 import model.Game;
 import model.GameBuilder;
 import server.BuilderLoader;
-
-import java.io.IOException;
 
 public class Driver implements GameDriver {
 
@@ -37,11 +33,11 @@ public class Driver implements GameDriver {
         return controller.interpretCommand(cmd,player);
     }
 
-    public Controller.GameState getGameState() {
+    public Player.GameState getGameState() {
         return controller.getGameState();
     }
 
-    public Controller.GameState getGameState(String player) {
+    public Player.GameState getGameState(String player) {
         return controller.getGameState(player);
     }
 

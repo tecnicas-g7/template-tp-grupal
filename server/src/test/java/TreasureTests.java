@@ -1,4 +1,5 @@
 import game.Controller;
+import game.Player;
 import org.junit.Test;
 import server.GamePaths;
 import server.driver.Driver;
@@ -39,7 +40,7 @@ public class TreasureTests {
         driver.sendCommand(command7);
         interpretTreasureCommands();
 
-        assert(Controller.GameState.Win == driver.getGameState());
+        assert(Player.GameState.Win == driver.getGameState());
 
     }
 

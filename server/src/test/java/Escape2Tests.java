@@ -1,4 +1,5 @@
-import game.Controller;
+
+import game.Player;
 import org.junit.Test;
 import server.GamePaths;
 import server.driver.Driver;
@@ -63,7 +64,7 @@ public class Escape2Tests {
         driver.sendCommand("goto Biblioteca","Player 1");
         driver.sendCommand("goto BibliotecaAcceso", "Player 1");
         driver.simulatePassingOfTime(121);
-        assert(driver.getGameState("Player 1") == Controller.GameState.Lost);
+        assert(driver.getGameState("Player 1") == Player.GameState.Lost);
     }
 
     @Test
@@ -81,8 +82,8 @@ public class Escape2Tests {
         driver.sendCommand("goto Pasillo","Player 2");
         driver.simulatePassingOfTime(121);
         driver.moveItem("Bibliotecario", "Biblioteca");
-        assert(driver.getGameState("Player 1") == Controller.GameState.Lost);
-        assert(driver.getGameState("Player 2") == Controller.GameState.InProgress);
+        assert(driver.getGameState("Player 1") == Player.GameState.Lost);
+        assert(driver.getGameState("Player 2") == Player.GameState.InProgress);
     }
 
 

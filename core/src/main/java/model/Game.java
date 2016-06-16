@@ -140,6 +140,7 @@ public class Game {
                 return false;
             }
         }
+        player.setGameState(Player.GameState.Win);
         return true;
     }
 
@@ -192,6 +193,7 @@ public class Game {
     public boolean gameOver(Player player) {
         for (Condition condition : this.loseConditions.get(player.getName())) {
             if (condition.isValid(player)) {
+                player.setGameState(Player.GameState.Lost);
                 return true;
             }
         }
@@ -214,7 +216,7 @@ public class Game {
 
     public Player getFreePlayer() {
         for (Player player : players.values()) {
-            if (!player.isPlaying()) {
+            if (!player.isPlaying() && player.getGameState() == Player.GameState.InProgress) {
                 player.setPlaying(true);
                 return player;
             }

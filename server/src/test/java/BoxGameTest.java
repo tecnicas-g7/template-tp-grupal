@@ -1,4 +1,5 @@
-import game.Controller;
+
+import game.Player;
 import org.junit.Test;
 
 import server.GamePaths;
@@ -31,6 +32,6 @@ public class BoxGameTest {
         String command3 = "enter door1";
         driver.sendCommand(command3);
 
-        assert(Controller.GameState.Win == driver.getGameState());
+        assert(Player.GameState.Win == driver.getGameState());
     }
 }

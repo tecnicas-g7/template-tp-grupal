@@ -34,6 +34,12 @@ public class Player implements HasItems {
 
     private boolean playing;
 
+    public enum GameState {
+        Lost, Win, InProgress
+    }
+
+    private GameState gameState;
+
     public void addAction(Action action) {
         this.actions.put(action.getName(), action);
     }
@@ -65,6 +71,7 @@ public class Player implements HasItems {
         this.status = new Status("ALIVE");
         this.actions = new HashMap<>();
         this.playing = false;
+        this.gameState = GameState.InProgress;
     }
 
     public Player(Location room) {
@@ -187,6 +194,14 @@ public class Player implements HasItems {
             }
             inventory.clear();
         }
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
 }

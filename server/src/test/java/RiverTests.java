@@ -1,4 +1,5 @@
 import game.Controller;
+import game.Player;
 import org.junit.Test;
 import server.GamePaths;
 import server.driver.Driver;
@@ -52,7 +53,7 @@ public class RiverTests {
         simpleCross("sheep", "north-shore");
 
 
-        assert(Controller.GameState.Win == driver.getGameState());
+        assert(Player.GameState.Win == driver.getGameState());
 
     }
 
@@ -81,6 +82,6 @@ public class RiverTests {
         driver.sendCommand(leaveWolf);
 
 
-        assert(Controller.GameState.Win != driver.getGameState());
+        assert(Player.GameState.Win != driver.getGameState());
     }
 }

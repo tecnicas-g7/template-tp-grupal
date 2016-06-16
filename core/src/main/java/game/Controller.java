@@ -20,11 +20,6 @@ public class Controller {
 
     private Game game;
 
-
-    public enum GameState {
-        Lost, Win, InProgress
-    }
-
     public Controller(Game game) {
         this.game = game;
     }
@@ -81,18 +76,18 @@ public class Controller {
         return game.gameOver();
     }
 
-    public GameState getGameState() {
+    public Player.GameState getGameState() {
         if (verify()) {
-            return GameState.Win;
+            return Player.GameState.Win;
         } else {
             if (gameOver()) {
-                return GameState.Lost;
+                return Player.GameState.Lost;
             }
         }
-        return GameState.InProgress;
+        return Player.GameState.InProgress;
     }
 
-    public GameState getGameState(String player) {
+    public Player.GameState getGameState(String player) {
         game.setActivePlayer(player);
         return getGameState();
     }
@@ -134,7 +129,7 @@ public class Controller {
     }
 
     public void moveItem(String itemName, String location) {
-        game.moveItem(itemName,location);
+        game.moveItem(itemName, location);
     }
 }
 
