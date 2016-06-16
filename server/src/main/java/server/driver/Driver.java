@@ -41,4 +41,7 @@ public class Driver implements GameDriver {
         return controller.getItemStatus(item);
     }
 
+    public void simulatePassingOfTime(int seconds) {
+        controller.simulatePassingOfTime(seconds);
+    }
 }

@@ -5,8 +5,9 @@ import server.driver.GameDriver;
 
 import static org.junit.Assert.assertTrue;
 
-/**Created by javier on 6/9/16.
+/*Created by javier on 6/9/16.
  */
+@SuppressWarnings("CPD-START")
 public class Escape2Tests {
 
     private GameDriver driver;
@@ -42,12 +43,7 @@ public class Escape2Tests {
         driver.sendCommand("goto Pasillo");
         driver.sendCommand("goto BibliotecaAcceso");
         driver.sendCommand("give licor Bibliotecario");
-        try {
-            //TODO Se cambisron valores en escape2 por un tema de acelerar los tests. Volver atras
-            Thread.sleep(20000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+        driver.simulatePassingOfTime(121);
         assertTrue(driver.getItemStatus("Bibliotecario").equalState("angry"));
 
     }

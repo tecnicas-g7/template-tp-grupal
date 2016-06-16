@@ -5,10 +5,7 @@ import game.actions.LookAction;
 import game.actions.MoveItemAction;
 import game.conditions.Condition;
 import game.conditions.InventoryCondition;
-import game.conditions.PlayerStateCondition;
 import game.items.Actionable;
-import game.states.Status;
-import game.tasks.DeadLine;
 import model.Game;
 import model.GameBuilder;
 import java.util.ArrayList;
@@ -41,8 +38,6 @@ public class StickGame implements GameBuilder {
 
         Condition condition = new InventoryCondition(items, true);
         game.addCondition(condition);
-        game.addLoseCondition(new PlayerStateCondition(new Status("dead")));
-        game.addTask(new DeadLine(game),15000,150000);
 
         return game;
     }

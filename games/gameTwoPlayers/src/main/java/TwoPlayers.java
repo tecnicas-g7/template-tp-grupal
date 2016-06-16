@@ -2,12 +2,9 @@ import game.Location;
 import game.Player;
 import game.actions.MoveItemAction;
 import game.actions.OpenCloseContainerAction;
-import game.conditions.PlayerStateCondition;
 import game.conditions.RoomCondition;
 import game.items.Actionable;
 import game.items.Container;
-import game.states.Status;
-import game.tasks.DeadLine;
 import model.Game;
 import model.GameBuilder;
 
@@ -47,9 +44,6 @@ public class TwoPlayers implements GameBuilder {
 
         game.addRoom(room1);
         game.addRoom(room2);
-        game.addLoseCondition(new PlayerStateCondition(new Status("dead")));
-        game.addTask(new DeadLine(game), 45000, 150000);
-
 
         return game;
     }

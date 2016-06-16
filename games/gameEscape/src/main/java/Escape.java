@@ -102,7 +102,7 @@ public class Escape implements GameBuilder {
         game.makeLocationsAdjacent(salon2, pasillo, null,"goto");
         RoomCondition roomCondition = new RoomCondition(afuera,true);
         game.addLoseCondition(roomCondition);
-        game.addTask(createScheduledTask(game, acceso.getItem("Bibliotecario")),300000,300000);
+        game.addTask(createScheduledTask(game, 300000,300000,acceso.getItem("Bibliotecario")));
         return game;
     }
 
@@ -243,8 +243,8 @@ public class Escape implements GameBuilder {
         actionable.addAction(new MoveItemAction(true,false,"drop"));
     }
 
-    private ScheduledTask createScheduledTask(Game game, Actionable item) {
-        return new ScheduledTask(game) {
+    private ScheduledTask createScheduledTask(Game game, int delay, int period, Actionable item) {
+        return new ScheduledTask(game,period,delay) {
             @Override
             public void run() {
                 try {
@@ -252,6 +252,8 @@ public class Escape implements GameBuilder {
                     location.removeItem(item.getName());
                     Location newLocation = location.getRandomAdjacentLocation();
                     newLocation.addItem(item);
+                    game.addMessage("El bibliotecario se movio a " + newLocation.getName());
+                    updateNextExecution();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -18,7 +18,7 @@ import java.util.*;
 public class Game {
 
     private List<Location> rooms;
-    //private List<Condition> conditions;
+    private List<ScheduledTask> tasks;
     //private List<Condition> loseConditions;
 
     private Map<String,List<Condition>> conditions;
@@ -31,6 +31,7 @@ public class Game {
 
     public Game(Player activePlayer) {
         this.rooms = new ArrayList<>();
+        this.tasks = new ArrayList<>();
         this.activePlayer = activePlayer;
 //        this.conditions = new ArrayList<>();
 //        this.loseConditions = new ArrayList<>();
@@ -109,6 +110,10 @@ public class Game {
         for (Player player : players.values()) {
             this.addLoseCondition(condition, player);
         }
+    }
+
+    public void addTask(ScheduledTask task) {
+        this.tasks.add(task);
     }
 
     public void addCondition(Condition condition, Player player) {
@@ -192,15 +197,6 @@ public class Game {
         return gameOver(this.activePlayer);
     }
 
-
-    public void addTask(ScheduledTask task, int delay, int period) {
-        Timer timer = new Timer();
-        if (period == 0) {
-            timer.schedule(task, delay);
-        }
-        timer.scheduleAtFixedRate(task, delay, period);
-    }
-
     public void addPlayer(Player player) {
         players.put(player.getName(),player);
         this.conditions.put(player.getName(), new ArrayList<>());
@@ -247,5 +243,23 @@ public class Game {
 
     public Player getPlayer(String player) {
         return players.get(player);
+    }
+
+    public void simulatePassingOfTime(int seconds) {
+        for(ScheduledTask task : tasks){
+            task.simulateMilli(seconds);
+        }
+        executeTasks();
+    }
+
+    public void executeTasks() {
+        for(ScheduledTask task : tasks){
+            if (task.readyToExecute()) {
+                task.run();
+                if (!task.isPeriodical()) {
+                    tasks.remove(task);
+                }
+            }
+        }
     }
 }

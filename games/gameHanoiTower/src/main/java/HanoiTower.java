@@ -7,7 +7,6 @@ import game.conditions.PlayerStateCondition;
 import game.items.Actionable;
 import game.items.StackContainerComponent;
 import game.states.Status;
-import game.tasks.DeadLine;
 import model.Game;
 import model.GameBuilder;
 import java.util.ArrayList;
@@ -48,8 +47,6 @@ public class HanoiTower implements GameBuilder {
         Game game = new Game(player);
 
         addConditions(game, stack2, stack3);
-        game.addLoseCondition(new PlayerStateCondition(new Status("dead")));
-        game.addTask(new DeadLine(game),120000,150000);
 
 
         return game;

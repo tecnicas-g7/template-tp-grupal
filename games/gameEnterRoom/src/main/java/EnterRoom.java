@@ -5,7 +5,6 @@ import game.items.Actionable;
 import game.Location;
 import game.Player;
 import game.states.Status;
-import game.tasks.DeadLine;
 import model.Game;
 import model.GameBuilder;
 
@@ -31,8 +30,6 @@ public class EnterRoom implements GameBuilder {
 
         game.addRoom(room1);
         game.addRoom(room2);
-        game.addTask(new DeadLine(game),15000,150000);
-        game.addLoseCondition(new PlayerStateCondition(new Status("dead")));
         game.addCondition(new RoomCondition(room2,true));
 
         return game;

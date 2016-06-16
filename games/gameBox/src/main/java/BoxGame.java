@@ -44,9 +44,6 @@ public class BoxGame implements GameBuilder {
 
         game.addRoom(room1);
         game.addRoom(room2);
-        game.addLoseCondition(new PlayerStateCondition(new Status("dead")));
-        game.addTask(new DeadLine(game),45000,150000);
-
 
         return game;
     }

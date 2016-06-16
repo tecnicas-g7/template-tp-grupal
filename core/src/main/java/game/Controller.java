@@ -24,6 +24,10 @@ public class Controller {
         return game.findItem(item).getStatus();
     }
 
+    public void simulatePassingOfTime(int seconds) {
+        game.simulatePassingOfTime(seconds);
+    }
+
 
     public enum GameState {
         Lost, Win, InProgress
@@ -109,6 +113,10 @@ public class Controller {
 
     public List<String> checkLosers() {
         return game.checkLosers();
+    }
+
+    public void executeTasks() {
+        game.executeTasks();
     }
 }
 

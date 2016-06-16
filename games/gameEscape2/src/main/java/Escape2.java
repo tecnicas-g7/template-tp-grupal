@@ -235,15 +235,14 @@ public class Escape2 implements GameBuilder {
     }
 
     private void createAccesoBiblioteca(Actionable licor, Container credencial, Location acceso, Location biblioteca, Location pasillo) {
-        //TODO FALTA LO DEL bibliotecario que se acuerde de no dejar pasar
+
         Container bibliotecario = new Container("Bibliotecario",5);
         acceso.addItem(bibliotecario);
         MoveItemAction moveItemAction = new MoveItemAction(true, false, "move");
         ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"),bibliotecario);
 
-        //TODO volver el 2000 a 120000 esto es solo para testear
-        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(game,bibliotecario),2000,0);
-        AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,bibliotecario),3000,10000);
+        AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(game,120000,0,bibliotecario));
+        AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,120000,240000,bibliotecario));
         ComplexAction action = new ComplexAction("give");
         action.addAction(moveItemAction);
         action.addAction(itemStatusAction);
@@ -280,8 +279,8 @@ public class Escape2 implements GameBuilder {
         actionable.addAction(new MoveItemAction(true,false,"drop"));
     }
 
-    private ScheduledTask createScheduledTask(Game game, Actionable item) {
-        return new ScheduledTask(game) {
+    private ScheduledTask createScheduledTask(Game game, int delay, int period, Actionable item) {
+        return new ScheduledTask(game,period,delay) {
             @Override
             public void run() {
                 try {
@@ -290,6 +289,7 @@ public class Escape2 implements GameBuilder {
                     Location newLocation = location.getRandomAdjacentLocation();
                     newLocation.addItem(item);
                     game.addMessage("El bibliotecario se movio a " + newLocation.getName());
+                    updateNextExecution();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -297,8 +297,8 @@ public class Escape2 implements GameBuilder {
         };
     }
 
-    private ScheduledTask createWakeUpTask(Game game, Actionable item) {
-        return new ScheduledTask(game) {
+    private ScheduledTask createWakeUpTask(Game game, int delay, int period,  Actionable item) {
+        return new ScheduledTask(game,period,delay) {
             @Override
             public void run() {
                 try {
@@ -306,6 +306,7 @@ public class Escape2 implements GameBuilder {
                     item.setNewStatus(status);
                     game.addLoseCondition(new RoomItemStatusCondition(item,status.getID()));
                     game.addMessage("El bibliotecario se desperto y esta enojado!");
+                    updateNextExecution();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

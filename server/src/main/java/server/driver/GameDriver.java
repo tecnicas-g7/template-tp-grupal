@@ -11,4 +11,6 @@ public interface GameDriver {
     Controller.GameState getGameState();
 
     State getItemStatus(String bibliotecario);
+
+    void simulatePassingOfTime(int seconds);
 }
