@@ -17,7 +17,8 @@ import java.util.*;
 
 public class Game {
 
-    private List<Location> rooms;
+    //private List<Location> rooms;
+    private HashMap<String,Location> rooms;
     private List<ScheduledTask> tasks;
     //private List<Condition> loseConditions;
 
@@ -30,7 +31,7 @@ public class Game {
     public ArrayList<String> messages;
 
     public Game(Player activePlayer) {
-        this.rooms = new ArrayList<>();
+        this.rooms = new HashMap<>();
         this.tasks = new ArrayList<>();
         this.activePlayer = activePlayer;
 //        this.conditions = new ArrayList<>();
@@ -49,13 +50,13 @@ public class Game {
     }
 
     public void addRoom(Location room) {
-        this.rooms.add(room);
+        this.rooms.put(room.getName(), room);
     }
 
-    public Location findItemLocation(Actionable item) {
-        for (Location location : rooms) {
+    public Location findItemLocation(String item) {
+        for (Location location : rooms.values()) {
             try {
-                if (location.getItem(item.getName()) != null) {
+                if (location.getItem(item) != null) {
                     return location;
                 }
             } catch (ItemNotFoundException e) {
@@ -269,6 +270,16 @@ public class Game {
             task.updateCurrent();
         }
         execute();
+    }
+
+    public void moveItem(String item, String locationName) {
+        if (rooms.get(locationName) == null) {
+            throw new ItemNotFoundException();
+        }
+        Location location = findItemLocation(item);
+        Actionable actionable = location.getItem(item);
+        location.removeItem(item);
+        rooms.get(locationName).addItem(actionable);
     }
 
 

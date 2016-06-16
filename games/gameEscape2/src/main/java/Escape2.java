@@ -288,7 +288,7 @@ public class Escape2 implements GameBuilder {
             public void run() {
                 try {
                     System.out.println("Moviendo...");
-                    Location location = game.findItemLocation(item);
+                    Location location = game.findItemLocation(item.getName());
                     location.removeItem(item.getName());
                     Location newLocation = location.getRandomAdjacentLocation();
                     newLocation.addItem(item);

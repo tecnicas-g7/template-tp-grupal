@@ -17,5 +17,7 @@ public interface GameDriver {
 
     void simulatePassingOfTime(int seconds);
 
+    void moveItem(String itemName,String location);
+
 
 }

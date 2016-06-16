@@ -20,11 +20,6 @@ public class Controller {
 
     private Game game;
 
-    public State getItemStatus(String item) {
-        return game.findItem(item).getStatus();
-    }
-
-
 
     public enum GameState {
         Lost, Win, InProgress
@@ -132,6 +127,14 @@ public class Controller {
 
     public void simulatePassingOfTime(int seconds) {
         game.simulatePassingOfTime(seconds);
+    }
+
+    public State getItemStatus(String item) {
+        return game.findItem(item).getStatus();
+    }
+
+    public void moveItem(String itemName, String location) {
+        game.moveItem(itemName,location);
     }
 }
 

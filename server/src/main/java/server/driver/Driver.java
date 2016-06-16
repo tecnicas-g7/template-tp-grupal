@@ -52,4 +52,8 @@ public class Driver implements GameDriver {
     public void simulatePassingOfTime(int seconds) {
         controller.simulatePassingOfTime(seconds);
     }
+
+    public void moveItem(String itemName,String location) {
+        controller.moveItem(itemName,location);
+    }
 }

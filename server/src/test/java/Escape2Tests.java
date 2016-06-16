@@ -79,8 +79,10 @@ public class Escape2Tests {
         driver.sendCommand("goto Biblioteca","Player 2");
         driver.sendCommand("goto BibliotecaAcceso","Player 2");
         driver.sendCommand("goto Pasillo","Player 2");
-
-
+        driver.simulatePassingOfTime(121);
+        driver.moveItem("Bibliotecario", "Biblioteca");
+        assert(driver.getGameState("Player 1") == Controller.GameState.Lost);
+        assert(driver.getGameState("Player 2") == Controller.GameState.InProgress);
     }
 
 

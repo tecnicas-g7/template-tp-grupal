@@ -248,7 +248,7 @@ public class Escape implements GameBuilder {
             @Override
             public void run() {
                 try {
-                    Location location = game.findItemLocation(item);
+                    Location location = game.findItemLocation(item.getName());
                     location.removeItem(item.getName());
                     Location newLocation = location.getRandomAdjacentLocation();
                     newLocation.addItem(item);
