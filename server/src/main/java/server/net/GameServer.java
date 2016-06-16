@@ -60,7 +60,7 @@ public class GameServer implements Runnable{
             if (!controller.hasPlayersPlaying()) {
                 gameRunning = false;
             }
-            controller.executeTasks();
+            controller.executeTasks(0);
             List<String> messages = controller.getMessages();
             for (String message : messages) {
                 clientSender.broadcast(null,message);

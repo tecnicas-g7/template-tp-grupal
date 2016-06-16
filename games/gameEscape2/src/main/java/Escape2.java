@@ -242,13 +242,16 @@ public class Escape2 implements GameBuilder {
         ItemStatusAction itemStatusAction = new ItemStatusAction(new Status("asleep"),bibliotecario);
 
         AddTaskAction taskAction = new AddTaskAction("wakeUp",createWakeUpTask(game,120000,0,bibliotecario));
-        AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,120000,240000,bibliotecario));
+        AddTaskAction taskAction2 = new AddTaskAction("moveToNextRoom",createScheduledTask(game,120000 + 240000,240000,bibliotecario));
         ComplexAction action = new ComplexAction("give");
         action.addAction(moveItemAction);
         action.addAction(itemStatusAction);
         action.addAction(taskAction);
         action.addAction(taskAction2);
         licor.addAction(action);
+        List<Actionable> listLicor = new ArrayList<>();
+        listLicor.add(licor);
+        biblioteca.addEnterCondition(new HasItemsWithItemsCondition(listLicor,bibliotecario,true));
         createBibliotecaEnterConditions(credencial, bibliotecario, biblioteca, pasillo);
     }
 
@@ -284,6 +287,7 @@ public class Escape2 implements GameBuilder {
             @Override
             public void run() {
                 try {
+                    System.out.println("Moviendo...");
                     Location location = game.findItemLocation(item);
                     location.removeItem(item.getName());
                     Location newLocation = location.getRandomAdjacentLocation();
@@ -304,11 +308,11 @@ public class Escape2 implements GameBuilder {
                 try {
                     Status status = new Status("angry");
                     item.setNewStatus(status);
-                    game.addLoseCondition(new RoomItemStatusCondition(item,status.getID()));
+                    game.addLoseCondition(new RoomItemStatusCondition(item, status.getID()));
                     game.addMessage("El bibliotecario se desperto y esta enojado!");
                     updateNextExecution();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         };

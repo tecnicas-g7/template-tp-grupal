@@ -44,9 +44,14 @@ public class Sender implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        close();
     }
 
     public void close() {
         running = false;
+    }
+
+    public boolean getRunning() {
+        return running;
     }
 }

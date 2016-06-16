@@ -53,7 +53,7 @@ public class Client {
             try {
                 listen(socket,inFromServer,sender);
             } catch (Exception e) {
-                if (running) {
+                if (running && sender.getRunning()) {
                     System.out.println("Errorrrrrrrrrrrrrrrrrrrr with connection...");
                     e.printStackTrace();
                 }

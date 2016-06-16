@@ -7,10 +7,15 @@ public interface GameDriver {
 
     void initGame(String jarPath);
     String sendCommand(String cmd);
+    String sendCommand(String cmd, String player);
 
     Controller.GameState getGameState();
+
+    Controller.GameState getGameState(String player);
 
     State getItemStatus(String bibliotecario);
 
     void simulatePassingOfTime(int seconds);
+
+
 }

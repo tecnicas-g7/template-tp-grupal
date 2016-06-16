@@ -54,8 +54,12 @@ public class Game {
 
     public Location findItemLocation(Actionable item) {
         for (Location location : rooms) {
-            if (location.getItem(item.getName()) != null) {
-                return location;
+            try {
+                if (location.getItem(item.getName()) != null) {
+                    return location;
+                }
+            } catch (ItemNotFoundException e) {
+                //Nada
             }
         }
         return null;
@@ -64,7 +68,7 @@ public class Game {
     public void makeLocationsAdjacent(Location room1, Location room2, Actionable key, String actionName) {
         EnterAction enterAction = new EnterAction(actionName);
         room1.addDoor(room2,key,room2.getName(),enterAction);
-        room2.addDoor(room1,key,room1.getName(),enterAction);
+        room2.addDoor(room1, key, room1.getName(), enterAction);
     }
 
     public void makeLocationsAdjacent(Location room1, Location room2, Actionable key) {
@@ -233,9 +237,6 @@ public class Game {
 
     public ArrayList<String> getMessages() {
         ArrayList<String> returnMessages = new ArrayList<>(messages);
-        if (messages.size() > 0) {
-            System.out.println("Hello");
-        }
         messages.clear();
 
         return returnMessages;
@@ -247,12 +248,12 @@ public class Game {
 
     public void simulatePassingOfTime(int seconds) {
         for(ScheduledTask task : tasks){
-            task.simulateMilli(seconds);
+           task.simulateMilli(seconds);
         }
-        executeTasks();
+        execute();
     }
 
-    public void executeTasks() {
+    private void execute() {
         for(ScheduledTask task : tasks){
             if (task.readyToExecute()) {
                 task.run();
@@ -262,4 +263,13 @@ public class Game {
             }
         }
     }
+
+    public void executeTasks() {
+        for(ScheduledTask task : tasks){
+            task.updateCurrent();
+        }
+        execute();
+    }
+
+
 }

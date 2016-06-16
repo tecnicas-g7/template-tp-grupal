@@ -24,9 +24,6 @@ public class Controller {
         return game.findItem(item).getStatus();
     }
 
-    public void simulatePassingOfTime(int seconds) {
-        game.simulatePassingOfTime(seconds);
-    }
 
 
     public enum GameState {
@@ -58,6 +55,11 @@ public class Controller {
         }
     }
 
+    public String interpretCommand(String cmd, String player) {
+        game.setActivePlayer(player);
+        return interpretCommand(cmd);
+    }
+
     public boolean verify( ) {
         return game.verifyVictory();
     }
@@ -87,8 +89,17 @@ public class Controller {
     public GameState getGameState() {
         if (verify()) {
             return GameState.Win;
+        } else {
+            if (gameOver()) {
+                return GameState.Lost;
+            }
         }
-        return GameState.Lost;
+        return GameState.InProgress;
+    }
+
+    public GameState getGameState(String player) {
+        game.setActivePlayer(player);
+        return getGameState();
     }
 
     public Player getPlayer() {
@@ -115,8 +126,12 @@ public class Controller {
         return game.checkLosers();
     }
 
-    public void executeTasks() {
+    public void executeTasks(int seconds) {
         game.executeTasks();
+    }
+
+    public void simulatePassingOfTime(int seconds) {
+        game.simulatePassingOfTime(seconds);
     }
 }
 

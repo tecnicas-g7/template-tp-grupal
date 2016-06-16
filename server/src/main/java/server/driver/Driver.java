@@ -33,8 +33,16 @@ public class Driver implements GameDriver {
         return controller.interpretCommand(cmd);
     }
 
+    public String sendCommand(String cmd, String player) {
+        return controller.interpretCommand(cmd,player);
+    }
+
     public Controller.GameState getGameState() {
         return controller.getGameState();
+    }
+
+    public Controller.GameState getGameState(String player) {
+        return controller.getGameState(player);
     }
 
     public State getItemStatus(String item) {
