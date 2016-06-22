@@ -55,6 +55,7 @@ public class GameServer implements Runnable{
 
     private void cycle() {
         //TODO: Ciclo para pasar tiempo de juego
+        System.out.println("MIRA COMO ME EJECUTO SIEMPRE...");
         boolean gameRunning = true;
         while (running && gameRunning) {
             if (!controller.hasPlayersPlaying()) {

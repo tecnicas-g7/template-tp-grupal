@@ -14,8 +14,8 @@ public class Messages {
 
     public static String getMessage(String key) {
         try {
-
-            File file = new File(fileName);
+            File file = new File(System.getProperty("user.dir").replace(System.getProperty("file.separator")+ "server", "")
+                    + System.getProperty("file.separator") + fileName);
             Properties properties = new Properties();
             fileInput = new FileInputStream(file);
             properties.load(fileInput);
